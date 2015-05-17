@@ -1,0 +1,5 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/home/xenzh'
+let g:netrw_dirhist_2='/home/xenzh/code/cpp/nml-parts/alltogether/CMakeFiles'
+let g:netrw_dirhist_3='/home/xenzh/code/cpp/nml-cmake/proto'

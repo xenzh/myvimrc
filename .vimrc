@@ -51,8 +51,31 @@ highlight ColorColumn ctermbg=darkgrey
 
 
 "
-" vim-clang
+" Pathogen
+"
+filetype off
+call pathogen#helptags()
+call pathogen#infect()
+filetype plugin indent on
+
+
+"
+" vim-clang and neocomplete
 "
 
-let g:clang_auto = 1
+let g:clang_auto = 0
+let g:clang_c_completeopt = 'menuone,preview'
+let g:clang_cpp_completeopt = 'menuone,preview'
+
+if !exists('g:neocomplete#foce_omni_input_patterns')
+    let g:neocomplete#force_omni_input_patterns = {}
+endif
+
+let g:neocomplete#force_omni_input_patterns.c =
+    \ '[^.[:digit:] *\t]\%(\.\|->\)\w*'
+let g:neocomplete#force_omni_input_patterns.cpp =
+    \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+
+let g:neocomplete#enable_at_startup = 1
 let g:clang_cpp_options = '-std=c++11'
+
