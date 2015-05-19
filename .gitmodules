@@ -7,3 +7,6 @@
 [submodule "bundle/rust.vim"]
 	path = bundle/rust.vim
 	url = git://github.com/rust-lang/rust.vim
+[submodule "bundle/neocomplete"]
+	path = bundle/neocomplete
+	url = git://github.com/Shougo/neocomplete.vim
