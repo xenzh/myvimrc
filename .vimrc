@@ -60,7 +60,7 @@ filetype plugin indent on
 
 
 "
-" vim-clang and neocomplete
+" vim-clang, neocomplete and vim-cpp-enhanced-highlight
 "
 
 let g:clang_auto = 0
@@ -77,5 +77,7 @@ let g:neocomplete#force_omni_input_patterns.cpp =
     \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
 
 let g:neocomplete#enable_at_startup = 1
+let g:cpp_class_scope_highlight = 1
+let g:cpp_experimental_template_highlight = 1
 let g:clang_cpp_options = '-std=c++11'
 
