@@ -4,3 +4,6 @@
 [submodule "bundle/vim-cpp-enhanced-highlight"]
 	path = bundle/vim-cpp-enhanced-highlight
 	url = git://github.com/octol/vim-cpp-enhanced-highlight.git
+[submodule "bundle/rust.vim"]
+	path = bundle/rust.vim
+	url = git://github.com/rust-lang/rust.vim
