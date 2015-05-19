@@ -5,15 +5,14 @@ For managing plugins git submodules + pathgen is used, ore info here: http://use
 Installation instructions
 -------------------------
 
-1. Get and update .vim folder
-```bash
+Get and update .vim folder
+```sh
 git clone git://github.com/xenzh/myvimrc.git ~/.vim
 cd ~/.vim
 git submodule init
 git submodule update
 ```
-
-2. Copy .vimrc to your home folder
-```bash
+Copy .vimrc to your home folder
+```sh
 cp ~/.vim/.vimrc ~
 ```
