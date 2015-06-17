@@ -79,5 +79,5 @@ let g:neocomplete#force_omni_input_patterns.cpp =
 let g:neocomplete#enable_at_startup = 1
 let g:cpp_class_scope_highlight = 1
 let g:cpp_experimental_template_highlight = 1
-let g:clang_cpp_options = '-std=c++11'
+let g:clang_cpp_options = '-std=c++14'
 
