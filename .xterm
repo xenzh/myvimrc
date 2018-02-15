@@ -1,0 +1,45 @@
+! Material Theme color schema
+xterm*foreground:      #dadada
+xterm*background:      #292929
+
+xterm*color0:          #000000
+xterm*color1:          #dd191d
+xterm*color2:          #0a8f08
+xterm*color3:          #afb42b
+xterm*color4:          #4e6cef
+xterm*color5:          #d81b60
+xterm*color6:          #00acc1
+xterm*color7:          #868686
+xterm*color8:          #121212
+xterm*color9:          #e84e40
+xterm*color10:         #2baf2b
+xterm*color11:         #d4e157
+xterm*color12:         #738ffe
+xterm*color13:         #ec407a
+xterm*color14:         #26c6da
+xterm*color15:         #dadada
+
+xterm*highlightColor:  #303f9f
+xterm*cursorColor:     #ffc400
+
+xterm*colorBDMode: true
+xterm*colorBD: #e5e5e5
+
+
+xterm*termName: xterm-256color
+xterm*locale: true
+xterm*utf8: 1
+
+
+xterm*renderFont: true
+xterm*faceName: DejaVu Sans Mono:style=Regular
+xterm*faceSize: 10
+xterm*boldFont: *-mono-*-*-*-12-*
+xterm*boldMode: false
+
+
+XTerm.vt100.saveLines: 4096
+XTerm.vt100.scrollBar: true
+XTerm.vt100.scrollbar.width: 10
+XTerm.vt100.geometry: 120x40
+XTerm.vt100.metaSendsEscape: true
