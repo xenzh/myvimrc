@@ -27,7 +27,7 @@ xrdb -load ./.Xresources
 5. Restart xterm session and have fun!
 
 ## Troubleshooting
-I had an issue with tmux breaking vim xterm color scheme inside vim.
+I had an issue with tmux breaking xterm color scheme for vim.
 Fixed it by forcing 256 colors in `.tmux.conf`:
 ```
 set -g default-terminal "screen-256color"
