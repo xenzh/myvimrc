@@ -1,6 +1,7 @@
 "
 " MY Vimrc, one and only
 "
+"
 " Plugins and binaries used:
 " * pathogen (plugin manager)
 "   https://github.com/tpope/vim-pathogen
@@ -75,7 +76,8 @@ set secure
 
 
 " color scheme
-set t_Co=256 " don't let xterm override color settings
+set term=xterm-256color
+set background=dark
 hi SpecialKey ctermfg=darkgray
 
 
