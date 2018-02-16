@@ -4,19 +4,19 @@ Configuration that makes C++ development a little bit easier for brave people us
 Features:
 * Basic development settings: tabs, spaces, etc
 * Plugin settings and mappings
-* Pathogen and a bunch of plugins set up as a git submodules
-* xterm settings (to be included into `~/.Xresources`), look, feel and most importantly colors
+* Pathogen and a bunch of plugins set up as git submodules
+* xterm settings (to be included into `~/.Xresources`): look, feel and, most importantly, colors
 
 ## Installation
 1. Clone this repo to your `~/.vim` folder
 ```
 git clone https://github.com/xenzh/myvimrc.git ~/.vim
 ```
-2. Make a `.vimrc` symlink
+2. Make `.vimrc` symlink
 ```
 ln -s ~/.vim/.vimrc ~/.vimrc
 ```
-3. Include `.xterm` to your `.Xresources` or `.Xdefaults`. At the end of the file add:
+3. Include `.xterm` to your `.Xresources` or `.Xdefaults` (just add following line at the end of the file)
 ```
 #include ".vim/.xterm"
 ```
