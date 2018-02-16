@@ -216,7 +216,14 @@ let g:clang_include_sysheaders = 1
 let g:clang_cpp_options = '-std=c++14'
 let g:clang_syntax_check_auto = 0
 
-nmap <F5> :ClangSyntaxCheck<CR>
+function! DoClangCheckSyntax()
+  set cmdheight=2
+  echo "Clang syntax check running..."
+  ClangSyntaxCheck
+  echo "done!"
+  set cmdheight=1
+endfunction
+nmap <F5> :call DoClangCheckSyntax()<CR>
 
 
 

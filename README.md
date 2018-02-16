@@ -63,5 +63,13 @@ git add .
 git commit -m "removed X plugin"
 ```
 
+## Also
+Little magic to `~/.bashrc`:
+```
+alias l="ls -la"
+alias c=clear
+alias x="xterm -fullscreen -uc"
+```
+
 ## Details
 Too lazy, please check .vimrc comments.
