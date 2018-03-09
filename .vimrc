@@ -1,38 +1,20 @@
 "
 " MY Vimrc, one and only
 "
-"
 " Plugins and binaries used:
 " * pathogen (plugin manager)
-"   https://github.com/tpope/vim-pathogen
-"
 " * a.vim (:A to switch between h/cpp)
-"   https://github.com/vim-scripts/a.vim
-"
 " * clang.vim [+ clang binary] (per-file C++ error check on save, autocompletion)
-"   https://github.com/justmao945/vim-clang
-"
 " * cscope.vim [+ cscope binary] (C code navigation: caller/callee, etc. Has issues with C++)
-"   [test it, should work w/o the plugin!]
-"
+" * csv.vim (CSV pretty print)
 " * nerdcommenter (block comment/uncomment)
-"   https://github.com/scrooloose/nerdcommenter
-"
 " * nerdtree (side pane, fs navigation)
-"   https://github.com/Xuyuanp/nerdtree-git-plugin
-"
 " * tagbar [+ctags binary] (side pane, code outline)
-"   https://github.com/majutsushi/tagbar
-"
 " * vim-airline (status bar and buffers bar)
-"   https://github.com/vim-airline/vim-airline
-"
+" * vim-autocomplpop [+ dependency, vim L9 plugin] (automatic completion popup on type)
 " * vim-cpp-enhanced-highlight
-"   https://github.com/octol/vim-cpp-enhanced-highlight
-"
 " * fugitive [+ git binary] (git integration)
-"   https://github.com/tpope/vim-fugitive
-"
+" * vim-json (better json syntax highlight and validity check)
 "
 " Third-party tools:
 " * ctags
@@ -76,7 +58,7 @@ set secure
 
 
 " color scheme
-set term=xterm-256color
+set term=xterm-256color " don't let vim override xterm color settings
 set background=dark
 hi SpecialKey ctermfg=darkgray
 
@@ -92,6 +74,15 @@ set hlsearch
 set incsearch
 set ignorecase
 
+" autocompletion
+set completeopt=longest,menuone
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
+inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
+  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 " syntax
 syntax on
@@ -116,6 +107,13 @@ set list
 set listchars=tab:→→,trail:·,space:·
 
 
+
+
+"
+" Shortcuts and commands
+"
+
+
 " split resize remappings
 nmap <F9>  :resize -3<CR>
 nmap <F10> :resize +3<CR>
@@ -123,6 +121,23 @@ nmap <F11> :vertical resize -3<CR>
 nmap <F12> :vertical resize +3<CR>
 
 
+" formatting
+function! DoFmt()
+  if &ft == 'json'
+    %!python -m json.tool
+    %s/\s\s/ /g " replace indent, 4 spaces -> 2 spaces
+  endif
+endfunction
+
+command Fmt :call DoFmt()
+
+" toggle space chars visibility
+function! DoToggleSpaceChars()
+  set list!
+endfunction
+
+command ToggleSpaceChars :call DoToggleSpaceChars()
+nmap <F6> :ToggleSpaceChars<CR>
 
 
 "
@@ -214,17 +229,17 @@ let g:clang_c_completeopt = 'menuone,preview'
 let g:clang_cpp_completeopt = 'menuone,preview'
 let g:clang_include_sysheaders = 1
 let g:clang_cpp_options = '-std=c++14'
-let g:clang_syntax_check_auto = 0
+let g:clang_check_syntax_auto = 0
 
-function! DoClangCheckSyntax()
+function! DoClangSyntaxCheck()
   set cmdheight=2
-  echo "Clang syntax check running..."
+  echom "Clang syntax check running..."
   ClangSyntaxCheck
-  echo "done!"
+  echom "done!"
   set cmdheight=1
 endfunction
-nmap <F5> :call DoClangCheckSyntax()<CR>
 
+nmap <F5> :call DoClangSyntaxCheck()<CR>
 
 
 " neocomplete
@@ -241,7 +256,3 @@ let g:neocomplete#enable_at_startup = 1
 
 
 " vim-cpp-enhanced-highlight
-let g:cpp_class_scope_highlight = 1
-let g:cpp_experimental_template_highlight = 1
-
-
