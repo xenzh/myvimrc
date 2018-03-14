@@ -15,6 +15,9 @@
 " * cscope.vim [+ cscope binary] (C code navigation: caller/callee, etc. Has issues with C++)
 "   [test it, should work w/o the plugin!]
 "
+" * csv.vim (CSV pretty print)
+"   https://github.com/chrisbra/csv.vim
+"
 " * nerdcommenter (block comment/uncomment)
 "   https://github.com/scrooloose/nerdcommenter
 "
@@ -26,6 +29,10 @@
 "
 " * vim-airline (status bar and buffers bar)
 "   https://github.com/vim-airline/vim-airline
+"
+" * vim-autocomplpop [+ dependency, vim L9 plugin] (automatic completion popup on type)
+"   https://github.com/vim-scripts/L9
+"   https://github.com/vim-scripts/AutoComplPop
 "
 " * vim-cpp-enhanced-highlight
 "   https://github.com/octol/vim-cpp-enhanced-highlight
@@ -76,7 +83,7 @@ set secure
 
 
 " color scheme
-set term=xterm-256color
+set term=xterm-256color " don't let vim override xterm color settings
 set background=dark
 hi SpecialKey ctermfg=darkgray
 
@@ -91,6 +98,17 @@ set showmatch
 set hlsearch
 set incsearch
 set ignorecase
+
+
+" autocompletion
+set completeopt=longest,menuone
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
+inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
+  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 
 " syntax
@@ -111,6 +129,13 @@ set visualbell
 set vb t_vb="" " Disable screen flashing on error
 
 
+
+
+"
+" Shortcuts and commands
+"
+
+
 " special chars
 set list
 set listchars=tab:→→,trail:·,space:·
@@ -121,6 +146,26 @@ nmap <F9>  :resize -3<CR>
 nmap <F10> :resize +3<CR>
 nmap <F11> :vertical resize -3<CR>
 nmap <F12> :vertical resize +3<CR>
+
+
+" formatting
+function! DoFmt()
+  if &ft == 'json'
+    %!python -m json.tool
+    %s/\s\s/ /g " replace indent, 4 spaces -> 2 spaces
+  endif
+endfunction
+
+command Fmt :call DoFmt()
+
+
+" toggle space chars visibility
+function! DoToggleSpaceChars()
+  set list!
+endfunction
+
+command ToggleSpaceChars :call DoToggleSpaceChars()
+nmap <F6> :ToggleSpaceChars<CR>
 
 
 
@@ -203,6 +248,7 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 
 
 
+
 "
 " C++ plugins config
 "
@@ -214,13 +260,13 @@ let g:clang_c_completeopt = 'menuone,preview'
 let g:clang_cpp_completeopt = 'menuone,preview'
 let g:clang_include_sysheaders = 1
 let g:clang_cpp_options = '-std=c++14'
-let g:clang_syntax_check_auto = 0
+let g:clang_check_syntax_auto = 0
 
 function! DoClangCheckSyntax()
   set cmdheight=2
-  echo "Clang syntax check running..."
+  echom "Clang syntax check running..."
   ClangSyntaxCheck
-  echo "done!"
+  echom "done!"
   set cmdheight=1
 endfunction
 nmap <F5> :call DoClangCheckSyntax()<CR>
