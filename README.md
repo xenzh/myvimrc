@@ -66,8 +66,13 @@ git commit -m "removed X plugin"
 ## Also
 Little magic to `~/.bashrc`:
 ```
-alias l="ls -la"
+PS1='\[\e]0;\u@\h:\w\a\][\u@\h \W$(__git_ps1 " (%s)")]\$ '
+
+alias ls='ls --color=auto'
+alias l="ls -la --color=auto"
 alias c=clear
+alias cl="clear && ls -la --color=auto"
+alias grep="grep --color=always"
 alias x="xterm -fullscreen -uc"
 ```
 
