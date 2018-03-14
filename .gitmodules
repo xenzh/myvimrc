@@ -25,3 +25,12 @@
 [submodule "bundle/vim-json"]
 	path = bundle/vim-json
 	url = https://github.com/elzr/vim-json
+[submodule "bundle/AutoComplPop"]
+	path = bundle/AutoComplPop
+	url = https://github.com/vim-scripts/AutoComplPop
+[submodule "bundle/L9"]
+	path = bundle/L9
+	url = https://github.com/vim-scripts/L9
+[submodule "bundle/csv.vim"]
+	path = bundle/csv.vim
+	url = https://github.com/chrisbra/csv.vim
