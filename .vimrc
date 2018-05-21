@@ -2,74 +2,102 @@
 " MY Vimrc, one and only
 "
 "
-" Plugins and binaries used:
-" * pathogen (plugin manager)
+" Plugins:
+" * pathogen
+"   Runtime path manager (.vim/bundle plugin autoload)
 "   https://github.com/tpope/vim-pathogen
 "
-" * a.vim (:A to switch between h/cpp)
+" * a.vim
+"   :A switch between associated files (h/cpp)
 "   https://github.com/vim-scripts/a.vim
 "
-" * clang.vim [+ clang binary] (per-file C++ error check on save, autocompletion)
+" * async.vim, asyncomplete.vim
+"   Asynchronous code completion engine
+"   https://github.com/prabirshrestha/async.vim
+"   https://github.com/prabirshrestha/asyncomplete.vim
+"
+" * vim-lsp, asyncomplete-lsp
+"   Language Server Protocol support and async completion engine bindings
+"   https://github.com/prabirshrestha/vim-lsp
+"   https://github.com/prabirshrestha/asyncomplete-lsp.vim
+"
+" * clang.vim
+"   C++ syntax checker (per-file) and autocompleter
 "   https://github.com/justmao945/vim-clang
 "
-" * cscope.vim [+ cscope binary] (C code navigation: caller/callee, etc. Has issues with C++)
-"   [test it, should work w/o the plugin!]
+" * vim-cpp-enhanced-highlight
+"   Better C++ code highlighting
+"   https://github.com/octol/vim-cpp-enhanced-highlight
 "
-" * csv.vim (CSV pretty print)
+" * syntastic
+"   Syntax checkers
+"   https://github.com/vim-syntastic/syntastic
+"
+" * rust.vim
+"   Better syntax highlighting, syntastic checkers and formatter for Rust
+"   https://github.com/rust-lang/rust.vim
+"
+" * csv.vim, vim-json, vim-toml
+"   Pretty printers and syntax highlighters for csv, json and toml
 "   https://github.com/chrisbra/csv.vim
+"   https://github.com/elzr/vim-json
+"   https://github.com/cespare/vim-toml
 "
-" * nerdcommenter (block comment/uncomment)
+" * nerdcommenter
+"   block comment/uncomment
 "   https://github.com/scrooloose/nerdcommenter
 "
-" * nerdtree (side pane, fs navigation)
+" * nerdtree
+"   Side pane for filesystem navigation
 "   https://github.com/Xuyuanp/nerdtree-git-plugin
 "
-" * tagbar [+ctags binary] (side pane, code outline)
+" * tagbar
+"   Side pane, code outline
 "   https://github.com/majutsushi/tagbar
 "
-" * vim-airline (status bar and buffers bar)
+" * vim-airline
+"   Configurable status bar and buffer tabs
 "   https://github.com/vim-airline/vim-airline
 "
-" * vim-autocomplpop [+ dependency, vim L9 plugin] (automatic completion popup on type)
+" * l9, vim-AutoComplPop
+"   Automatic simple text completion
 "   https://github.com/vim-scripts/L9
 "   https://github.com/vim-scripts/AutoComplPop
 "
-" * vim-cpp-enhanced-highlight
-"   https://github.com/octol/vim-cpp-enhanced-highlight
-"
-" * fugitive [+ git binary] (git integration)
+" * fugitive
+"   Git integration (integrated with vim-airline)
 "   https://github.com/tpope/vim-fugitive
 "
 "
-" Third-party tools:
-" * ctags
-" * cscope
-" * clang
+" Third-party tools and binaries:
+" * ctags (code navigation. exuberant-ctags recommended)
+" * git (vim-airline, branch and status)
+" * clang (C++ syntax check)
+" * cargo, rustc (Rust syntax check)
+" * rustfmt, rls, racer (via rustup; Rust formatting and code completion)
+" * xmllint (XML formatting)
+" * jq (Json formatting; alternatively there's a python-based formatting)
 "
 " Generated files:
 " * .clang - simple file with -I compiler flags, clang.vim uses it to locate headers
 " * tags - ctags output file, used for code navigation
-" * cscope.out - cscope output, used for code navigation
 "
-" codenav.sh (generates ctags and cscope output):
-" #!/bin/ksh
-" codeDir=${1:-$PWD}
-" cd /
-" find $codeDir -name '*.cc' \
-"     -o -name '*.h' \
-"     -o -name '*.cpp' \
-"     -o -name '*.c' > $codeDir/cscope.files
-" cd $codeDir && cscope -b -q
-" export CSCOPE_DB=$codeDir/cscope.out
+" codenav.sh (generates ctags):
+" #!/bin/sh
 " ctags -R .
 "
-" You might want to update .Xdefaults/.Xresources for better experience of
-" using vim in xterm
+" You might want to update .Xdefaults/.Xresources for better experience of using vim in xterm
+
+
 
 
 "
 " Basic config
 "
+
+" enable mouse
+" Shift+Wheel to X-paste!
+set mouse=a
 
 
 " use utf-8 everywhere
@@ -100,7 +128,7 @@ set incsearch
 set ignorecase
 
 
-" autocompletion
+" simple word autocompletion
 set completeopt=longest,menuone
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
@@ -111,7 +139,7 @@ inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
   \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 
-" syntax
+" syntax highlighting
 syntax on
 filetype plugin indent on
 
@@ -129,16 +157,16 @@ set visualbell
 set vb t_vb="" " Disable screen flashing on error
 
 
+" space chars
+set list
+set listchars=tab:→→,trail:·,space:·
+
+
 
 
 "
 " Shortcuts and commands
 "
-
-
-" special chars
-set list
-set listchars=tab:→→,trail:·,space:·
 
 
 " split resize remappings
@@ -151,21 +179,52 @@ nmap <F12> :vertical resize +3<CR>
 " formatting
 function! DoFmt()
   if &ft == 'json'
-    %!python -m json.tool
-    %s/\s\s/ /g " replace indent, 4 spaces -> 2 spaces
+    "%!python -m json.tool
+    "%s/\s\s/ /g " replace indent, 4 spaces -> 2 spaces
+    %!jq .
+  elseif &ft == 'xml'
+    %!xmllint --format -
+  elseif &ft == 'rust'
+    execute 'RustFmt'
   endif
 endfunction
 
 command Fmt :call DoFmt()
 
 
+" syntax check
+function! DoCheckSyntax()
+  set cmdheight=2
+  echom "Syntax check running..."
+
+  if &ft == 'cpp'
+    " use vim-clang plugin
+    ClangSyntaxCheck
+  elseif &ft == 'rust'
+    " use syntastic checker provided by rust.vim
+    execute 'SyntasticCheck cargo'
+    execute 'Errors'
+  endif
+
+  echom "done!"
+  set cmdheight=1
+endfunction
+
+nmap <F5> :call DoCheckSyntax()<CR>
+
+
 " toggle space chars visibility
 function! DoToggleSpaceChars()
   set list!
+  set number!
 endfunction
 
 command ToggleSpaceChars :call DoToggleSpaceChars()
 nmap <F6> :ToggleSpaceChars<CR>
+
+
+" close all buffers but this
+command O %bd | e#
 
 
 
@@ -182,44 +241,11 @@ call pathogen#helptags()
 filetype plugin indent on
 
 
-" ctags and cscope
+" load ctags (recursive downtop)
 set tags=./tags;/
 
-if has("scope")
 
-  set cscopetag cscopeverbose
-
-  if has('quickfix')
-    set cscopequickfix=s-,c-,d-,i-,t-,e-
-  endif
-
-  cnoreabbrev csa cs add
-  cnoreabbrev csf cs find
-  cnoreabbrev csk cs kill
-  cnoreabbrev csr cs reset
-  cnoreabbrev css cs show
-  cnoreabbrev csh cs help
-
-  command -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/srci
-
-  function! LoadCscope()
-    let db = findfile("cscope.out", ".;")
-    if (!empty(db))
-      let path = strpart(db, 0, match(db, "/cscope.out$"))
-      set nocscopeverbose " suppress 'duplicate connection' error
-      exe "cs add " . db . " " . path
-      set cscopeverbose
-    " else add the database pointed to by environment variable
-    elseif $CSCOPE_DB != ""
-      cs add $CSCOPE_DB
-    endif
-  endfunction
-  au BufEnter /* call LoadCscope()
-
-endif
-
-
-" vim-airline, plus buffer tab select remappins
+" vim-airline, buffer tab selection remappings
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 
@@ -246,6 +272,16 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 
 
+" syntasic
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 2
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_loc_list_height = 6
+
+let g:syntastic_cpp_checkers = []
+let g:syntastic_rust_checkers = ['cargo', 'rustc']
+
 
 
 
@@ -261,16 +297,6 @@ let g:clang_cpp_completeopt = 'menuone,preview'
 let g:clang_include_sysheaders = 1
 let g:clang_cpp_options = '-std=c++14'
 let g:clang_check_syntax_auto = 0
-
-function! DoClangCheckSyntax()
-  set cmdheight=2
-  echom "Clang syntax check running..."
-  ClangSyntaxCheck
-  echom "done!"
-  set cmdheight=1
-endfunction
-nmap <F5> :call DoClangCheckSyntax()<CR>
-
 
 
 " neocomplete
@@ -290,4 +316,20 @@ let g:neocomplete#enable_at_startup = 1
 let g:cpp_class_scope_highlight = 1
 let g:cpp_experimental_template_highlight = 1
 
+
+
+
+"
+" Rust plugins config
+"
+
+
+" Rust Language Server (via Language Server Protocol completion plugin)
+if executable('rls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'rls',
+        \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
+        \ 'whitelist': ['rust'],
+        \ })
+endif
 

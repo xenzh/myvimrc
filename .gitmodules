@@ -34,3 +34,24 @@
 [submodule "bundle/csv.vim"]
 	path = bundle/csv.vim
 	url = https://github.com/chrisbra/csv.vim
+[submodule "bundle/rls/async.vim"]
+	path = bundle/rls/async.vim
+	url = https://github.com/prabirshrestha/async.vim
+[submodule "bundle/rls/vim-lsp"]
+	path = bundle/rls/vim-lsp
+	url = https://github.com/prabirshrestha/vim-lsp
+[submodule "bundle/rls/asyncomplete.vim"]
+	path = bundle/rls/asyncomplete.vim
+	url = https://github.com/prabirshrestha/asyncomplete.vim
+[submodule "bundle/rls/asyncomplete-lsp.vim"]
+	path = bundle/rls/asyncomplete-lsp.vim
+	url = https://github.com/prabirshrestha/asyncomplete-lsp.vim
+[submodule "bundle/rls/rust.vim"]
+	path = bundle/rls/rust.vim
+	url = https://github.com/rust-lang/rust.vim
+[submodule "bundle/syntastic"]
+	path = bundle/syntastic
+	url = https://github.com/vim-syntastic/syntastic.git
+[submodule "bundle/vim-toml"]
+	path = bundle/vim-toml
+	url = https://github.com/cespare/vim-toml
