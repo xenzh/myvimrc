@@ -1,10 +1,5 @@
 #!/bin/sh
 
-alias ddd=dpkg-distro-dev
-alias ddc=dpkg-debchange
-alias ddl=dpkg-distro-list
-alias diy="dpkg-distro-dev install -y"
-
 alias c=clear
 alias l="ls -laH --block-size=human-readable"
 alias cl="c && l"
