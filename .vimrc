@@ -273,11 +273,17 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 
 
 " syntasic
-let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 2
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height = 6
+
+let g:syntasic_mode_map = {
+    \ "mode": "passive",
+    \ "active_filetypes": []}
+
+let g:syntastic_clang_check_config_file = ".clang"
 
 let g:syntastic_cpp_checkers = []
 let g:syntastic_rust_checkers = ['cargo', 'rustc']
