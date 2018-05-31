@@ -111,12 +111,6 @@ set exrc
 set secure
 
 
-" color scheme
-set term=xterm-256color " don't let vim override xterm color settings
-set background=dark
-hi SpecialKey ctermfg=darkgray
-
-
 " newline
 set wrap
 set ai
@@ -155,15 +149,19 @@ set ruler
 set number
 set backspace=indent,eol,start
 set visualbell
-set vb t_vb="" " Disable screen flashing on error
 
 
-" space chars
+" show special chars
 set list
 set listchars=tab:→→,trail:·,space:·
 
 
-
+" color scheme
+set term=xterm-256color " don't let vim override xterm color settings
+set background=dark
+colorscheme bubblegum-256-dark
+hi SpecialKey ctermfg=darkgray " should be set after set listchars and colorscheme
+set vb t_vb="" " Disable screen flashing on error
 
 "
 " Shortcuts and commands
