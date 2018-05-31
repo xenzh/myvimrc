@@ -47,6 +47,10 @@
 "   block comment/uncomment
 "   https://github.com/scrooloose/nerdcommenter
 "
+" * ctrlp
+"   fuzzy search palette for files, recently opened files and buffers
+"   https://github.com/ctrlpvim/ctrlp.vim
+"
 " * nerdtree
 "   Side pane for filesystem navigation
 "   https://github.com/Xuyuanp/nerdtree-git-plugin
@@ -273,6 +277,11 @@ nmap <F8> :TagbarToggle<CR>
 nmap <F7> :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+
+
+" ctrlp
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
 
 
 " syntasic
