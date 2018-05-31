@@ -55,9 +55,10 @@
 "   Side pane, code outline
 "   https://github.com/majutsushi/tagbar
 "
-" * vim-airline
+" * vim-airline, vim-airline-themes
 "   Configurable status bar and buffer tabs
 "   https://github.com/vim-airline/vim-airline
+"   https://github.com/vim-airline/vim-airline-themes
 "
 " * l9, vim-AutoComplPop
 "   Automatic simple text completion
@@ -204,12 +205,14 @@ function! DoCheckSyntax()
     " use syntastic checker provided by rust.vim
     execute 'SyntasticCheck cargo'
     execute 'Errors'
+  elseif &ft == 'python'
+    execute 'SyntasticCheck'
+    execute 'Errors'
   endif
 
   echom "done!"
   set cmdheight=1
 endfunction
-
 nmap <F5> :call DoCheckSyntax()<CR>
 
 
@@ -249,6 +252,8 @@ set tags=./tags;/
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 
+let g:airline_theme='bubblegum'
+
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
 nmap <leader>3 <Plug>AirlineSelectTab3
@@ -279,7 +284,7 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height = 6
 
-let g:syntasic_mode_map = {
+let g:syntastic_mode_map = {
     \ "mode": "passive",
     \ "active_filetypes": []}
 

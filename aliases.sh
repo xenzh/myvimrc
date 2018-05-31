@@ -22,3 +22,4 @@ alias gb="git branch"
 alias gd="git diff"
 alias gp="git remote prune origin"
 
+__git_complete gc _git_checkout
