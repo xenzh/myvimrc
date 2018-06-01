@@ -101,7 +101,7 @@
 "
 
 " enable mouse
-" Shift+Wheel to X-paste!
+" Shift+Wheel to X-paste from x clipboard!
 set mouse=a
 
 
@@ -113,6 +113,12 @@ set encoding=utf-8
 " use per-directory .vimrc-s
 set exrc
 set secure
+
+
+" backups and swap files
+set nobackup
+set nowb
+set noswapfile
 
 
 " newline
@@ -127,7 +133,10 @@ set incsearch
 set ignorecase
 
 
-" simple word autocompletion
+" simple menu and word autocompletion
+set wildmenu
+set wildignore="*.o"
+
 set completeopt=longest,menuone
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
@@ -141,6 +150,7 @@ inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
 " syntax highlighting
 syntax on
 filetype plugin indent on
+set cursorline
 
 
 " tabs, indents, line numbers, backspace and bell
@@ -151,6 +161,7 @@ set autoindent
 set shiftwidth=4
 set ruler
 set number
+set showmatch
 set backspace=indent,eol,start
 set visualbell
 
@@ -160,12 +171,15 @@ set list
 set listchars=tab:→→,trail:·,space:·
 
 
-" color scheme
-set term=xterm-256color " don't let vim override xterm color settings
+" color scheme and tweaks
+set term=xterm-256color
 set background=dark
 colorscheme bubblegum-256-dark
 hi SpecialKey ctermfg=darkgray " should be set after set listchars and colorscheme
 set vb t_vb="" " Disable screen flashing on error
+
+
+
 
 "
 " Shortcuts and commands
@@ -217,6 +231,10 @@ function! DoCheckSyntax()
 endfunction
 nmap <F5> :call DoCheckSyntax()<CR>
 
+function ClearCheckSyntaxResults()
+  execute 'SyntasticReset'
+endfunction
+command C call ClearCheckSyntaxResults()
 
 " toggle space chars visibility
 function! DoToggleSpaceChars()
