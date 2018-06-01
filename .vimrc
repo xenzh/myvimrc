@@ -135,7 +135,7 @@ set ignorecase
 
 " simple menu and word autocompletion
 set wildmenu
-set wildignore="*.o"
+set wildignore+=*.o
 
 set completeopt=longest,menuone
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
@@ -176,6 +176,7 @@ set term=xterm-256color
 set background=dark
 colorscheme bubblegum-256-dark
 hi SpecialKey ctermfg=darkgray " should be set after set listchars and colorscheme
+hi TabLineSel ctermfg=darkgray
 set vb t_vb="" " Disable screen flashing on error
 
 
@@ -248,6 +249,10 @@ nmap <F6> :ToggleSpaceChars<CR>
 
 " close all buffers but this
 command O %bd | e#
+
+
+" list all highlight groups
+command Hi :so $VIMRUNTIME/syntax/hitest.vim
 
 
 
