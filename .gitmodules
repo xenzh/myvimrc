@@ -27,10 +27,12 @@
 	url = http://github.com/elzr/vim-json
 [submodule "bundle/AutoComplPop"]
 	path = bundle/AutoComplPop
-	url = http://github.com/vim-scripts/AutoComplPop
+    url = http://github.com/vim-scripts/AutoComplPop
+    ignore = dirty
 [submodule "bundle/L9"]
 	path = bundle/L9
-	url = http://github.com/vim-scripts/L9
+    url = http://github.com/vim-scripts/L9
+    ignore = dirty
 [submodule "bundle/csv.vim"]
 	path = bundle/csv.vim
 	url = http://github.com/chrisbra/csv.vim
