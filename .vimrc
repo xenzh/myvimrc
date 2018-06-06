@@ -51,6 +51,10 @@
 "   fuzzy search palette for files, recently opened files and buffers
 "   https://github.com/ctrlpvim/ctrlp.vim
 "
+" * vim-bookmarks
+"   visual bookmarks and annotations
+"   https://github.com/MattesGroeger/vim-bookmarks
+"
 " * nerdtree
 "   Side pane for filesystem navigation
 "   https://github.com/Xuyuanp/nerdtree-git-plugin
@@ -177,6 +181,14 @@ set background=dark
 colorscheme bubblegum-256-dark
 hi SpecialKey ctermfg=darkgray " should be set after set listchars and colorscheme
 hi TabLineSel ctermfg=darkgray
+
+" vim-bookmarks
+highlight BookmarkSign ctermbg=237 ctermfg=79
+highlight BookmarkLine ctermbg=237 ctermfg=79
+
+highlight BookmarkAnnotationSign ctermbg=237 ctermfg=79
+highlight BookmarkAnnotationLine ctermbg=237 ctermfg=79
+
 set vb t_vb="" " Disable screen flashing on error
 
 
@@ -251,6 +263,11 @@ nmap <F6> :ToggleSpaceChars<CR>
 command O %bd | e#
 
 
+" open this buffer in vertical split and switch left side to prev buffer
+command Vs :vs | bd
+command Js :% | y | vn | setf json | Fmt
+
+
 " list all highlight groups
 command Hi :so $VIMRUNTIME/syntax/hitest.vim
 
@@ -305,6 +322,16 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 " ctrlp
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
+
+
+" vim-bookmarks
+let g:bookmark_sign = '>>'
+let g:bookmark_annotation_sign = '##'
+let g:bookmark_auto_close = 1
+let g:bookmark_highlight_lines = 1
+let g:bookmark_show_toggle_warning = 0
+let g:bookmark_center = 1
+" let g:bookmark_location_list = 1
 
 
 " syntasic

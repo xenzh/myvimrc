@@ -58,3 +58,6 @@
 [submodule "bundle/ctrlp.vim"]
 	path = bundle/ctrlp.vim
 	url = http://github.com/ctrlpvim/ctrlp.vim
+[submodule "bundle/vim-bookmarks"]
+	path = bundle/vim-bookmarks
+	url = http://github.com/MattesGroeger/vim-bookmarks.git
