@@ -7,6 +7,10 @@
 "   Runtime path manager (.vim/bundle plugin autoload)
 "   https://github.com/tpope/vim-pathogen
 "
+" * vim-localvimrc
+"   Search .lvimrc files from pwd up to root and source them in
+"   https://github.com/embear/vim-localvimrc
+"
 " * a.vim
 "   :A switch between associated files (h/cpp)
 "   https://github.com/vim-scripts/a.vim
@@ -139,7 +143,7 @@ set ignorecase
 
 " simple menu and word autocompletion
 set wildmenu
-set wildignore+=*.o
+set wildignore+=*.o,*.pyc
 
 set completeopt=longest,menuone
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
@@ -197,6 +201,13 @@ set vb t_vb="" " Disable screen flashing on error
 "
 " Shortcuts and commands
 "
+
+
+" I like to hold Shift for a bit longer than necessary
+command W :w
+command Q :q
+command Wq :wq
+command WQ :wq
 
 
 " split resize remappings
@@ -286,6 +297,13 @@ call pathogen#helptags()
 filetype plugin indent on
 
 
+" localvimrc
+let g:localvimrc_name = [".vimrc", "~/.lvimrc"]
+let g:localvimrc_event = ["VimEnter"]
+let g:localvimrc_sandbox = 0
+let g:localvimrc_ask = 0
+
+
 " load ctags (recursive downtop)
 set tags=./tags;/
 
@@ -321,16 +339,18 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 
 " ctrlp
 let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlPMixed'
+let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_extensions = ['tag', 'dir']
 
-nmap [p :CtrlPDir ~/rr/include<CR>
+nmap [p :CtrlP<CR>
+nmap ]p :CtrlPMixed<CR>
 
 
 " vim-bookmarks
 let g:bookmark_sign = '>>'
 let g:bookmark_annotation_sign = '##'
-let g:bookmark_manage_per_buffer = 1
+let g:bookmark_save_per_working_dir = 0
+let g:bookmark_manage_per_buffer = 0
 let g:bookmark_auto_close = 1
 let g:bookmark_highlight_lines = 1
 let g:bookmark_show_toggle_warning = 0

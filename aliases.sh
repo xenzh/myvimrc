@@ -1,7 +1,7 @@
 #!/bin/sh
 
 alias c=clear
-alias l="ls -laH --block-size=human-readable"
+alias l="ls -lahH --group-directories-first"
 alias cl="c && l"
 alias x="xterm -uc -en en_US.UTF8"
 alias :e="vim"

@@ -63,3 +63,6 @@
 [submodule "bundle/vim-bookmarks"]
 	path = bundle/vim-bookmarks
 	url = http://github.com/MattesGroeger/vim-bookmarks.git
+[submodule "bundle/vim-localvimrc"]
+	path = bundle/vim-localvimrc
+	url = http://github.com/embear/vim-localvimrc.git
