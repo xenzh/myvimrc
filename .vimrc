@@ -270,6 +270,10 @@ command ToggleSpaceChars :call DoToggleSpaceChars()
 nmap <F6> :ToggleSpaceChars<CR>
 
 
+" Change working dir to current file
+command Cd cd %:p:h
+
+
 " close all buffers but this
 command O %bd | e#
 
@@ -298,7 +302,7 @@ filetype plugin indent on
 
 
 " localvimrc
-let g:localvimrc_name = [".vimrc", "~/.lvimrc"]
+let g:localvimrc_name = ["~/.lvimrc"]
 let g:localvimrc_event = ["VimEnter"]
 let g:localvimrc_sandbox = 0
 let g:localvimrc_ask = 0
@@ -328,6 +332,7 @@ nmap <leader>+ <Plug>AirlineSelectNextTab
 
 
 " tagbar
+let g:tagbar_autofocus = 1
 nmap <F8> :TagbarToggle<CR>
 
 
@@ -342,8 +347,7 @@ let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_extensions = ['tag', 'dir']
 
-nmap [p :CtrlP<CR>
-nmap ]p :CtrlPMixed<CR>
+nmap [p :CtrlPMixed<CR>
 
 
 " vim-bookmarks
