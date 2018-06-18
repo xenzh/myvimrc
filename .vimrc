@@ -89,21 +89,21 @@
 "
 "
 " Third-party tools and binaries:
-" * ctags (code navigation. exuberant-ctags recommended)
-" * git (vim-airline, branch and status)
+" * ctags (code navigation. exuberant-ctags preferred)
+" * fzf (command-line fuzzy finder)
+" * git (vim-airline, branch and status; fugitive integration)
 " * clang (C++ syntax check)
 " * cargo, rustc (Rust syntax check)
 " * rustfmt, rls, racer (via rustup; Rust formatting and code completion)
 " * xmllint (XML formatting)
-" * jq (Json formatting; alternatively there's a python-based formatting)
+" * jq (Json formatting; there's also a python-based solution, see below)
 "
 " Generated files:
 " * .clang - simple file with -I compiler flags, clang.vim uses it to locate headers
 " * tags - ctags output file, used for code navigation
 "
-" codenav.sh (generates ctags):
-" #!/bin/sh
-" ctags -R .
+" How to generate tags:
+" ctags -R <project folder>
 "
 " You might want to update .Xdefaults/.Xresources for better experience of using vim in xterm
 
