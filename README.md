@@ -66,6 +66,7 @@ git commit -m "Updated plugins"
 ```
 
 ### Remove
+See https://gist.github.com/myusuf3/7f645819ded92bda6677. Alternatively:
 ```
 cd ./.vim/bundle
 rm -rf ./plugin
