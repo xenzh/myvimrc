@@ -51,9 +51,15 @@
 "   block comment/uncomment
 "   https://github.com/scrooloose/nerdcommenter
 "
-" * ctrlp
+" * [DISABLED] ctrlp
 "   fuzzy search palette for files, recently opened files and buffers
+"   poor performance, switched default setup to use fzf.vim
 "   https://github.com/ctrlpvim/ctrlp.vim
+"
+" * fzf, fzf.vim
+"   Search for files, tags and more based on fzf command-line tool
+"   https://github.com/junegunn/fzf
+"   https://github.com/junegunn/fzf.vim
 "
 " * vim-bookmarks
 "   visual bookmarks and annotations
@@ -270,10 +276,6 @@ command ToggleSpaceChars :call DoToggleSpaceChars()
 nmap <F6> :ToggleSpaceChars<CR>
 
 
-" Change working dir to current file
-command Cd cd %:p:h
-
-
 " close all buffers but this
 command O %bd | e#
 
@@ -309,7 +311,7 @@ let g:localvimrc_ask = 0
 
 
 " load ctags (recursive downtop)
-set tags=./tags;/
+set tags+=./tags;/
 
 
 " vim-airline, buffer tab selection remappings
@@ -347,7 +349,31 @@ let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_extensions = ['tag', 'dir']
 
-nmap [p :CtrlPMixed<CR>
+let g:ctrlp_lazy_update = 350
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_max_files = 0
+
+if executable("ag")
+    set grepprg=ag\ --nogroup\ --nocolor
+    let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --ignore ''.git'' --hidden -g ""'
+endif
+
+"nmap [p :CtrlPMixed<CR>
+"nmap ]p : CtrlPBufTagAll<CR>
+"nmap ][p :CtrlPTag<CR>
+
+
+" fzf.vim
+function LocalTags()
+    let old_tags=&tags
+    set tags=./tags;/
+    execute ':Tags'
+    let &tags=old_tags
+endfunction
+
+nmap [p :Files<CR> " files in this repo
+nmap ]p :call LocalTags()<CR> " tags in this folder tree
+nmap ][p :Tags<CR> " all tags
 
 
 " vim-bookmarks

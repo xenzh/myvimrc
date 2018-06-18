@@ -20,6 +20,11 @@ alias gr="git rebase -i"
 alias gl="git log"
 alias gb="git branch"
 alias gd="git diff"
-alias gp="git remote prune origin"
+alias gpo="git push origin"
+alias gpom="git push origin master"
+alias grpo="git remote prune origin"
 
 __git_complete gc _git_checkout
+__git_complete gb _git_branch
+__git_complete gd _git_diff
+__git_complete gpo _git_push
