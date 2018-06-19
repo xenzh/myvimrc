@@ -316,6 +316,7 @@ set tags+=./tags;/
 
 " vim-airline, buffer tab selection remappings
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 
 let g:airline_theme='bubblegum'
@@ -390,6 +391,13 @@ let g:bookmark_disable_ctrlp = 1 " or ma in ctrlp list (not sorted!)
 let g:bookmark_location_list = 0 " quickfix or location list
 
 nmap ml <Plug>BookmarkShowAll
+
+
+" ale
+let g:ale_linters = {
+    \ 'cpp': ['clang']
+\ }
+let g:ale_completion_enabled = 1
 
 
 " syntasic
