@@ -11,10 +11,6 @@
 "   Search .lvimrc files from pwd up to root and source them in
 "   https://github.com/embear/vim-localvimrc
 "
-" * a.vim
-"   :A switch between associated files (h/cpp)
-"   https://github.com/vim-scripts/a.vim
-"
 " * async.vim, asyncomplete.vim
 "   Asynchronous code completion engine
 "   https://github.com/prabirshrestha/async.vim
@@ -25,36 +21,13 @@
 "   https://github.com/prabirshrestha/vim-lsp
 "   https://github.com/prabirshrestha/asyncomplete-lsp.vim
 "
-" * clang.vim
-"   C++ syntax checker (per-file) and autocompleter
-"   https://github.com/justmao945/vim-clang
-"
-" * vim-cpp-enhanced-highlight
-"   Better C++ code highlighting
-"   https://github.com/octol/vim-cpp-enhanced-highlight
-"
-" * syntastic
-"   Syntax checkers
-"   https://github.com/vim-syntastic/syntastic
-"
-" * rust.vim
-"   Better syntax highlighting, syntastic checkers and formatter for Rust
-"   https://github.com/rust-lang/rust.vim
-"
-" * csv.vim, vim-json, vim-toml
-"   Pretty printers and syntax highlighters for csv, json and toml
-"   https://github.com/chrisbra/csv.vim
-"   https://github.com/elzr/vim-json
-"   https://github.com/cespare/vim-toml
+" * ale
+"   Asynchronous multi-language linter, formatter and autocompleter
+"   https://github.com/w0rp/ale
 "
 " * nerdcommenter
 "   block comment/uncomment
 "   https://github.com/scrooloose/nerdcommenter
-"
-" * [DISABLED] ctrlp
-"   fuzzy search palette for files, recently opened files and buffers
-"   poor performance, switched default setup to use fzf.vim
-"   https://github.com/ctrlpvim/ctrlp.vim
 "
 " * fzf, fzf.vim
 "   Search for files, tags and more based on fzf command-line tool
@@ -87,25 +60,43 @@
 "   Git integration (integrated with vim-airline)
 "   https://github.com/tpope/vim-fugitive
 "
+" * a.vim
+"   :A switch between associated files (h/cpp)
+"   https://github.com/vim-scripts/a.vim
+"
+" * vim-cpp-enhanced-highlight
+"   Better C++ code highlighting
+"   https://github.com/octol/vim-cpp-enhanced-highlight
+"
+" * rust.vim
+"   Better syntax highlighting, syntastic checkers and formatter for Rust
+"   https://github.com/rust-lang/rust.vim
+"
+" * csv.vim, vim-json, vim-toml
+"   Pretty printers and syntax highlighters for csv, json and toml
+"   https://github.com/chrisbra/csv.vim
+"   https://github.com/elzr/vim-json
+"   https://github.com/cespare/vim-toml
+"
 "
 " Third-party tools and binaries:
 " * ctags (code navigation. exuberant-ctags recommended)
-" * git (vim-airline, branch and status)
-" * clang (C++ syntax check)
-" * cargo, rustc (Rust syntax check)
-" * rustfmt, rls, racer (via rustup; Rust formatting and code completion)
+" * fzf (command-line fuzzy finder tool)
+" * ag (better grep)
+" * git (vim-airline, branch and status; fugitive, git integration)
+" * clang (C++ linting)
+" * cargo, rustc (Rust linting)
+" * rustfmt, rls, racer (Rust formatting and code completion; via rustup)
+" * flake8 (python linting)
 " * xmllint (XML formatting)
-" * jq (Json formatting; alternatively there's a python-based formatting)
+" * jq (Json formatting; see below for python-based option)
 "
-" Generated files:
-" * .clang - simple file with -I compiler flags, clang.vim uses it to locate headers
+"
+" Other files:
+" * .lvimrc - local vim config files
+" * .clang - simple file with C++ compiler flags, linter uses it to locate headers
 " * tags - ctags output file, used for code navigation
 "
-" codenav.sh (generates ctags):
-" #!/bin/sh
-" ctags -R .
-"
-" You might want to update .Xdefaults/.Xresources for better experience of using vim in xterm
 
 
 
@@ -145,6 +136,10 @@ set showmatch
 set hlsearch
 set incsearch
 set ignorecase
+
+
+" load ctags (recursive downtop)
+set tags+=./tags;/
 
 
 " simple menu and word autocompletion
@@ -192,14 +187,17 @@ colorscheme bubblegum-256-dark
 hi SpecialKey ctermfg=darkgray " should be set after set listchars and colorscheme
 hi TabLineSel ctermfg=darkgray
 
-" vim-bookmarks
+
+" vim-bookmarks colors
 highlight BookmarkSign ctermbg=237 ctermfg=79
 highlight BookmarkLine ctermbg=237 ctermfg=79
 
 highlight BookmarkAnnotationSign ctermbg=237 ctermfg=79
 highlight BookmarkAnnotationLine ctermbg=237 ctermfg=79
 
-set vb t_vb="" " Disable screen flashing on error
+
+" Disable screen flashing on error
+set vb t_vb=""
 
 
 
@@ -238,33 +236,6 @@ endfunction
 
 command Fmt :call DoFmt()
 
-
-" syntax check
-function! DoCheckSyntax()
-  set cmdheight=2
-  echom "Syntax check running..."
-
-  if &ft == 'cpp'
-    " use vim-clang plugin
-    ClangSyntaxCheck
-  elseif &ft == 'rust'
-    " use syntastic checker provided by rust.vim
-    execute 'SyntasticCheck cargo'
-    execute 'Errors'
-  elseif &ft == 'python'
-    execute 'SyntasticCheck'
-    execute 'Errors'
-  endif
-
-  echom "done!"
-  set cmdheight=1
-endfunction
-nmap <F5> :call DoCheckSyntax()<CR>
-
-function ClearCheckSyntaxResults()
-  execute 'SyntasticReset'
-endfunction
-command C call ClearCheckSyntaxResults()
 
 " toggle space chars visibility
 function! DoToggleSpaceChars()
@@ -310,8 +281,56 @@ let g:localvimrc_sandbox = 0
 let g:localvimrc_ask = 0
 
 
-" load ctags (recursive downtop)
-set tags+=./tags;/
+" ale
+let g:ale_linters = {
+    \ 'cpp': ['clang'],
+    \ 'python': ['flake8', 'pylint']
+\ }
+let g:ale_completion_enabled = 1
+let g:ale_open_list = 0
+
+let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_filetype_changed = 0
+
+augroup CloseLoclistWindowGroup
+    autocmd!
+    autocmd QuitPre * if empty(&buftype) | lclose | endif
+augroup END
+
+let g:my_linter_running = 0
+function GetLintingMessage()
+    return g:my_linter_running ? "[linting...]" : "[idle]"
+endfunction
+
+augroup ALEProgress
+    autocmd!
+    autocmd User ALELintPre  let g:my_linter_running = 1 | redrawstatus
+    autocmd User ALELintPost let g:my_linter_running = 0 | let g:ale_open_list = 0 | redrawstatus
+augroup end
+
+function LoadClangFlagsToAle()
+    let flags = ['-std=c++14', '-Wall']
+    for clang_file in findfile('.clang', '.;', -1)
+        let flags += readfile(clang_file)
+    endfor
+    let g:ale_cpp_clang_options = join(flags, ' ')
+endfunction
+
+function! DoCheckSyntax()
+    let g:ale_open_list = 1
+    if &ft == 'cpp'
+        call LoadClangFlagsToAle()
+        execute 'ALELint'
+    else
+        execute 'ALELint'
+    endif
+endfunction
+nmap <F5> :call DoCheckSyntax()<CR>
+
+command C execute 'ALEReset'
+command D execute 'ALEDetail'
 
 
 " vim-airline, buffer tab selection remappings
@@ -333,6 +352,12 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 nmap <leader>- <Plug>AirlineSelectPrevTab
 nmap <leader>+ <Plug>AirlineSelectNextTab
 
+function! AirlineInit()
+    call airline#parts#define_function('lint-status', 'GetLintingMessage')
+    let g:airline_section_x = airline#section#create(['filetype', ' ', 'lint-status'])
+  endfunction
+autocmd User AirlineAfterInit call AirlineInit()
+
 
 " tagbar
 let g:tagbar_autofocus = 1
@@ -342,26 +367,7 @@ nmap <F8> :TagbarToggle<CR>
 " nerdtree, start it in case vim opened on a folder
 nmap <F7> :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-
-
-" ctrlp
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_extensions = ['tag', 'dir']
-
-let g:ctrlp_lazy_update = 350
-let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_max_files = 0
-
-if executable("ag")
-    set grepprg=ag\ --nogroup\ --nocolor
-    let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --ignore ''.git'' --hidden -g ""'
-endif
-
-"nmap [p :CtrlPMixed<CR>
-"nmap ]p : CtrlPBufTagAll<CR>
-"nmap ][p :CtrlPTag<CR>
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'FZF' argv()[0] | endif
 
 
 " fzf.vim
@@ -393,45 +399,11 @@ let g:bookmark_location_list = 0 " quickfix or location list
 nmap ml <Plug>BookmarkShowAll
 
 
-" ale
-let g:ale_linters = {
-    \ 'cpp': ['clang']
-\ }
-let g:ale_completion_enabled = 1
-
-
-" syntasic
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 2
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_loc_list_height = 6
-
-let g:syntastic_mode_map = {
-    \ "mode": "passive",
-    \ "active_filetypes": []}
-
-let g:syntastic_clang_check_config_file = ".clang"
-
-let g:syntastic_cpp_checkers = []
-let g:syntastic_rust_checkers = ['cargo', 'rustc']
-
-
 
 
 "
 " C++ plugins config
 "
-
-
-" vim-clang
-let g:clang_auto = 0
-let g:clang_c_completeopt = 'menuone,preview'
-let g:clang_cpp_completeopt = 'menuone,preview'
-let g:clang_include_sysheaders = 1
-let g:clang_cpp_options = '-std=c++14'
-let g:clang_check_syntax_auto = 0
-
 
 " neocomplete
 if !exists('g:neocomplete#foce_omni_input_patterns')
