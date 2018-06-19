@@ -338,7 +338,8 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 
-let g:airline_theme='bubblegum'
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#tagbar#flags = 'f'
 
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
@@ -354,9 +355,11 @@ nmap <leader>+ <Plug>AirlineSelectNextTab
 
 function! AirlineInit()
     call airline#parts#define_function('lint-status', 'GetLintingMessage')
-    let g:airline_section_x = airline#section#create(['filetype', ' ', 'lint-status'])
+    let g:airline_section_x = airline#section#create(['tagbar', ' | ', 'filetype', ' ', 'lint-status'])
   endfunction
 autocmd User AirlineAfterInit call AirlineInit()
+
+let g:airline_theme='bubblegum'
 
 
 " tagbar
@@ -364,10 +367,8 @@ let g:tagbar_autofocus = 1
 nmap <F8> :TagbarToggle<CR>
 
 
-" nerdtree, start it in case vim opened on a folder
+" nerdtree
 nmap <F7> :NERDTreeToggle<CR>
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'FZF' argv()[0] | endif
 
 
 " fzf.vim
@@ -377,6 +378,10 @@ function LocalTags()
     execute ':Tags'
     let &tags=old_tags
 endfunction
+
+" open fzf when vim opened on a folder
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'Files' argv()[0] | endif
 
 nmap [p :Files<CR> " files in this repo
 nmap ]p :call LocalTags()<CR> " tags in this folder tree
@@ -402,35 +407,16 @@ nmap ml <Plug>BookmarkShowAll
 
 
 "
-" C++ plugins config
+" Language-specific plugins and tweaks
 "
 
-" neocomplete
-if !exists('g:neocomplete#foce_omni_input_patterns')
-    let g:neocomplete#force_omni_input_patterns = {}
-endif
 
-let g:neocomplete#force_omni_input_patterns.c =
-    \ '[^.[:digit:] *\t]\%(\.\|->\)\w*'
-let g:neocomplete#force_omni_input_patterns.cpp =
-    \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
-
-let g:neocomplete#enable_at_startup = 1
-
-
-" vim-cpp-enhanced-highlight
+" [C++] vim-cpp-enhanced-highlight
 let g:cpp_class_scope_highlight = 1
 let g:cpp_experimental_template_highlight = 1
 
 
-
-
-"
-" Rust plugins config
-"
-
-
-" Rust Language Server (via Language Server Protocol completion plugin)
+" [Rust] RLS (code completion via asyncomplete-lsp plugin)
 if executable('rls')
     au User lsp_setup call lsp#register_server({
         \ 'name': 'rls',
@@ -438,4 +424,3 @@ if executable('rls')
         \ 'whitelist': ['rust'],
         \ })
 endif
-
