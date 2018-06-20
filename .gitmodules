@@ -66,3 +66,6 @@
 [submodule "bundle/ale"]
 	path = bundle/ale
 	url = http://github.com/w0rp/ale
+[submodule "bundle/vim-lsp"]
+	path = bundle/vim-lsp
+	url = http://github.com/prabirshrestha/vim-lsp
