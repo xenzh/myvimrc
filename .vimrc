@@ -315,26 +315,13 @@ endfunction
 
 augroup ALEProgress
     autocmd!
-    autocmd User ALELintPre  let g:my_linter_running = 1 | redrawstatus
+    autocmd User ALELintPre let g:ale_cpp_clang_options = g:my_cpp_linter_flags | let g:my_linter_running = 1 | redrawstatus
     autocmd User ALELintPost let g:my_linter_running = 0 | let g:ale_open_list = 0 | redrawstatus
 augroup end
 
-function LoadClangFlagsToAle()
-    let flags = ['-std=c++14', '-Wall']
-    for clang_file in findfile('.clang', '.;', -1)
-        let flags += readfile(clang_file)
-    endfor
-    let g:ale_cpp_clang_options = join(flags, ' ')
-endfunction
-
 function! DoCheckSyntax()
     let g:ale_open_list = 1
-    if &ft == 'cpp'
-        call LoadClangFlagsToAle()
-        execute 'ALELint'
-    else
-        execute 'ALELint'
-    endif
+    execute 'ALELint'
 endfunction
 nmap <F5> :call DoCheckSyntax()<CR>
 
@@ -425,7 +412,24 @@ let g:cpp_class_scope_highlight = 1
 let g:cpp_experimental_template_highlight = 1
 
 
-" [C++] cquery (via vim-lsp plugin)
+" [C++] load cpp flags to variable for linting
+let g:my_cpp_linter_flags = '-std=c++14 -Wall '
+function LoadCppLinterFlags()
+    let flags = []
+    for clang_file in findfile('.clang', '.;', -1)
+        if !filereadable(clang_file)
+            continue
+        endif
+        let filtered = readfile(clang_file)
+        call filter(filtered, {idx, val -> val[0] == '-'})
+        let flags += filtered
+    endfor
+    let g:my_cpp_linter_flags .= join(flags, ' ')
+endfunction
+:autocmd FileType cpp call LoadCppLinterFlags()
+
+
+" [C++] start cquery (via vim-lsp plugin)
 if executable('cquery')
     au User lsp_setup call lsp#register_server({
         \ 'name': 'cquery',
@@ -443,7 +447,7 @@ endif
 "let g:lsp_log_file = expand('~/vim-lsp.log')
 "let g:asyncomplete_log_file = expand('~/asyncomplete.log')
 
-" [Rust] RLS (via vim-lsp plugin)
+" [Rust] start RLS (via vim-lsp plugin)
 if executable('rls')
     au User lsp_setup call lsp#register_server({
         \ 'name': 'rls',
