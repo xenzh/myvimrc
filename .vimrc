@@ -430,22 +430,31 @@ endfunction
 
 
 " [C++] start cquery (via vim-lsp plugin)
-if executable('cquery')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'cquery',
-        \ 'cmd': {server_info->['cquery']},
-        \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), '.clang'))},
-        \ 'initialization_options': { 'cacheDirectory': expand('~/tmp/cquery-cache') },
-        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
-        \ })
-endif
+function SetupCquery()
+    if executable('cquery')
+        if !exists("g:my_cpp_cquery_cache_dir")
+            echo "WARN: cpp cquery cache dir is not set, defaulting to profile's tmp"
+            let g:my_cpp_cquery_cache_dir = "~/tmp/cquery-cache"
+        endif
+
+        au User lsp_setup call lsp#register_server({
+            \ 'name': 'cquery',
+            \ 'cmd': {server_info->['cquery']},
+            \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
+            \ 'initialization_options': { 'cacheDirectory': expand(g:my_cpp_cquery_cache_dir) },
+            \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
+            \ })
+    endif
+endfunction
+au User LocalVimRCPost call SetupCquery()
+
 
 " vim-lsp and asyncomplete.vim debugging
 " try autogenerating .clang or compile-commands.json,
 " see https://github.com/cquery-project/cquery/wiki/compile_commands.json
 "let g:lsp_log_verbose = 1
-"let g:lsp_log_file = expand('~/vim-lsp.log')
-"let g:asyncomplete_log_file = expand('~/asyncomplete.log')
+"let g:lsp_log_file = expand('~/lsp-vim.log')
+"let g:asyncomplete_log_file = expand('~/lsp-asyncomplete.log')
 
 " [Rust] start RLS (via vim-lsp plugin)
 if executable('rls')
