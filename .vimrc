@@ -440,7 +440,7 @@ function SetupCquery()
         au User lsp_setup call lsp#register_server({
             \ 'name': 'cquery',
             \ 'cmd': {server_info->['cquery']},
-            \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
+            \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), '.clang'))},
             \ 'initialization_options': { 'cacheDirectory': expand(g:my_cpp_cquery_cache_dir) },
             \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
             \ })

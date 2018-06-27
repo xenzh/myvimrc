@@ -1,0 +1,43 @@
+{
+    "commands": {
+        "jq": {
+            "desc": "jq premade queries",
+            "args": [
+                {
+                    "name": "slurp",
+                    "desc": "get the data into an array",
+                    "shortcut": "s",
+                    "default": false,
+                    "map": "-s"
+                }
+            ]
+        }
+    },
+    "templates": {
+        "jq": {
+            "nodes": {
+                "desc": "template description",
+                "args": [
+                    {
+                        "name": "node",
+                        "desc": "optional description",
+                        "shortcut": "n",
+                        "map": "--mapped-node={} --second-chance={}"
+                    }
+                ]
+            },
+            "choices": {
+                "desc": "template description",
+                "args": [
+                    {
+                        "name": "pomf",
+                        "choices": ["yes", "no", "gtfo"],
+                        "default": "gtfo",
+                        "map": "--mapped-pomf={}"
+                    }
+                ]
+            }
+
+        }
+    }
+}
