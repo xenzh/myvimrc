@@ -54,12 +54,6 @@
                         "desc": "output file",
                         "default": "object.json",
                         "map": "{}"
-                    },
-                    {
-                        "name": "test",
-                        "shortcut": "t",
-                        "desc": "test",
-                        "map": "{} -- {}"
                     }
                 ]
             }

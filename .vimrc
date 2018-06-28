@@ -413,7 +413,7 @@ let g:cpp_experimental_template_highlight = 1
 
 
 " [C++] load cpp flags to variable for linting
-let g:my_cpp_linter_flags = '-std=c++14 -Wall '
+let g:my_cpp_linter_flags = '-std=c++14 -Wall -Wno-unknown-warning-option '
 function LoadCppLinterFlags()
     let flags = []
     for clang_file in findfile('.clang', '.;', -1)

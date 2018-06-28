@@ -3,9 +3,12 @@
 import argparse
 import json
 import re
+
 from os import path
 from subprocess import call
+
 from functools import reduce
+from itertools import chain
 
 
 DEFAULT_FILEPATH = path.join(path.dirname(path.realpath(__file__)), ".call-templates")
@@ -39,7 +42,7 @@ def populate_arg(subparser, arg):
     add_arg_names = []
     if shortcut:
         add_arg_names.append("-{}".format(arg["shortcut"][0]))
-    print(arg["name"], nargs)
+
     if not shortcut and required: # add positional argument
         add_arg_names.append(arg["name"])
         if nargs == 0:
@@ -119,11 +122,9 @@ def process(args, unknown_args, static):
         if farg_count == 0:
             acc.append(mapped)
         else:
-            raw_list = [getattr(args, a["name"])]
-            # flatten the list and unpack it to format args
-            #idef fl(lst):
-            #    return [fl(elem) if isinstance(elem, list) else elem for elem in lst]
-            acc.append(mapped.format(*getattr(args, a["name"])))
+            fl = lambda l: chain.from_iterable([[el] if not isinstance(el, list) else fl(el) for el in l])
+            flattened = list(fl([getattr(args, a["name"])]))
+            acc.append(mapped.format(*flattened))
         return acc
 
     cargs = reduce(formatter, static["commands"][args.cmd]["args"], [])
@@ -153,8 +154,8 @@ def main():
     cmd = process(args[0], args[1], templ)
 
     if own_args.dry_run:
-        print(args)
-        print(cmd)
+        print("Parsed arguments: {}\n".format(args))
+        print("Final command: {}\n".format(cmd))
     else:
         call(cmd, shell=True)
 
