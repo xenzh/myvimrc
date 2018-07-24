@@ -381,6 +381,7 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 
 nmap [p :Files<CR> " files in this repo
 nmap ]p :call LocalTags()<CR> " tags in this folder tree
+nmap [l :BTags<CR> " tags in this buffer
 nmap ][p :Tags<CR> " all tags
 
 
@@ -429,9 +430,19 @@ endfunction
 :autocmd FileType cpp call LoadCppLinterFlags()
 
 
-" [C++] start cquery (via vim-lsp plugin)
+" [C++] start clangd (via vim-lsp plugin)
+if executable('clangd')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'clangd',
+        \ 'cmd': {server_info->['clangd']},
+        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+        \ })
+endif
+
+
+" [C++] start cquery (via vim-lsp, if clangd is unavailble)
 function SetupCquery()
-    if executable('cquery')
+    if !executable('clangd') && executable('cquery')
         if !exists("g:my_cpp_cquery_cache_dir")
             echo "WARN: cpp cquery cache dir is not set, defaulting to profile's tmp"
             let g:my_cpp_cquery_cache_dir = "~/tmp/cquery-cache"
@@ -462,5 +473,14 @@ if executable('rls')
         \ 'name': 'rls',
         \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
         \ 'whitelist': ['rust'],
+        \ })
+endif
+
+" [python] start python language server (via vim-lsp)
+if executable('pyls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'pyls',
+        \ 'cmd': {server_info->['pyls']},
+        \ 'whitelist': ['python'],
         \ })
 endif
