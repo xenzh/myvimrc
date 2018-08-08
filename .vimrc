@@ -85,6 +85,8 @@
 " * ag (better grep)
 " * git (vim-airline, branch and status; fugitive, git integration)
 " * clang (C++ linting)
+" * clangd/cquery (C/C++ code completion and navigation via LSP)
+" * bear (https://github.com/rizsotto/Bear) - generating clang compilation databases for clang tools
 " * cargo, rustc (Rust linting)
 " * rustfmt, rls, racer (Rust formatting and code completion; via rustup)
 " * flake8 (python linting)
@@ -95,6 +97,7 @@
 " Other files:
 " * .lvimrc - local vim config files
 " * .clang - simple file with C++ compiler flags, linter uses it to locate headers
+" * compile_commands.json - clang compilation database for clangd/cquery code completion/navigation
 " * tags - ctags output file, used for code navigation
 "
 
@@ -284,10 +287,9 @@ let g:localvimrc_ask = 0
 " vim-lsp
 let g:lsp_auto_enable = 1
 
-"nmap <';l> :LspDocumentDiagnostics<CR>
-"nmap <;;> :LspDefinition<CR>
-"nmap <;']> :LspReferences<CR>
-"nmap <;l> :LspHover<CR>
+nmap ;; :LspDefinition<CR>
+nmap ;' :LspReferences<CR>
+nmap ;l :LspHover<CR>
 
 
 " ale
@@ -435,6 +437,7 @@ if executable('clangd')
     au User lsp_setup call lsp#register_server({
         \ 'name': 'clangd',
         \ 'cmd': {server_info->['clangd']},
+        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
         \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
         \ })
 endif
@@ -451,7 +454,7 @@ function SetupCquery()
         au User lsp_setup call lsp#register_server({
             \ 'name': 'cquery',
             \ 'cmd': {server_info->['cquery']},
-            \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), '.clang'))},
+            \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
             \ 'initialization_options': { 'cacheDirectory': expand(g:my_cpp_cquery_cache_dir) },
             \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
             \ })
@@ -461,8 +464,6 @@ au User LocalVimRCPost call SetupCquery()
 
 
 " vim-lsp and asyncomplete.vim debugging
-" try autogenerating .clang or compile-commands.json,
-" see https://github.com/cquery-project/cquery/wiki/compile_commands.json
 "let g:lsp_log_verbose = 1
 "let g:lsp_log_file = expand('~/lsp-vim.log')
 "let g:asyncomplete_log_file = expand('~/lsp-asyncomplete.log')
