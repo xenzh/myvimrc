@@ -80,18 +80,22 @@
 "
 "
 " Third-party tools and binaries:
-" * ctags (code navigation. exuberant-ctags recommended)
-" * fzf (command-line fuzzy finder tool)
-" * ag (better grep)
 " * git (vim-airline, branch and status; fugitive, git integration)
-" * clang (C++ linting)
-" * clangd/cquery (C/C++ code completion and navigation via LSP)
+" * ag (better grep, used by fzf)
+" * fzf (command-line fuzzy finder tool)
+" * ctags (code navigation. exuberant-ctags recommended)
+" * jq (json formatting; see below for python-based option)
+" * xmllint (xml formatting)
+"
+" * clang++ (C++ linting, via ale)
+" * clangd/cquery (C/C++ code completion and navigation, used with LSP)
 " * bear (https://github.com/rizsotto/Bear) - generating clang compilation databases for clang tools
-" * cargo, rustc (Rust linting)
-" * rustfmt, rls, racer (Rust formatting and code completion; via rustup)
-" * flake8 (python linting)
-" * xmllint (XML formatting)
-" * jq (Json formatting; see below for python-based option)
+"
+" * cargo, rustc (Rust linting, via ale)
+" * rustfmt, rls, racer (Rust formatting and code completion; install with rustup, used by LSP)
+"
+" * python-language-server (python code completion and navigation, install with pip, used by LSP)
+" * pylint/flake8 (python linting, via ale)
 "
 "
 " Other files:
@@ -107,6 +111,7 @@
 "
 " Basic config
 "
+
 
 " enable mouse
 " Shift+Wheel to X-paste from x clipboard!
@@ -190,13 +195,14 @@ colorscheme bubblegum-256-dark
 hi SpecialKey ctermfg=darkgray " should be set after set listchars and colorscheme
 hi TabLineSel ctermfg=darkgray
 
-
 " vim-bookmarks colors
 highlight BookmarkSign ctermbg=237 ctermfg=79
 highlight BookmarkLine ctermbg=237 ctermfg=79
-
 highlight BookmarkAnnotationSign ctermbg=237 ctermfg=79
 highlight BookmarkAnnotationLine ctermbg=237 ctermfg=79
+
+" git merge markers highlight
+match WildMenu '\v^(\<|\=|\>){7}([^=].+)?$'
 
 
 " Disable screen flashing on error
@@ -206,7 +212,7 @@ set vb t_vb=""
 
 
 "
-" Shortcuts and commands
+" Generic mappings, autocommands and commands
 "
 
 
@@ -229,18 +235,58 @@ set vb t_vb=""
 :inoremap <Esc>OM <Enter>
 
 
-" I like to hold Shift for a bit longer than necessary
-command W :w
-command Q :q
-command Wq :wq
-command WQ :wq
-
-
 " split resize remappings
 nmap <F9>  :resize -3<CR>
 nmap <F10> :resize +3<CR>
 nmap <F11> :vertical resize -3<CR>
 nmap <F12> :vertical resize +3<CR>
+
+
+" Split navigation: C-<x> instead of C-W C-<x>
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+
+" Re-select visual block after indenting
+vnoremap < <gv
+vnoremap > >gv
+
+
+" Search results are always centered
+nnoremap n nzz
+nnoremap N Nzz
+
+
+" Navigate git merge markers with ]c and [c
+nnoremap <silent> ]c /\v^(\<\|\=\|\>){7}([^=].+)?$<CR>
+nnoremap <silent> [c ?\v^(\<\|\=\|\>){7}([^=].+)\?$<CR>
+
+
+" Auto-source .vimrc on saving, update ui
+function! RefreshUI()
+  if exists(':AirlineRefresh')
+    AirlineRefresh
+  else
+    " Clear & redraw the screen, then redraw all statuslines.
+    redraw!
+    redrawstatus!
+  endif
+endfunction
+autocmd! bufwritepost $MYVIMRC,.vimrc source $MYVIMRC | :call RefreshUI()
+
+
+" I like to hold Shift for a bit longer than necessary
+command! W :w
+command! Q :q
+command! Wq :wq
+command! WQ :wq
+
+
+" :wd - save and delete the buffer (and refresh tagline, see below)
+command! Wbd :w | :bd | call airline#extensions#tabline#buflist#invalidate()
+cnoreabbrev wd Wbd
 
 
 " formatting
@@ -256,7 +302,7 @@ function! DoFmt()
   endif
 endfunction
 
-command Fmt :call DoFmt()
+command! Fmt :call DoFmt()
 
 
 " toggle space chars visibility
@@ -265,21 +311,21 @@ function! DoToggleSpaceChars()
   set number!
 endfunction
 
-command ToggleSpaceChars :call DoToggleSpaceChars()
+command! ToggleSpaceChars :call DoToggleSpaceChars()
 nmap <F6> :ToggleSpaceChars<CR>
 
 
+" Convert buffer to hex / read buffer from xxd hex dump
+command! ToHex :%!xxd
+command! FromHex %s#^[^:]*: \(\%(\x\+ \)\+\) .*#\1# | %!xxd -r -p
+
+
 " close all buffers but this
-command O %bd | e#
-
-
-" open this buffer in vertical split and switch left side to prev buffer
-command Vs :vs | bd
-command Js :% | y | vn | setf json | Fmt
+command! O %bd | e#
 
 
 " list all highlight groups
-command Hi :so $VIMRUNTIME/syntax/hitest.vim
+command! Hi :so $VIMRUNTIME/syntax/hitest.vim
 
 
 
@@ -310,7 +356,7 @@ nmap ;; :LspDefinition<CR>
 nmap ;' :LspReferences<CR>
 nmap ;l :LspHover<CR>
 
-function GetLspStatusMessage()
+function! GetLspStatusMessage()
     "return lsp#get_server_status()
     return ""
 endfunction
@@ -337,7 +383,7 @@ augroup CloseLoclistWindowGroup
 augroup END
 
 let g:my_linter_running = 0
-function GetLintingMessage()
+function! GetLintingMessage()
     return g:my_linter_running ? "[linting...]" : "[idle]"
 endfunction
 
@@ -353,8 +399,8 @@ function! DoCheckSyntax()
 endfunction
 nmap <F5> :call DoCheckSyntax()<CR>
 
-command C :ALEReset | :lcl
-command D :ALEDetail
+command! C :ALEReset | :lcl
+command! D :ALEDetail
 
 
 " vim-airline, buffer tab selection remappings
@@ -400,7 +446,7 @@ nmap <F7> :NERDTreeToggle<CR>
 
 
 " fzf.vim
-function LocalTags()
+function! LocalTags()
     let old_tags=&tags
     set tags=./tags;/
     execute ':Tags'
@@ -450,7 +496,7 @@ let g:cpp_experimental_template_highlight = 1
 
 " [C++] load cpp flags to variable for linting
 let g:my_cpp_linter_flags = ""
-function GetCppFlagsFromClangDb(init_flags)
+function! GetCppFlagsFromClangDb(init_flags)
     let jq = printf("jq '.[] | select(.file | contains(\"%s\"))' ./compile_commands.json | jq -s '.[0]? | .arguments[]?'", expand('%'))
 
     let flags = a:init_flags
@@ -464,7 +510,7 @@ function GetCppFlagsFromClangDb(init_flags)
     return flags
 endfunction
 
-function GetCppFlagsFromClangFile(init_flags)
+function! GetCppFlagsFromClangFile(init_flags)
     let flags = a:init_flags
     for clang_file in findfile('.clang', '.;', -1)
         if !filereadable(clang_file)
@@ -477,7 +523,7 @@ function GetCppFlagsFromClangFile(init_flags)
     return flags
 endfunction
 
-function LoadCppFlags()
+function! LoadCppFlags()
     let flags = ['-Wno-unknown-warning-option', '-Qunused-arguments']
     let flags += GetCppFlagsFromClangDb(flags)
     if len (flags) == 0
@@ -502,7 +548,7 @@ endif
 
 
 " [C++] start cquery (via vim-lsp, if clangd is unavailble)
-function SetupCquery()
+function! SetupCquery()
     if !executable('clangd') && executable('cquery')
         if !exists("g:my_cpp_cquery_cache_dir")
             echo "WARN: cpp cquery cache dir is not set, defaulting to profile's tmp"
