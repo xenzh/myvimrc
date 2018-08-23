@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 alias c=clear
 alias l="ls -lahH --group-directories-first"
@@ -8,17 +8,46 @@ alias x="xterm -uc -en en_US.UTF8"
 alias :e="vim"
 
 vimf() {
-    loc=$(fzf)
+    if [ -z "$1" ]; then
+        loc=$(fzf)
+    else
+        cwd=$PWD
+        cd $1
+        loc=$(fzf)
+        if [ -n "$loc" ]; then
+            loc="$1/$loc"
+        fi
+        cd $cwd
+    fi
+
     if [ -n "$loc" ]; then
         vim "$loc"
     fi
 }
 
 vimag() {
-    loc=$(ag --nogroup --column --color "$1" | fzf --ansi | ack "^(.*?)\:(\d+):.*" --output "\$1 +\$2")
-    if [ -n "$loc" ]; then
-        vim "$loc"
+    cwd=$PWD
+    if [ -n "$2" ]; then
+        cd $2
     fi
+    matches=$(ag --nogroup --column --color "$1" | fzf --ansi)
+    loc=$(echo "$matches" | ack "^(.*?)\:(\d+):.*" --output "\$1")
+    offset=$(echo $matches | ack "^(.*?)\:(\d+):.*" --output "\$2")
+
+    if [ -n "$loc" ]; then
+        if [ -n "$2" ]; then
+            loc="$2/$loc"
+            cd $cwd
+        fi
+
+        vim "$loc" "+$offset"
+    fi
+}
+
+comms() {
+    a="$1"; shift
+    b="$1"; shift
+    comm <(sort "$a") <(sort "$b") "$@"
 }
 
 alias g="git"

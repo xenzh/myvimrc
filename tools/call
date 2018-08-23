@@ -46,13 +46,15 @@ def populate_arg(subparser, arg):
     if not shortcut and required: # add positional argument
         add_arg_names.append(arg["name"])
         if nargs == 0:
-            subparser.add_argument(*add_arg_names,
+            subparser.add_argument(
+                *add_arg_names,
                 help=arg.get("desc"),
                 action=action,
                 nargs=nargs,
                 choices=arg.get("choices"))
         else:
-            subparser.add_argument(*add_arg_names,
+            subparser.add_argument(
+                *add_arg_names,
                 help=arg.get("desc"),
                 action=action,
                 nargs=nargs,
@@ -60,13 +62,15 @@ def populate_arg(subparser, arg):
     else:
         add_arg_names.append("--{}".format(arg["name"]))
         if nargs == 0:
-            subparser.add_argument(*add_arg_names,
+            subparser.add_argument(
+                *add_arg_names,
                 help=arg.get("desc"),
                 action=action,
                 default=arg.get("default"),
                 required=required)
         else:
-            subparser.add_argument(*add_arg_names,
+            subparser.add_argument(
+                *add_arg_names,
                 help=arg.get("desc"),
                 action=action,
                 nargs=nargs,

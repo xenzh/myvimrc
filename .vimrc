@@ -291,12 +291,19 @@ nmap ;; :LspDefinition<CR>
 nmap ;' :LspReferences<CR>
 nmap ;l :LspHover<CR>
 
+function GetLspStatusMessage()
+    "return lsp#get_server_status()
+    return ""
+endfunction
+
 
 " ale
 let g:ale_linters = {
     \ 'cpp': ['clang'],
     \ 'python': ['flake8', 'pylint']
 \ }
+let g:ale_python_pylint_options="-d C0111" " suppress missing doscstring warnings
+
 let g:ale_completion_enabled = 1
 let g:ale_open_list = 0
 
@@ -351,9 +358,13 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 nmap <leader>- <Plug>AirlineSelectPrevTab
 nmap <leader>+ <Plug>AirlineSelectNextTab
 
+" https://github.com/vim-airline/vim-airline/issues/399
+autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
+
 function! AirlineInit()
     call airline#parts#define_function('lint-status', 'GetLintingMessage')
-    let g:airline_section_x = airline#section#create(['tagbar', ' | ', 'filetype', ' ', 'lint-status'])
+    call airline#parts#define_function('lsp-status', 'GetLspStatusMessage')
+    let g:airline_section_x = airline#section#create(['tagbar', ' | ', 'filetype', ' ', 'lint-status', ' ', 'lsp-status'])
   endfunction
 autocmd User AirlineAfterInit call AirlineInit()
 
@@ -381,10 +392,13 @@ endfunction
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'Files' argv()[0] | endif
 
-nmap [p :Files<CR> " files in this repo
-nmap ]p :call LocalTags()<CR> " tags in this folder tree
-nmap [l :BTags<CR> " tags in this buffer
-nmap ][p :Tags<CR> " all tags
+nmap [p :Files<CR> " files in working dir
+nmap ]p :exe('Files ' . expand('%:p:h'))<CR> " files in directory of current file
+
+nmap [o :call LocalTags()<CR> " tags in working dir
+nmap ]o :BTags<CR> " tags in this buffer
+nmap ][o :Tags<CR> " all tags
+
 
 
 " vim-bookmarks
@@ -416,9 +430,23 @@ let g:cpp_experimental_template_highlight = 1
 
 
 " [C++] load cpp flags to variable for linting
-let g:my_cpp_linter_flags = '-std=c++14 -Wall -Wno-unknown-warning-option '
-function LoadCppLinterFlags()
-    let flags = []
+let g:my_cpp_linter_flags = ""
+function GetCppFlagsFromClangDb(init_flags)
+    let jq = printf("jq '.[] | select(.file | contains(\"%s\"))' ./compile_commands.json | jq -s '.[0]? | .arguments[]?'", expand('%'))
+
+    let flags = a:init_flags
+    for clangdb_file in findfile('compile_commands.json', '.;', -1)
+        if !filereadable(clangdb_file)
+            continue
+        endif
+        let entry = system(jq)
+        let flags += filter(split(substitute(entry, '\"', '', 'g'), '\n'), {idx, val -> val[0] == '-' && val != '-o'})
+    endfor
+    return flags
+endfunction
+
+function GetCppFlagsFromClangFile(init_flags)
+    let flags = a:init_flags
     for clang_file in findfile('.clang', '.;', -1)
         if !filereadable(clang_file)
             continue
@@ -427,9 +455,20 @@ function LoadCppLinterFlags()
         call filter(filtered, {idx, val -> val[0] == '-'})
         let flags += filtered
     endfor
-    let g:my_cpp_linter_flags .= join(flags, ' ')
+    return flags
 endfunction
-:autocmd FileType cpp call LoadCppLinterFlags()
+
+function LoadCppFlags()
+    let flags = ['-Wno-unknown-warning-option', '-Qunused-arguments']
+    let flags += GetCppFlagsFromClangDb(flags)
+    if len (flags) == 0
+        let flags += ['-std=c++14', '-Wall']
+        let flags += GetCppFlagsFromClangFile(flags)
+    endif
+    let g:my_cpp_linter_flags = join(flags, ' ')
+endfunction
+
+:autocmd FileType cpp call LoadCppFlags()
 
 
 " [C++] start clangd (via vim-lsp plugin)
@@ -464,7 +503,7 @@ au User LocalVimRCPost call SetupCquery()
 
 
 " vim-lsp and asyncomplete.vim debugging
-"let g:lsp_log_verbose = 1
+let g:lsp_log_verbose = 1
 "let g:lsp_log_file = expand('~/lsp-vim.log')
 "let g:asyncomplete_log_file = expand('~/lsp-asyncomplete.log')
 
@@ -483,5 +522,6 @@ if executable('pyls')
         \ 'name': 'pyls',
         \ 'cmd': {server_info->['pyls']},
         \ 'whitelist': ['python'],
+        \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:false}}}},
         \ })
 endif
