@@ -27,6 +27,7 @@ xterm*colorBD: #e5e5e5
 
 
 xterm*termName: xterm-256color
+xterm*appkeypadDefault: false
 xterm*locale: true
 xterm*utf8: 1
 
