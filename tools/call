@@ -1,0 +1,168 @@
+#!/usr/bin/python2.7
+
+import argparse
+import json
+import re
+
+from os import path
+from subprocess import call
+
+from functools import reduce
+from itertools import chain
+
+
+DEFAULT_FILEPATH = path.join(path.dirname(path.realpath(__file__)), ".call-templates")
+
+
+def load(filepath):
+    with open(filepath, "r") as f:
+        return json.load(f)
+
+
+def multi_replace(where, subst):
+    regex = re.compile("({})".format("|".join(map(re.escape, subst.keys()))))
+    return regex.sub(lambda mo: subst[mo.string[mo.start():mo.end()]], where)
+
+
+def populate_arg(subparser, arg):
+    if "name" not in arg:
+        return
+
+    required = "default" not in arg
+    shortcut = "shortcut" in arg
+
+    nargs = arg.get("map", "{}").count("{}")
+    if nargs == 0:
+        action = "store_true"
+    elif nargs == 1:
+        action = "store"
+    else:
+        action = "append"
+
+    add_arg_names = []
+    if shortcut:
+        add_arg_names.append("-{}".format(arg["shortcut"][0]))
+
+    if not shortcut and required: # add positional argument
+        add_arg_names.append(arg["name"])
+        if nargs == 0:
+            subparser.add_argument(
+                *add_arg_names,
+                help=arg.get("desc"),
+                action=action,
+                nargs=nargs,
+                choices=arg.get("choices"))
+        else:
+            subparser.add_argument(
+                *add_arg_names,
+                help=arg.get("desc"),
+                action=action,
+                nargs=nargs,
+                choices=arg.get("choices"))
+    else:
+        add_arg_names.append("--{}".format(arg["name"]))
+        if nargs == 0:
+            subparser.add_argument(
+                *add_arg_names,
+                help=arg.get("desc"),
+                action=action,
+                default=arg.get("default"),
+                required=required)
+        else:
+            subparser.add_argument(
+                *add_arg_names,
+                help=arg.get("desc"),
+                action=action,
+                nargs=nargs,
+                choices=arg.get("choices"),
+                default=arg.get("default"),
+                required=required)
+
+
+def populate_group(subparsers, name, group_name, data):
+    subparser = subparsers.add_parser(name) # desc??
+    group = subparser.add_argument_group(group_name)
+    for arg in data["args"]:
+        populate_arg(group, arg)
+    return subparser
+
+
+def populate_template_args(parser, contents):
+    subparsers = parser.add_subparsers(dest="cmd")
+    for cmd, cmd_data in contents["commands"].items():
+        subparser = populate_group(subparsers, cmd, "command options", cmd_data)
+
+        templ_subparsers = subparser.add_subparsers(dest="templ")
+        templ_subparsers.add_parser("raw")
+
+        cmd_templates = contents["templates"].get(cmd)
+        if cmd_templates:
+            for templ, templ_data in cmd_templates.items():
+                populate_group(templ_subparsers, templ, "template options", templ_data)
+
+
+def populate_own_args(parser):
+    parser.add_argument("--defs",
+        default=[DEFAULT_FILEPATH],
+        action="append",
+        help="Specify custom template file")
+    parser.add_argument("--dry-run",
+        action="store_true",
+        help="print args, shell command and exit")
+
+
+def process(args, unknown_args, static):
+    substs = {}
+    for name, val in args.__dict__.items():
+        substs["[{}]".format(name)] = val
+
+    def formatter(acc, a):
+        if "map" not in a:
+            return acc
+
+        mapped = multi_replace(a["map"], substs)
+
+        farg_count = mapped.count("{}")
+        if farg_count == 0:
+            acc.append(mapped)
+        else:
+            fl = lambda l: chain.from_iterable([[el] if not isinstance(el, list) else fl(el) for el in l])
+            flattened = list(fl([getattr(args, a["name"])]))
+            acc.append(mapped.format(*flattened))
+        return acc
+
+    cargs = reduce(formatter, static["commands"][args.cmd]["args"], [])
+    targs = []
+    if args.templ != "raw":
+        targs = reduce(formatter, static["templates"][args.cmd][args.templ]["args"], targs)
+
+    return " ".join([args.cmd] + cargs + targs + unknown_args)
+
+
+def main():
+    init_parser = argparse.ArgumentParser(add_help=False)
+    populate_own_args(init_parser)
+    own_args = init_parser.parse_known_args()[0]
+
+    parser = argparse.ArgumentParser()
+    populate_own_args(parser)
+
+    templ = {}
+    for def_file in set(own_args.defs):
+        single_templ = load(def_file)
+        templ.update(single_templ)
+
+    populate_template_args(parser, single_templ)
+
+    args = parser.parse_known_args()
+    cmd = process(args[0], args[1], templ)
+
+    if own_args.dry_run:
+        print("Parsed arguments: {}\n".format(args))
+        print("Final command: {}\n".format(cmd))
+    else:
+        call(cmd, shell=True)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,62 @@
+{
+    "commands": {
+        "aws": {
+            "desc": "aws console client",
+            "args": [
+                {
+                    "desc": "use s3 api toolset",
+                    "map": "s3api"
+                },
+                {
+                    "desc": "BCS endpoint",
+                    "map": "--endpoint-url \"https://s3.[env].[dc].bcs.bloomberg.com\""
+                },
+                {
+                    "name": "env",
+                    "desc": "BCS environment",
+                    "choices": ["dev", "prod"],
+                    "default": "dev"
+                },
+                {
+                    "name": "dc",
+                    "desc": "BCS datacenter",
+                    "choices": ["rrdc", "obdc"],
+                    "default": "rrdc"
+                },
+                {
+                    "name": "output",
+                    "desc": "Output format",
+                    "default": "json",
+                    "map": "--output {}"
+                }
+            ]
+        }
+    },
+    "templates": {
+        "aws": {
+            "go": {
+                "desc": "get object",
+                "args": [
+                    {
+                        "name": "bucket",
+                        "shortcut": "b",
+                        "desc": "target bucket name",
+                        "default": "ephemeral",
+                        "map": "--bucket {}"
+                    },
+                    {
+                        "name": "key",
+                        "desc": "object key",
+                        "map": "--key {}"
+                    },
+                    {
+                        "name": "outfile",
+                        "desc": "output file",
+                        "default": "object.json",
+                        "map": "{}"
+                    }
+                ]
+            }
+        }
+    }
+}

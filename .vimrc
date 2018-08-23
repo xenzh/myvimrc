@@ -11,10 +11,6 @@
 "   Search .lvimrc files from pwd up to root and source them in
 "   https://github.com/embear/vim-localvimrc
 "
-" * a.vim
-"   :A switch between associated files (h/cpp)
-"   https://github.com/vim-scripts/a.vim
-"
 " * async.vim, asyncomplete.vim
 "   Asynchronous code completion engine
 "   https://github.com/prabirshrestha/async.vim
@@ -25,36 +21,13 @@
 "   https://github.com/prabirshrestha/vim-lsp
 "   https://github.com/prabirshrestha/asyncomplete-lsp.vim
 "
-" * clang.vim
-"   C++ syntax checker (per-file) and autocompleter
-"   https://github.com/justmao945/vim-clang
-"
-" * vim-cpp-enhanced-highlight
-"   Better C++ code highlighting
-"   https://github.com/octol/vim-cpp-enhanced-highlight
-"
-" * syntastic
-"   Syntax checkers
-"   https://github.com/vim-syntastic/syntastic
-"
-" * rust.vim
-"   Better syntax highlighting, syntastic checkers and formatter for Rust
-"   https://github.com/rust-lang/rust.vim
-"
-" * csv.vim, vim-json, vim-toml
-"   Pretty printers and syntax highlighters for csv, json and toml
-"   https://github.com/chrisbra/csv.vim
-"   https://github.com/elzr/vim-json
-"   https://github.com/cespare/vim-toml
+" * ale
+"   Asynchronous multi-language linter, formatter and autocompleter
+"   https://github.com/w0rp/ale
 "
 " * nerdcommenter
 "   block comment/uncomment
 "   https://github.com/scrooloose/nerdcommenter
-"
-" * [DISABLED] ctrlp
-"   fuzzy search palette for files, recently opened files and buffers
-"   poor performance, switched default setup to use fzf.vim
-"   https://github.com/ctrlpvim/ctrlp.vim
 "
 " * fzf, fzf.vim
 "   Search for files, tags and more based on fzf command-line tool
@@ -87,25 +60,50 @@
 "   Git integration (integrated with vim-airline)
 "   https://github.com/tpope/vim-fugitive
 "
+" * a.vim
+"   :A switch between associated files (h/cpp)
+"   https://github.com/vim-scripts/a.vim
+"
+" * vim-cpp-enhanced-highlight
+"   Better C++ code highlighting
+"   https://github.com/octol/vim-cpp-enhanced-highlight
+"
+" * rust.vim
+"   Better syntax highlighting, syntastic checkers and formatter for Rust
+"   https://github.com/rust-lang/rust.vim
+"
+" * csv.vim, vim-json, vim-toml
+"   Pretty printers and syntax highlighters for csv, json and toml
+"   https://github.com/chrisbra/csv.vim
+"   https://github.com/elzr/vim-json
+"   https://github.com/cespare/vim-toml
+"
 "
 " Third-party tools and binaries:
-" * ctags (code navigation. exuberant-ctags preferred)
-" * fzf (command-line fuzzy finder)
-" * git (vim-airline, branch and status; fugitive integration)
-" * clang (C++ syntax check)
-" * cargo, rustc (Rust syntax check)
-" * rustfmt, rls, racer (via rustup; Rust formatting and code completion)
-" * xmllint (XML formatting)
-" * jq (Json formatting; there's also a python-based solution, see below)
+" * git (vim-airline, branch and status; fugitive, git integration)
+" * ag (better grep, used by fzf)
+" * fzf (command-line fuzzy finder tool)
+" * ctags (code navigation. exuberant-ctags recommended)
+" * jq (json formatting; see below for python-based option)
+" * xmllint (xml formatting)
 "
-" Generated files:
-" * .clang - simple file with -I compiler flags, clang.vim uses it to locate headers
+" * clang++ (C++ linting, via ale)
+" * clangd/cquery (C/C++ code completion and navigation, used with LSP)
+" * bear (https://github.com/rizsotto/Bear) - generating clang compilation databases for clang tools
+"
+" * cargo, rustc (Rust linting, via ale)
+" * rustfmt, rls, racer (Rust formatting and code completion; install with rustup, used by LSP)
+"
+" * python-language-server (python code completion and navigation, install with pip, used by LSP)
+" * pylint/flake8 (python linting, via ale)
+"
+"
+" Other files:
+" * .lvimrc - local vim config files
+" * .clang - simple file with C++ compiler flags, linter uses it to locate headers
+" * compile_commands.json - clang compilation database for clangd/cquery code completion/navigation
 " * tags - ctags output file, used for code navigation
 "
-" How to generate tags:
-" ctags -R <project folder>
-"
-" You might want to update .Xdefaults/.Xresources for better experience of using vim in xterm
 
 
 
@@ -113,6 +111,7 @@
 "
 " Basic config
 "
+
 
 " enable mouse
 " Shift+Wheel to X-paste from x clipboard!
@@ -145,6 +144,10 @@ set showmatch
 set hlsearch
 set incsearch
 set ignorecase
+
+
+" load ctags (recursive downtop)
+set tags+=./tags;/
 
 
 " simple menu and word autocompletion
@@ -192,28 +195,44 @@ colorscheme bubblegum-256-dark
 hi SpecialKey ctermfg=darkgray " should be set after set listchars and colorscheme
 hi TabLineSel ctermfg=darkgray
 
-" vim-bookmarks
+" vim-bookmarks colors
 highlight BookmarkSign ctermbg=237 ctermfg=79
 highlight BookmarkLine ctermbg=237 ctermfg=79
-
 highlight BookmarkAnnotationSign ctermbg=237 ctermfg=79
 highlight BookmarkAnnotationLine ctermbg=237 ctermfg=79
 
-set vb t_vb="" " Disable screen flashing on error
+" git merge markers highlight
+match WildMenu '\v^(\<|\=|\>){7}([^=].+)?$'
+
+
+" Disable screen flashing on error
+set vb t_vb=""
 
 
 
 
 "
-" Shortcuts and commands
+" Generic mappings, autocommands and commands
 "
 
 
-" I like to hold Shift for a bit longer than necessary
-command W :w
-command Q :q
-command Wq :wq
-command WQ :wq
+" Make vim understand numpad escape sequences
+:inoremap <Esc>Oq 1
+:inoremap <Esc>Or 2
+:inoremap <Esc>Os 3
+:inoremap <Esc>Ot 4
+:inoremap <Esc>Ou 5
+:inoremap <Esc>Ov 6
+:inoremap <Esc>Ow 7
+:inoremap <Esc>Ox 8
+:inoremap <Esc>Oy 9
+:inoremap <Esc>Op 0
+:inoremap <Esc>On .
+:inoremap <Esc>OQ /
+:inoremap <Esc>OR *
+:inoremap <Esc>Ol +
+:inoremap <Esc>OS -
+:inoremap <Esc>OM <Enter>
 
 
 " split resize remappings
@@ -221,6 +240,53 @@ nmap <F9>  :resize -3<CR>
 nmap <F10> :resize +3<CR>
 nmap <F11> :vertical resize -3<CR>
 nmap <F12> :vertical resize +3<CR>
+
+
+" Split navigation: C-<x> instead of C-W C-<x>
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+
+" Re-select visual block after indenting
+vnoremap < <gv
+vnoremap > >gv
+
+
+" Search results are always centered
+nnoremap n nzz
+nnoremap N Nzz
+
+
+" Navigate git merge markers with ]c and [c
+nnoremap <silent> ]c /\v^(\<\|\=\|\>){7}([^=].+)?$<CR>
+nnoremap <silent> [c ?\v^(\<\|\=\|\>){7}([^=].+)\?$<CR>
+
+
+" Auto-source .vimrc on saving, update ui
+function! RefreshUI()
+  if exists(':AirlineRefresh')
+    AirlineRefresh
+  else
+    " Clear & redraw the screen, then redraw all statuslines.
+    redraw!
+    redrawstatus!
+  endif
+endfunction
+autocmd! bufwritepost $MYVIMRC,.vimrc source $MYVIMRC | :call RefreshUI()
+
+
+" I like to hold Shift for a bit longer than necessary
+command! W :w
+command! Q :q
+command! Wq :wq
+command! WQ :wq
+
+
+" :wd - save and delete the buffer (and refresh tagline, see below)
+command! Wbd :w | :bd | call airline#extensions#tabline#buflist#invalidate()
+cnoreabbrev wd Wbd
 
 
 " formatting
@@ -236,35 +302,8 @@ function! DoFmt()
   endif
 endfunction
 
-command Fmt :call DoFmt()
+command! Fmt :call DoFmt()
 
-
-" syntax check
-function! DoCheckSyntax()
-  set cmdheight=2
-  echom "Syntax check running..."
-
-  if &ft == 'cpp'
-    " use vim-clang plugin
-    ClangSyntaxCheck
-  elseif &ft == 'rust'
-    " use syntastic checker provided by rust.vim
-    execute 'SyntasticCheck cargo'
-    execute 'Errors'
-  elseif &ft == 'python'
-    execute 'SyntasticCheck'
-    execute 'Errors'
-  endif
-
-  echom "done!"
-  set cmdheight=1
-endfunction
-nmap <F5> :call DoCheckSyntax()<CR>
-
-function ClearCheckSyntaxResults()
-  execute 'SyntasticReset'
-endfunction
-command C call ClearCheckSyntaxResults()
 
 " toggle space chars visibility
 function! DoToggleSpaceChars()
@@ -272,21 +311,21 @@ function! DoToggleSpaceChars()
   set number!
 endfunction
 
-command ToggleSpaceChars :call DoToggleSpaceChars()
+command! ToggleSpaceChars :call DoToggleSpaceChars()
 nmap <F6> :ToggleSpaceChars<CR>
 
 
+" Convert buffer to hex / read buffer from xxd hex dump
+command! ToHex :%!xxd
+command! FromHex %s#^[^:]*: \(\%(\x\+ \)\+\) .*#\1# | %!xxd -r -p
+
+
 " close all buffers but this
-command O %bd | e#
-
-
-" open this buffer in vertical split and switch left side to prev buffer
-command Vs :vs | bd
-command Js :% | y | vn | setf json | Fmt
+command! O %bd | e#
 
 
 " list all highlight groups
-command Hi :so $VIMRUNTIME/syntax/hitest.vim
+command! Hi :so $VIMRUNTIME/syntax/hitest.vim
 
 
 
@@ -310,15 +349,67 @@ let g:localvimrc_sandbox = 0
 let g:localvimrc_ask = 0
 
 
-" load ctags (recursive downtop)
-set tags+=./tags;/
+" vim-lsp
+let g:lsp_auto_enable = 1
+
+nmap ;; :LspDefinition<CR>
+nmap ;' :LspReferences<CR>
+nmap ;l :LspHover<CR>
+
+function! GetLspStatusMessage()
+    "return lsp#get_server_status()
+    return ""
+endfunction
+
+
+" ale
+let g:ale_linters = {
+    \ 'cpp': ['clang'],
+    \ 'python': ['flake8', 'pylint']
+\ }
+let g:ale_python_pylint_options="-d C0111" " suppress missing doscstring warnings
+
+let g:ale_completion_enabled = 1
+let g:ale_open_list = 0
+
+let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_filetype_changed = 0
+
+augroup CloseLoclistWindowGroup
+    autocmd!
+    autocmd QuitPre * if empty(&buftype) | lclose | endif
+augroup END
+
+let g:my_linter_running = 0
+function! GetLintingMessage()
+    return g:my_linter_running ? "[linting...]" : "[idle]"
+endfunction
+
+augroup ALEProgress
+    autocmd!
+    autocmd User ALELintPre let g:ale_cpp_clang_options = g:my_cpp_linter_flags | let g:my_linter_running = 1 | redrawstatus
+    autocmd User ALELintPost let g:my_linter_running = 0 | let g:ale_open_list = 0 | redrawstatus
+augroup end
+
+function! DoCheckSyntax()
+    let g:ale_open_list = 1
+    execute 'ALELint'
+endfunction
+nmap <F5> :call DoCheckSyntax()<CR>
+
+command! C :ALEReset | :lcl
+command! D :ALEDetail
 
 
 " vim-airline, buffer tab selection remappings
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 
-let g:airline_theme='bubblegum'
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#tagbar#flags = 'f'
 
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
@@ -332,48 +423,47 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 nmap <leader>- <Plug>AirlineSelectPrevTab
 nmap <leader>+ <Plug>AirlineSelectNextTab
 
+" https://github.com/vim-airline/vim-airline/issues/399
+autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
+
+function! AirlineInit()
+    call airline#parts#define_function('lint-status', 'GetLintingMessage')
+    call airline#parts#define_function('lsp-status', 'GetLspStatusMessage')
+    let g:airline_section_x = airline#section#create(['tagbar', ' | ', 'filetype', ' ', 'lint-status', ' ', 'lsp-status'])
+  endfunction
+autocmd User AirlineAfterInit call AirlineInit()
+
+let g:airline_theme='bubblegum'
+
 
 " tagbar
 let g:tagbar_autofocus = 1
 nmap <F8> :TagbarToggle<CR>
 
 
-" nerdtree, start it in case vim opened on a folder
+" nerdtree
 nmap <F7> :NERDTreeToggle<CR>
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-
-
-" ctrlp
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_extensions = ['tag', 'dir']
-
-let g:ctrlp_lazy_update = 350
-let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_max_files = 0
-
-if executable("ag")
-    set grepprg=ag\ --nogroup\ --nocolor
-    let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --ignore ''.git'' --hidden -g ""'
-endif
-
-"nmap [p :CtrlPMixed<CR>
-"nmap ]p : CtrlPBufTagAll<CR>
-"nmap ][p :CtrlPTag<CR>
 
 
 " fzf.vim
-function LocalTags()
+function! LocalTags()
     let old_tags=&tags
     set tags=./tags;/
     execute ':Tags'
     let &tags=old_tags
 endfunction
 
-nmap [p :Files<CR> " files in this repo
-nmap ]p :call LocalTags()<CR> " tags in this folder tree
-nmap ][p :Tags<CR> " all tags
+" open fzf when vim opened on a folder
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'Files' argv()[0] | endif
+
+nmap [p :Files<CR> " files in working dir
+nmap ]p :exe('Files ' . expand('%:p:h'))<CR> " files in directory of current file
+
+nmap [o :call LocalTags()<CR> " tags in working dir
+nmap ]o :BTags<CR> " tags in this buffer
+nmap ][o :Tags<CR> " all tags
+
 
 
 " vim-bookmarks
@@ -392,65 +482,97 @@ let g:bookmark_location_list = 0 " quickfix or location list
 nmap ml <Plug>BookmarkShowAll
 
 
-" syntasic
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 2
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_loc_list_height = 6
-
-let g:syntastic_mode_map = {
-    \ "mode": "passive",
-    \ "active_filetypes": []}
-
-let g:syntastic_clang_check_config_file = ".clang"
-
-let g:syntastic_cpp_checkers = []
-let g:syntastic_rust_checkers = ['cargo', 'rustc']
-
-
 
 
 "
-" C++ plugins config
+" Language-specific plugins and tweaks
 "
 
 
-" vim-clang
-let g:clang_auto = 0
-let g:clang_c_completeopt = 'menuone,preview'
-let g:clang_cpp_completeopt = 'menuone,preview'
-let g:clang_include_sysheaders = 1
-let g:clang_cpp_options = '-std=c++14'
-let g:clang_check_syntax_auto = 0
-
-
-" neocomplete
-if !exists('g:neocomplete#foce_omni_input_patterns')
-    let g:neocomplete#force_omni_input_patterns = {}
-endif
-
-let g:neocomplete#force_omni_input_patterns.c =
-    \ '[^.[:digit:] *\t]\%(\.\|->\)\w*'
-let g:neocomplete#force_omni_input_patterns.cpp =
-    \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
-
-let g:neocomplete#enable_at_startup = 1
-
-
-" vim-cpp-enhanced-highlight
+" [C++] vim-cpp-enhanced-highlight
 let g:cpp_class_scope_highlight = 1
 let g:cpp_experimental_template_highlight = 1
 
 
+" [C++] load cpp flags to variable for linting
+let g:my_cpp_linter_flags = ""
+function! GetCppFlagsFromClangDb(init_flags)
+    let jq = printf("jq '.[] | select(.file | contains(\"%s\"))' ./compile_commands.json | jq -s '.[0]? | .arguments[]?'", expand('%'))
+
+    let flags = a:init_flags
+    for clangdb_file in findfile('compile_commands.json', '.;', -1)
+        if !filereadable(clangdb_file)
+            continue
+        endif
+        let entry = system(jq)
+        let flags += filter(split(substitute(entry, '\"', '', 'g'), '\n'), {idx, val -> val[0] == '-' && val != '-o'})
+    endfor
+    return flags
+endfunction
+
+function! GetCppFlagsFromClangFile(init_flags)
+    let flags = a:init_flags
+    for clang_file in findfile('.clang', '.;', -1)
+        if !filereadable(clang_file)
+            continue
+        endif
+        let filtered = readfile(clang_file)
+        call filter(filtered, {idx, val -> val[0] == '-'})
+        let flags += filtered
+    endfor
+    return flags
+endfunction
+
+function! LoadCppFlags()
+    let flags = ['-Wno-unknown-warning-option', '-Qunused-arguments']
+    let flags += GetCppFlagsFromClangDb(flags)
+    if len (flags) == 0
+        let flags += ['-std=c++14', '-Wall']
+        let flags += GetCppFlagsFromClangFile(flags)
+    endif
+    let g:my_cpp_linter_flags = join(flags, ' ')
+endfunction
+
+:autocmd FileType cpp call LoadCppFlags()
 
 
-"
-" Rust plugins config
-"
+" [C++] start clangd (via vim-lsp plugin)
+if executable('clangd')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'clangd',
+        \ 'cmd': {server_info->['clangd']},
+        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
+        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+        \ })
+endif
 
 
-" Rust Language Server (via Language Server Protocol completion plugin)
+" [C++] start cquery (via vim-lsp, if clangd is unavailble)
+function! SetupCquery()
+    if !executable('clangd') && executable('cquery')
+        if !exists("g:my_cpp_cquery_cache_dir")
+            echo "WARN: cpp cquery cache dir is not set, defaulting to profile's tmp"
+            let g:my_cpp_cquery_cache_dir = "~/tmp/cquery-cache"
+        endif
+
+        au User lsp_setup call lsp#register_server({
+            \ 'name': 'cquery',
+            \ 'cmd': {server_info->['cquery']},
+            \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
+            \ 'initialization_options': { 'cacheDirectory': expand(g:my_cpp_cquery_cache_dir) },
+            \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
+            \ })
+    endif
+endfunction
+au User LocalVimRCPost call SetupCquery()
+
+
+" vim-lsp and asyncomplete.vim debugging
+let g:lsp_log_verbose = 1
+"let g:lsp_log_file = expand('~/lsp-vim.log')
+"let g:asyncomplete_log_file = expand('~/lsp-asyncomplete.log')
+
+" [Rust] start RLS (via vim-lsp plugin)
 if executable('rls')
     au User lsp_setup call lsp#register_server({
         \ 'name': 'rls',
@@ -459,3 +581,12 @@ if executable('rls')
         \ })
 endif
 
+" [python] start python language server (via vim-lsp)
+if executable('pyls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'pyls',
+        \ 'cmd': {server_info->['pyls']},
+        \ 'whitelist': ['python'],
+        \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:false}}}},
+        \ })
+endif

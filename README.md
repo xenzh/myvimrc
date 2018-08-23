@@ -32,9 +32,9 @@ ln -s ~/.vim/.tmux.conf ~/.tmux.conf
 ```
 xrdb -load ./.Xresources
 ```
-6. Source aliases (just add following line to your `.bashrc`)
+6. Source profile tweaks (just add following line to your `.bashrc`)
 ```
-source ~/.vim/aliases.sh
+source ~/.vim/tools/profile.sh
 ```
 7. Restart xterm session and have fun!
 
