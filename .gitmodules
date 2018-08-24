@@ -69,3 +69,6 @@
 [submodule "bundle/vim-lsp"]
 	path = bundle/vim-lsp
 	url = http://github.com/prabirshrestha/vim-lsp
+[submodule "bundle/Rename"]
+	path = bundle/Rename
+	url = http://github.com/vim-scripts/Rename

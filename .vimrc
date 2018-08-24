@@ -42,6 +42,10 @@
 "   Side pane for filesystem navigation
 "   https://github.com/Xuyuanp/nerdtree-git-plugin
 "
+" * rename
+"   Rename file inplace
+"   https://github.com/vim-scripts/Rename
+"
 " * tagbar
 "   Side pane, code outline
 "   https://github.com/majutsushi/tagbar
@@ -434,6 +438,10 @@ function! AirlineInit()
 autocmd User AirlineAfterInit call AirlineInit()
 
 let g:airline_theme='bubblegum'
+
+
+" rename
+cnoreabbrev rn Rename
 
 
 " tagbar
