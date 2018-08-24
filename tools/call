@@ -1,5 +1,72 @@
 #!/usr/bin/python2.7
 
+"""
+call: template engine for shell commands
+
+This application is used to invoke shell commands based on json template definitions.
+I often find myself writing bash aliases, functions and scripts just to rebind arguments
+or pipe several commands together; this script is an attempt to move it all to a single place.
+
+Essentially this is a json-to-argparse converter with basic parametrization capabilities.
+It uses subprocess for shell command invocation. Beware that argparse is greedy, so to be able
+to pipe "call" output you'll have to limit it somehow:
+    $ echo `call <args>` | tail -1
+
+Template definition syntax:
+    Template definitions are stored in json files. There could be as many as you want.
+
+    They consist of following entities:
+    * command - base to build templates on. Could be just a shell command name or have it's own args
+    * template - named set of arguments based on a command.
+    * details - argument set associated with either a command or a template
+
+    Basic file structure:
+    {
+        "commands": {
+            "<cmd-name>" : <details-object>
+        },
+        "templates": {
+            "<cmd-name>": {
+                "<template-name>": <details-object>
+            }
+        }
+    }
+
+    Details object:
+    {
+        "desc": "Description, required (I think)",
+        "args": [
+            "name": "Full name, optional. If not specified, argument won't show up",
+            "shortcut": "Short name (like -a), optional, applicable only for optional arguments",
+            "desc": "Description, required",
+            "default": "Default value, optional, makes argument optional if specified",
+            "map": "Specifies how to transform input arg value to a part of output shell command"
+        ]
+    }
+
+    Argument mapping:
+        "map" parameter string may have unnamed "{}" and named "{name}" placeholders.
+        Unnammed placeholders are used for mapping input value(s) of this arg,
+        named - for mapping input value(s) of other args.
+
+        Unnamed placeholder combinations:
+        * no placeholders: call arg doesn't have a value (nargs=0), essentially a bool flag
+            * if "name" is specified: map is appended if flag is present in input args
+            * if "name" is not specified: will always be appended to shell command
+        * single placeholder: is substituted with call arg value
+        * multiple placeholders: will be added in original order. No repetition support for now.
+
+        Named placeholders can be used when input and output can't be mapped 1:1.
+        Consider typical example:
+        * There are two named args with defaults and no mappings
+        * There is an arg with a map containing these two, but no unnamed parameters
+
+        This scenario allows to provide arbitrary info in input args and use it to
+        construct single output arg for target shell command.
+"""
+
+from __future__ import print_function
+
 import argparse
 import json
 import re
@@ -7,7 +74,6 @@ import re
 from os import path
 from subprocess import call
 
-from functools import reduce
 from itertools import chain
 
 
@@ -15,8 +81,8 @@ DEFAULT_FILEPATH = path.join(path.dirname(path.realpath(__file__)), ".call-templ
 
 
 def load(filepath):
-    with open(filepath, "r") as f:
-        return json.load(f)
+    with open(filepath, "r") as file_obj:
+        return json.load(file_obj)
 
 
 def multi_replace(where, subst):
@@ -32,12 +98,6 @@ def populate_arg(subparser, arg):
     shortcut = "shortcut" in arg
 
     nargs = arg.get("map", "{}").count("{}")
-    if nargs == 0:
-        action = "store_true"
-    elif nargs == 1:
-        action = "store"
-    else:
-        action = "append"
 
     add_arg_names = []
     if shortcut:
@@ -49,14 +109,19 @@ def populate_arg(subparser, arg):
             subparser.add_argument(
                 *add_arg_names,
                 help=arg.get("desc"),
-                action=action,
+                action="store_true",
                 nargs=nargs,
+                choices=arg.get("choices"))
+        elif nargs == 1:
+            subparser.add_argument(
+                *add_arg_names,
+                help=arg.get("desc"),
                 choices=arg.get("choices"))
         else:
             subparser.add_argument(
                 *add_arg_names,
                 help=arg.get("desc"),
-                action=action,
+                action="append",
                 nargs=nargs,
                 choices=arg.get("choices"))
     else:
@@ -65,14 +130,21 @@ def populate_arg(subparser, arg):
             subparser.add_argument(
                 *add_arg_names,
                 help=arg.get("desc"),
-                action=action,
+                action="store_true",
+                default=arg.get("default"),
+                required=required)
+        elif nargs == 1:
+            subparser.add_argument(
+                *add_arg_names,
+                help=arg.get("desc"),
+                choices=arg.get("choices"),
                 default=arg.get("default"),
                 required=required)
         else:
             subparser.add_argument(
                 *add_arg_names,
                 help=arg.get("desc"),
-                action=action,
+                action="append",
                 nargs=nargs,
                 choices=arg.get("choices"),
                 default=arg.get("default"),
@@ -80,7 +152,7 @@ def populate_arg(subparser, arg):
 
 
 def populate_group(subparsers, name, group_name, data):
-    subparser = subparsers.add_parser(name) # desc??
+    subparser = subparsers.add_parser(name, description=data["desc"])
     group = subparser.add_argument_group(group_name)
     for arg in data["args"]:
         populate_arg(group, arg)
@@ -88,12 +160,14 @@ def populate_group(subparsers, name, group_name, data):
 
 
 def populate_template_args(parser, contents):
-    subparsers = parser.add_subparsers(dest="cmd")
+    subparsers = parser.add_subparsers(dest="cmd", title="commands")
     for cmd, cmd_data in contents["commands"].items():
         subparser = populate_group(subparsers, cmd, "command options", cmd_data)
 
-        templ_subparsers = subparser.add_subparsers(dest="templ")
-        templ_subparsers.add_parser("raw")
+        templ_subparsers = subparser.add_subparsers(dest="templ", title="templates")
+        templ_subparsers.add_parser(
+            "raw",
+            description="Use command directly without invoking a template")
 
         cmd_templates = contents["templates"].get(cmd)
         if cmd_templates:
@@ -102,11 +176,17 @@ def populate_template_args(parser, contents):
 
 
 def populate_own_args(parser):
-    parser.add_argument("--defs",
+    parser.add_argument(
+        "--explain",
+        action="store_true",
+        help="Display docs on usage and json definition format")
+    parser.add_argument(
+        "--defs",
         default=[DEFAULT_FILEPATH],
         action="append",
         help="Specify custom template file")
-    parser.add_argument("--dry-run",
+    parser.add_argument(
+        "--dry-run",
         action="store_true",
         help="print args, shell command and exit")
 
@@ -114,20 +194,22 @@ def populate_own_args(parser):
 def process(args, unknown_args, static):
     substs = {}
     for name, val in args.__dict__.items():
-        substs["[{}]".format(name)] = val
+        substs["{{{}}}".format(name)] = val
 
-    def formatter(acc, a):
-        if "map" not in a:
+    def formatter(acc, arg):
+        if "map" not in arg:
             return acc
 
-        mapped = multi_replace(a["map"], substs)
+        mapped = multi_replace(arg["map"], substs)
 
         farg_count = mapped.count("{}")
         if farg_count == 0:
             acc.append(mapped)
         else:
-            fl = lambda l: chain.from_iterable([[el] if not isinstance(el, list) else fl(el) for el in l])
-            flattened = list(fl([getattr(args, a["name"])]))
+            flatten = lambda l: chain.from_iterable(
+                [[el] if not isinstance(el, list) else flatten(el) for el in l]
+            )
+            flattened = list(flatten([getattr(args, arg["name"])]))
             acc.append(mapped.format(*flattened))
         return acc
 
@@ -141,8 +223,13 @@ def process(args, unknown_args, static):
 
 def main():
     init_parser = argparse.ArgumentParser(add_help=False)
+
     populate_own_args(init_parser)
     own_args = init_parser.parse_known_args()[0]
+
+    if own_args.explain:
+        print(__doc__)
+        exit(0)
 
     parser = argparse.ArgumentParser()
     populate_own_args(parser)
