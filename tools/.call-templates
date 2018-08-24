@@ -1,62 +1,108 @@
 {
-    "commands": {
-        "aws": {
-            "desc": "aws console client",
-            "args": [
-                {
-                    "desc": "use s3 api toolset",
-                    "map": "s3api"
-                },
-                {
-                    "desc": "BCS endpoint",
-                    "map": "--endpoint-url \"https://s3.[env].[dc].bcs.bloomberg.com\""
-                },
-                {
-                    "name": "env",
-                    "desc": "BCS environment",
-                    "choices": ["dev", "prod"],
-                    "default": "dev"
-                },
-                {
-                    "name": "dc",
-                    "desc": "BCS datacenter",
-                    "choices": ["rrdc", "obdc"],
-                    "default": "rrdc"
-                },
-                {
-                    "name": "output",
-                    "desc": "Output format",
-                    "default": "json",
-                    "map": "--output {}"
-                }
-            ]
+  "commands": {
+    "aws": {
+      "desc": "AWS-based BCS console client",
+      "args": [
+        {
+          "desc": "use s3 api toolset",
+          "map": "s3api"
+        },
+        {
+          "desc": "BCS endpoint",
+          "map": "--endpoint-url \"https://s3.{env}.{dc}.bcs.com\""
+        },
+        {
+          "name": "env",
+          "desc": "BCS environment",
+          "choices": [
+            "dev",
+            "prod"
+          ],
+          "default": "dev"
+        },
+        {
+          "name": "dc",
+          "desc": "BCS datacenter",
+          "choices": [
+            "rrdc",
+            "obdc"
+          ],
+          "default": "rrdc"
+        },
+        {
+          "name": "output",
+          "desc": "Output format",
+          "default": "json",
+          "map": "--output {}"
         }
-    },
-    "templates": {
-        "aws": {
-            "go": {
-                "desc": "get object",
-                "args": [
-                    {
-                        "name": "bucket",
-                        "shortcut": "b",
-                        "desc": "target bucket name",
-                        "default": "ephemeral",
-                        "map": "--bucket {}"
-                    },
-                    {
-                        "name": "key",
-                        "desc": "object key",
-                        "map": "--key {}"
-                    },
-                    {
-                        "name": "outfile",
-                        "desc": "output file",
-                        "default": "object.json",
-                        "map": "{}"
-                    }
-                ]
-            }
-        }
+      ]
     }
+  },
+  "templates": {
+    "aws": {
+      "go": {
+        "desc": "Get BCS object by bucket and key",
+        "args": [
+          {
+            "desc": "get object command",
+            "map": "get-object"
+          },
+          {
+            "name": "bucket",
+            "shortcut": "b",
+            "desc": "target bucket name",
+            "default": "ephemeral",
+            "map": "--bucket {}"
+          },
+          {
+            "name": "key",
+            "desc": "object key",
+            "map": "--key {}"
+          },
+          {
+            "name": "outfile",
+            "desc": "output file",
+            "default": "object.json",
+            "map": "{}"
+          }
+        ]
+      },
+      "listlogs": {
+        "desc": "List all log objects in logdownloader bucket",
+        "args": [
+          {
+            "desc": "list objects command",
+            "map": "list-objects"
+          },
+          {
+            "desc": "log bucket",
+            "map": "--bucket logdownloader"
+          }
+        ]
+      },
+      "findkeys": {
+        "desc": "Search BCS bucket (logdownloader by default) for matching keys given an awk regex",
+        "args": [
+          {
+            "desc": "list objects command",
+            "map": "list-objects"
+          },
+          {
+            "name": "bucket",
+            "desc": "bucket name",
+            "default": "logdownloader",
+            "map": "--bucket {}"
+          },
+          {
+            "name": "awk-regex",
+            "desc": "awk regex to match object keys (i.e. DFPATH part)"
+          },
+          {
+            "desc": "tail filters and formatters",
+            "map": " | jq '.Contents[].Key' | awk '/{subject}/ {gsub(\"\\\"\", \"\", $0); print}'"
+          }
+        ]
+      }
+    }
+  }
 }
