@@ -72,3 +72,9 @@
 [submodule "bundle/Rename"]
 	path = bundle/Rename
 	url = http://github.com/vim-scripts/Rename
+[submodule "bundle/open_file_under_cursor.vim"]
+	path = bundle/open_file_under_cursor.vim
+	url = http://github.com/amix/open_file_under_cursor.vim
+[submodule "bundle/vim-multiple-cursors"]
+	path = bundle/vim-multiple-cursors
+	url = http://github.com/terryma/vim-multiple-cursors

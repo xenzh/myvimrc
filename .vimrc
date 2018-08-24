@@ -11,6 +11,52 @@
 "   Search .lvimrc files from pwd up to root and source them in
 "   https://github.com/embear/vim-localvimrc
 "
+" * fzf, fzf.vim
+"   Search for files, tags and more based on fzf command-line tool
+"   https://github.com/junegunn/fzf
+"   https://github.com/junegunn/fzf.vim
+"
+" * l9, vim-AutoComplPop
+"   Automatic simple text completion
+"   https://github.com/vim-scripts/L9
+"   https://github.com/vim-scripts/AutoComplPop
+"
+" * vim-bookmarks
+"   visual bookmarks and annotations
+"   https://github.com/MattesGroeger/vim-bookmarks
+"
+"
+" * nerdcommenter
+"   block comment/uncomment
+"   https://github.com/scrooloose/nerdcommenter
+"
+" * vim-multiple-cursors
+"   Sublime Text-line multiple cursors
+"   https://github.com/terryma/vim-multiple-cursors
+"
+" * rename
+"   Rename file inplace
+"   https://github.com/vim-scripts/Rename
+"
+" * open_file_under_cursor.vim
+"   :gf, <c-w><c-f>, <c-w>f
+"   https://github.com/amix/open_file_under_cursor.vim
+"
+"
+" * nerdtree
+"   Side pane for filesystem navigation
+"   https://github.com/Xuyuanp/nerdtree-git-plugin
+
+" * tagbar
+"   Side pane, code outline
+"   https://github.com/majutsushi/tagbar
+"
+" * vim-airline, vim-airline-themes
+"   Configurable status bar and buffer tabs
+"   https://github.com/vim-airline/vim-airline
+"   https://github.com/vim-airline/vim-airline-themes
+"
+"
 " * async.vim, asyncomplete.vim
 "   Asynchronous code completion engine
 "   https://github.com/prabirshrestha/async.vim
@@ -24,41 +70,6 @@
 " * ale
 "   Asynchronous multi-language linter, formatter and autocompleter
 "   https://github.com/w0rp/ale
-"
-" * nerdcommenter
-"   block comment/uncomment
-"   https://github.com/scrooloose/nerdcommenter
-"
-" * fzf, fzf.vim
-"   Search for files, tags and more based on fzf command-line tool
-"   https://github.com/junegunn/fzf
-"   https://github.com/junegunn/fzf.vim
-"
-" * vim-bookmarks
-"   visual bookmarks and annotations
-"   https://github.com/MattesGroeger/vim-bookmarks
-"
-" * nerdtree
-"   Side pane for filesystem navigation
-"   https://github.com/Xuyuanp/nerdtree-git-plugin
-"
-" * rename
-"   Rename file inplace
-"   https://github.com/vim-scripts/Rename
-"
-" * tagbar
-"   Side pane, code outline
-"   https://github.com/majutsushi/tagbar
-"
-" * vim-airline, vim-airline-themes
-"   Configurable status bar and buffer tabs
-"   https://github.com/vim-airline/vim-airline
-"   https://github.com/vim-airline/vim-airline-themes
-"
-" * l9, vim-AutoComplPop
-"   Automatic simple text completion
-"   https://github.com/vim-scripts/L9
-"   https://github.com/vim-scripts/AutoComplPop
 "
 " * fugitive
 "   Git integration (integrated with vim-airline)
