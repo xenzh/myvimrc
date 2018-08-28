@@ -43,12 +43,8 @@
 "   https://github.com/amix/open_file_under_cursor.vim
 "
 "
-" * nerdtree
-"   Side pane for filesystem navigation
-"   https://github.com/Xuyuanp/nerdtree-git-plugin
-
 " * tagbar
-"   Side pane, code outline
+"   Side pane, code outline. Integrates w/ airline to show tag path under cursor
 "   https://github.com/majutsushi/tagbar
 "
 " * vim-airline, vim-airline-themes
@@ -452,10 +448,6 @@ cnoreabbrev rn Rename
 " tagbar
 let g:tagbar_autofocus = 1
 nmap <F8> :TagbarToggle<CR>
-
-
-" nerdtree
-nmap <F7> :NERDTreeToggle<CR>
 
 
 " fzf.vim
