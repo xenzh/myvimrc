@@ -167,7 +167,7 @@ set tags+=./tags;/
 
 " simple menu and word autocompletion
 set wildmenu
-set wildignore+=*.o,*.pyc
+set wildignore+=*.o,*.d,*.pyc
 
 set completeopt=longest,menuone
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
@@ -181,7 +181,6 @@ inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
 
 " syntax highlighting
 syntax on
-filetype plugin indent on
 set cursorline
 
 
@@ -209,6 +208,9 @@ set background=dark
 colorscheme bubblegum-256-dark
 hi SpecialKey ctermfg=darkgray " should be set after set listchars and colorscheme
 hi TabLineSel ctermfg=darkgray
+
+" vim-airline colors
+let g:airline_theme='bubblegum'
 
 " vim-bookmarks colors
 highlight BookmarkSign ctermbg=237 ctermfg=79
@@ -306,15 +308,8 @@ cnoreabbrev wd Wbd
 
 " formatting
 function! DoFmt()
-  if &ft == 'json'
-    "%!python -m json.tool
-    "%s/\s\s/ /g " replace indent, 4 spaces -> 2 spaces
-    %!jq .
-  elseif &ft == 'xml'
-    %!xmllint --format -
-  elseif &ft == 'rust'
-    execute 'RustFmt'
-  endif
+  " See DoFmt() implementations for concrete filetypes
+  echo 'Formatting is not implemented for this filetype (see .vim/ftplugin)'
 endfunction
 
 command! Fmt :call DoFmt()
@@ -342,6 +337,9 @@ command! O %bd | e#
 " list all highlight groups
 command! Hi :so $VIMRUNTIME/syntax/hitest.vim
 
+
+" find word under cursor, open quickfix with results
+command! Gr :execute 'vimgrep '.expand('<cword>').' '.expand('%') | :copen
 
 
 
@@ -378,11 +376,7 @@ endfunction
 
 
 " ale
-let g:ale_linters = {
-    \ 'cpp': ['clang'],
-    \ 'python': ['flake8', 'pylint']
-\ }
-let g:ale_python_pylint_options="-d C0111" " suppress missing doscstring warnings
+let g:ale_linters = {}
 
 let g:ale_completion_enabled = 1
 let g:ale_open_list = 0
@@ -402,11 +396,13 @@ function! GetLintingMessage()
     return g:my_linter_running ? "[linting...]" : "[idle]"
 endfunction
 
-augroup ALEProgress
-    autocmd!
-    autocmd User ALELintPre let g:ale_cpp_clang_options = g:my_cpp_linter_flags | let g:my_linter_running = 1 | redrawstatus
-    autocmd User ALELintPost let g:my_linter_running = 0 | let g:ale_open_list = 0 | redrawstatus
-augroup end
+if !exists("my_global_ale_au_loaded")
+    let my_global_ale_au_loaded = 1
+    augroup ALEProgress
+        autocmd User ALELintPre let g:my_linter_running = 1 | redrawstatus
+        autocmd User ALELintPost let g:my_linter_running = 0 | let g:ale_open_list = 0 | redrawstatus
+    augroup end
+endif
 
 function! DoCheckSyntax()
     let g:ale_open_list = 1
@@ -448,10 +444,8 @@ function! AirlineInit()
   endfunction
 autocmd User AirlineAfterInit call AirlineInit()
 
-let g:airline_theme='bubblegum'
 
-
-" rename
+" rename (rename current file)
 cnoreabbrev rn Rename
 
 
@@ -478,11 +472,11 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 
 nmap [p :Files<CR> " files in working dir
 nmap ]p :exe('Files ' . expand('%:p:h'))<CR> " files in directory of current file
+nmap ][p :Files ~<CR> " files in home dir
 
 nmap [o :call LocalTags()<CR> " tags in working dir
 nmap ]o :BTags<CR> " tags in this buffer
 nmap ][o :Tags<CR> " all tags
-
 
 
 " vim-bookmarks
@@ -501,111 +495,7 @@ let g:bookmark_location_list = 0 " quickfix or location list
 nmap ml <Plug>BookmarkShowAll
 
 
-
-
-"
-" Language-specific plugins and tweaks
-"
-
-
-" [C++] vim-cpp-enhanced-highlight
-let g:cpp_class_scope_highlight = 1
-let g:cpp_experimental_template_highlight = 1
-
-
-" [C++] load cpp flags to variable for linting
-let g:my_cpp_linter_flags = ""
-function! GetCppFlagsFromClangDb(init_flags)
-    let jq = printf("jq '.[] | select(.file | contains(\"%s\"))' ./compile_commands.json | jq -s '.[0]? | .arguments[]?'", expand('%'))
-
-    let flags = a:init_flags
-    for clangdb_file in findfile('compile_commands.json', '.;', -1)
-        if !filereadable(clangdb_file)
-            continue
-        endif
-        let entry = system(jq)
-        let flags += filter(split(substitute(entry, '\"', '', 'g'), '\n'), {idx, val -> val[0] == '-' && val != '-o'})
-    endfor
-    return flags
-endfunction
-
-function! GetCppFlagsFromClangFile(init_flags)
-    let flags = a:init_flags
-    for clang_file in findfile('.clang', '.;', -1)
-        if !filereadable(clang_file)
-            continue
-        endif
-        let filtered = readfile(clang_file)
-        call filter(filtered, {idx, val -> val[0] == '-'})
-        let flags += filtered
-    endfor
-    return flags
-endfunction
-
-function! LoadCppFlags()
-    let flags = ['-Wno-unknown-warning-option', '-Qunused-arguments']
-    let flags += GetCppFlagsFromClangDb(flags)
-    if len (flags) == 0
-        let flags += ['-std=c++14', '-Wall']
-        let flags += GetCppFlagsFromClangFile(flags)
-    endif
-    let g:my_cpp_linter_flags = join(flags, ' ')
-endfunction
-
-:autocmd FileType cpp call LoadCppFlags()
-
-
-" [C++] start clangd (via vim-lsp plugin)
-if executable('clangd')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'clangd',
-        \ 'cmd': {server_info->['clangd']},
-        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
-        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-        \ })
-endif
-
-
-" [C++] start cquery (via vim-lsp, if clangd is unavailble)
-function! SetupCquery()
-    if !executable('clangd') && executable('cquery')
-        if !exists("g:my_cpp_cquery_cache_dir")
-            echo "WARN: cpp cquery cache dir is not set, defaulting to profile's tmp"
-            let g:my_cpp_cquery_cache_dir = "~/tmp/cquery-cache"
-        endif
-
-        au User lsp_setup call lsp#register_server({
-            \ 'name': 'cquery',
-            \ 'cmd': {server_info->['cquery']},
-            \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
-            \ 'initialization_options': { 'cacheDirectory': expand(g:my_cpp_cquery_cache_dir) },
-            \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
-            \ })
-    endif
-endfunction
-au User LocalVimRCPost call SetupCquery()
-
-
-" vim-lsp and asyncomplete.vim debugging
-let g:lsp_log_verbose = 1
+" vim-lsp and asyncomplete.vim debugging (uncomment to enable logging)
+"let g:lsp_log_verbose = 1
 "let g:lsp_log_file = expand('~/lsp-vim.log')
 "let g:asyncomplete_log_file = expand('~/lsp-asyncomplete.log')
-
-" [Rust] start RLS (via vim-lsp plugin)
-if executable('rls')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'rls',
-        \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
-        \ 'whitelist': ['rust'],
-        \ })
-endif
-
-" [python] start python language server (via vim-lsp)
-if executable('pyls')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'pyls',
-        \ 'cmd': {server_info->['pyls']},
-        \ 'whitelist': ['python'],
-        \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:false}}}},
-        \ })
-endif
