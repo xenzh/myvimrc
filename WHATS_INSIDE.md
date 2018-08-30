@@ -10,6 +10,7 @@ This package contains:
 I've started this repository just for .vimrc and plugins. A that time keeping everything in .vim directory seemed like a good idea.
 Now, with other dotfiles and scripts it's kind of a mess, I guess adopting XDG directories might be a good idea.
 
+
 ## Requirements and third-party tools
 
 ### Requirements
@@ -58,9 +59,19 @@ These settings are intended to be directly used as `tmux` config file.
 ### vim
 This vim configuration is built mainly for C++/python/Rust development and includes a bunch of niceties to make life a bit easier (my vim-fu is still not very good).
 From development side it provides code highlighting, linting, autocompletion, quick files/tags navigation.
+
+Interesting features:
+* C++ compile flags
+  Both `ALE` and `clangd` work best if provided with a set of compile flags for each file they process, `-I` in particular. There are several ways to specify them:
+  * `compile_commands.json` - `clang` compilation database file, could be generated with `cmake` or tools like `bear`. Just put it in repo root folder, make sure it has right pathing (see `ccfix.py` tool), open vim and you're all set. Note that compilation database doesn't contain entries for header files - for them `vim` will try to get flags from matching cpp, and if it's missing will fall back to the next option.
+  * `.clang` - if compilation database is missing or failed to load, `vim` tries to read `-I` flags from this file's lines and apply them to all h/cpp in this repo. Tools like `clang.vim` and `cquery` also accept files in this format, `clangd` doesn't.
+  * `g:my_cpp_linter_flags` - specify flags manually in local vimrc file _(actually this might be broken)_.
+
 For more details check out [mappings doc](MAPPINGS.md).
 
+
 ## VIM Plugins
+
 ### System
 * **[pathogen.vim](https://github.com/tpope/vim-pathogen)** - runtimepath (plugin) manager
 * **[fzf](https://github.com/junegunn/fzf)** and **[fzf.vim](https://github.com/junegunn/fzf.vim)** - search files, lines, history, mappings etc using integrated `fzf` command line tool
@@ -73,7 +84,7 @@ For more details check out [mappings doc](MAPPINGS.md).
 * **[vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)** - Sublime Text-like multiple cursors
 * **[Rename](https://github.com/vim-scripts/Rename)** - rename file opened in current buffer
 * **[Open file under cursor](https://github.com/amix/open_file_under_cursor.vim)** - opens file under cursor, duh
- 
+
 ### UI
 * **[vim-airline](https://github.com/vim-airline/vim-airline)** and **[vim-airline-themes](https://github.com/vim-airline/vim-airline-themes)** - functional configurable statusbar written in pure vimscript; integrates with a bunch of other plugins.
 
@@ -87,13 +98,11 @@ For more details check out [mappings doc](MAPPINGS.md).
 
 ### Coding, language-specific
 * **[vim.cpp](https://github.com/octol/vim-cpp-enhanced-highlight)** - additional C++ syntax highlighting
-* **[rist.vim](https://github.com/rust-lang/rust.vim)** - Rust filetype, better syntax highlighting, formatting, `tagbar` integration
+* **[rust.vim](https://github.com/rust-lang/rust.vim)** - Rust filetype, better syntax highlighting, formatting, `tagbar` integration
 * **[vim-json](https://github.com/elzr/vim-json)** - better json highlighting and validation
 * **[vim-toml](https://github.com/cespare/vim-toml)** - syntax highlighting for TOML
 * **[csv.vim](https://github.com/chrisbra/csv.vim)** - column-based csv representation
 
-## Commands, mappings and snippets
-MOVE TO NEW FILE! for vim and tmux with links to standard; leave a link here
 
 ## Tools
 ### [`myvimrc`](tools/myvimrc)

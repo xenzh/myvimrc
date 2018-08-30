@@ -1,12 +1,8 @@
 # My trusty dotfiles
-## What's inside
-Configuration that makes C++ and Rust development a little bit easier for brave souls using xterm + tmux + vim setup.
-Features:
-* Basic vim settings: mappings, indents, etc
-* Collection of vim plugins for C++/Rust development managed with pathogen and git submodules
-* tmux config (mouse mode, colors and tricks)
-* xterm config (to be included into `~/.Xresources`): look, feel and, most importantly, colors
-* a number of handy aliases
+
+(What's inside)[WHATS\_INSIDE.md]
+(Mappings and commands)[MAPPINGS.md]
+
 
 ## Installation
 1. Clone this repo to your `~/.vim` folder and download the plugins
@@ -48,6 +44,8 @@ set -g default-terminal "screen-256color"
 
 ## How to add, remove and update plugins
 
+Use `tools/myvimrc` script. Or, if you prefer to do things manually:
+
 ### Add
 ```
 cd ~/.vim/bundle
@@ -66,7 +64,7 @@ git commit -m "Updated plugins"
 ```
 
 ### Remove
-See https://gist.github.com/myusuf3/7f645819ded92bda6677. Alternatively:
+See https://gist.github.com/myusuf3/7f645819ded92bda6677 (outdated). Alternatively:
 ```
 cd ./.vim/bundle
 rm -rf ./plugin
@@ -81,6 +79,3 @@ Little optional magic to `~/.bashrc`:
 ```
 PS1='\[\e]0;\u@\h:\w\a\][\u@\h \W$(__git_ps1 " (%s)")]\$ '
 ```
-
-## Details
-Please check `.vimrc` comments for list of plugins (and short explanations what they for) and list of required external tools

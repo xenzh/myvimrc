@@ -1,15 +1,18 @@
 # Mappings and commands
 
+
 ## vim, `.vimrc`
 
 Following mappings and commands are added in `.vimrc`.
 `<leader>` key is `\`.
+
 
 ### View
 
 * `F6` - toggle line numbers and space chars (useful for working with system clipboard)
 * `F8` - _tagbar_, toggle code outline view
 * `ml` - _vim-bookmarks_, show all bookmarks
+
 
 ### Navigation
 
@@ -32,21 +35,26 @@ Switch airline tabs/buffers:
 Search text and files:
 * `:Gr` - find word under cursor, open quickfix with results
 * `gf` - _open file under cursor_, jump to file
-* `[p` - _fzf.vim_, search files in current working directory
-* `]p` - _fzf.vim_, search files near current file
-* `][p` - _fzf.vim_, search files in user home directory
-* `[o` - _fzf.vim_, search tags in current working directory
-* `]o` - _fzf.vim_, search tags in this buffer
-* `][o` - _fzf.vim_, search all loaded tags
+* _fzf.vim_, search files
+  * `[p` - in current working directory
+  * `]p` - near current file
+  * `][p` -in user home directory
+* _fzf.vim_, search tags
+  * `[o` - in current working directory
+  * `]o` - in this buffer
+  * `][o` - all loaded tags
 
 Code:
 * `]c` and `[c` - jump to next/previous git merge marker
-* `;;` - _LSP_, go to symbol definition
-* `;'` - _LSP_, find references
-* `;l` - _LSP_, symbol hover info
-* `F5` - _ALE_, check syntax and open location list if there are warnings/errors
-* `:C` - _ALE_, clean all error/warning indicators, close location list
-* `:D` - _ALE_, show preview window with error/warning description
+* _vim-lsp_
+  * `;;` - go to symbol definition
+  * `;'` - find references
+  * `;l` - symbol hover info
+* _ALE_
+  * `F5` - check syntax and open location list if there are warnings/errors
+  * `:C` - clean all error/warning indicators, close location list
+  * `:D` - show preview window with error/warning description
+
 
 ### Editing
 
@@ -67,9 +75,26 @@ Code:
 
 Following mappings/commands are defined by plugins or are vim defaults. I keep them here as a cheat sheet.
 
-* `noh` - disable search results highlighting.
-* `:set noexpandtab` - `Tab` inserts tabs, not spaces. Use when editing code intended with tabs.
-* `:set wrap` / `:set nowrap` - enable/disable line wrapping.
+* Default
+  * `noh` - disable search results highlighting.
+  * `:set noexpandtab` - `Tab` inserts tabs, not spaces. Use when editing code intended with tabs.
+  * `:set wrap` / `:set nowrap` - enable/disable line wrapping.
+  * tags
+    * `Ctrl-]` - go to definition of symbol under cursor
+    * `:ta` - go to symbol definition
+    * `g]` - list symbol definitions
+    * `Ctrl-t` - go back
+* Plugins
+  * vim-bookmarks
+    * `mm` -- toggle bookmark at current line
+    * `mi` - add/edit/remove annotation at current line
+    * `ma` - _[remapped to `ml`]_ - toggle list all bookmarks
+    * `mn`, `mp` - jump to next/prev bookmark
+    * `mc`, `mx` - clear boormarks in current buffer/in all buffers
+  * NERD Commenter
+    * `<leader>-c, l` - comment selected lines with line comments (not block)
+    * `<leader-c, u>` - uncomment selected lines
+
 
 ## tmux
 
