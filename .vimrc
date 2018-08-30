@@ -311,6 +311,31 @@ endfunction
 command! Fmt :call DoFmt()
 
 
+" Range function wrapper that reads selected text and calls a functor
+" https://vi.stackexchange.com/a/11028
+function! s:process_selection(fn) range
+  let [lnum1, col1] = getpos("'<")[1:2]
+  let [lnum2, col2] = getpos("'>")[1:2]
+  let lines = getline(lnum1, lnum2)
+  let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
+  let lines[0] = lines[0][col1 - 1:]
+  call a:fn(join(lines, "\n"))
+endfunction
+
+
+" Interpret selection as json, copy it to right split and format
+function! JsonToRsplit(sel)
+    below vnew
+    let @a = a:sel
+    normal! G
+    execute 'put a'
+    setf json
+    call DoFmt()
+endfunction
+
+command! -range Jsp <line1>,<line2>call s:process_selection(function('JsonToRsplit'))
+
+
 " toggle space chars visibility
 function! DoToggleSpaceChars()
   set list!
