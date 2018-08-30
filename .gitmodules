@@ -19,14 +19,6 @@
 [submodule "bundle/vim-json"]
 	path = bundle/vim-json
 	url = http://github.com/elzr/vim-json
-[submodule "bundle/AutoComplPop"]
-	path = bundle/AutoComplPop
-    url = http://github.com/vim-scripts/AutoComplPop
-    ignore = dirty
-[submodule "bundle/L9"]
-	path = bundle/L9
-    url = http://github.com/vim-scripts/L9
-    ignore = dirty
 [submodule "bundle/csv.vim"]
 	path = bundle/csv.vim
 	url = http://github.com/chrisbra/csv.vim
@@ -75,3 +67,9 @@
 [submodule "bundle/vim-multiple-cursors"]
 	path = bundle/vim-multiple-cursors
 	url = http://github.com/terryma/vim-multiple-cursors
+[submodule "bundle/asyncomplete-buffer.vim"]
+	path = bundle/asyncomplete-buffer.vim
+	url = http://github.com/prabirshrestha/asyncomplete-buffer.vim
+[submodule "bundle/asyncomplete-tags.vim"]
+	path = bundle/asyncomplete-tags.vim
+	url = http://github.com/prabirshrestha/asyncomplete-tags.vim

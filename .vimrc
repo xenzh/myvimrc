@@ -1,114 +1,6 @@
 "
 " MY Vimrc, one and only
 "
-"
-" Plugins:
-" * pathogen
-"   Runtime path manager (.vim/bundle plugin autoload)
-"   https://github.com/tpope/vim-pathogen
-"
-" * vim-localvimrc
-"   Search .lvimrc files from pwd up to root and source them in
-"   https://github.com/embear/vim-localvimrc
-"
-" * fzf, fzf.vim
-"   Search for files, tags and more based on fzf command-line tool
-"   https://github.com/junegunn/fzf
-"   https://github.com/junegunn/fzf.vim
-"
-" * l9, vim-AutoComplPop
-"   Automatic simple text completion
-"   https://github.com/vim-scripts/L9
-"   https://github.com/vim-scripts/AutoComplPop
-"
-" * vim-bookmarks
-"   visual bookmarks and annotations
-"   https://github.com/MattesGroeger/vim-bookmarks
-"
-"
-" * nerdcommenter
-"   block comment/uncomment
-"   https://github.com/scrooloose/nerdcommenter
-"
-" * vim-multiple-cursors
-"   Sublime Text-line multiple cursors
-"   https://github.com/terryma/vim-multiple-cursors
-"
-" * rename
-"   Rename file inplace
-"   https://github.com/vim-scripts/Rename
-"
-" * open_file_under_cursor.vim
-"   :gf, <c-w><c-f>, <c-w>f
-"   https://github.com/amix/open_file_under_cursor.vim
-"
-"
-" * tagbar
-"   Side pane, code outline. Integrates w/ airline to show tag path under cursor
-"   https://github.com/majutsushi/tagbar
-"
-" * vim-airline, vim-airline-themes
-"   Configurable status bar and buffer tabs
-"   https://github.com/vim-airline/vim-airline
-"   https://github.com/vim-airline/vim-airline-themes
-"
-"
-" * async.vim, asyncomplete.vim
-"   Asynchronous code completion engine
-"   https://github.com/prabirshrestha/async.vim
-"   https://github.com/prabirshrestha/asyncomplete.vim
-"
-" * vim-lsp, asyncomplete-lsp
-"   Language Server Protocol support and async completion engine bindings
-"   https://github.com/prabirshrestha/vim-lsp
-"   https://github.com/prabirshrestha/asyncomplete-lsp.vim
-"
-" * ale
-"   Asynchronous multi-language linter, formatter and autocompleter
-"   https://github.com/w0rp/ale
-"
-" * fugitive
-"   Git integration (integrated with vim-airline)
-"   https://github.com/tpope/vim-fugitive
-"
-" * a.vim
-"   :A switch between associated files (h/cpp)
-"   https://github.com/vim-scripts/a.vim
-"
-" * vim-cpp-enhanced-highlight
-"   Better C++ code highlighting
-"   https://github.com/octol/vim-cpp-enhanced-highlight
-"
-" * rust.vim
-"   Better syntax highlighting, syntastic checkers and formatter for Rust
-"   https://github.com/rust-lang/rust.vim
-"
-" * csv.vim, vim-json, vim-toml
-"   Pretty printers and syntax highlighters for csv, json and toml
-"   https://github.com/chrisbra/csv.vim
-"   https://github.com/elzr/vim-json
-"   https://github.com/cespare/vim-toml
-"
-"
-" Third-party tools and binaries:
-" * git (vim-airline, branch and status; fugitive, git integration)
-" * ag (better grep, used by fzf)
-" * fzf (command-line fuzzy finder tool)
-" * ctags (code navigation. exuberant-ctags recommended)
-" * jq (json formatting; see below for python-based option)
-" * xmllint (xml formatting)
-"
-" * clang++ (C++ linting, via ale)
-" * clangd/cquery (C/C++ code completion and navigation, used with LSP)
-" * bear (https://github.com/rizsotto/Bear) - generating clang compilation databases for clang tools
-"
-" * cargo, rustc (Rust linting, via ale)
-" * rustfmt, rls, racer (Rust formatting and code completion; install with rustup, used by LSP)
-"
-" * python-language-server (python code completion and navigation, install with pip, used by LSP)
-" * pylint/flake8 (python linting, via ale)
-"
-"
 " Other files:
 " * .lvimrc - local vim config files
 " * .clang - simple file with C++ compiler flags, linter uses it to locate headers
@@ -161,18 +53,10 @@ set ignorecase
 set tags+=./tags;/
 
 
-" simple menu and word autocompletion
+" wild menu and popup autocompletion
 set wildmenu
 set wildignore+=*.o,*.d,*.pyc
-
 set completeopt=longest,menuone
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
-  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-
-inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
-  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 
 " syntax highlighting
@@ -246,6 +130,12 @@ set vb t_vb=""
 :inoremap <Esc>Ol +
 :inoremap <Esc>OS -
 :inoremap <Esc>OM <Enter>
+
+
+" autocompletion popup controls
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 
 
 " split resize remappings
@@ -381,6 +271,31 @@ let g:localvimrc_name = ["~/.lvimrc"]
 let g:localvimrc_event = ["VimEnter"]
 let g:localvimrc_sandbox = 0
 let g:localvimrc_ask = 0
+
+
+" asyncomplete.vim
+let g:asyncomplete_smart_completion = 1
+let g:asyncomplete_auto_popup = 1
+let g:asyncomplete_remove_duplicates = 1
+
+" completion source: asyncomplete-buffer.vim
+call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+    \ 'name': 'buffer',
+    \ 'whitelist': ['*'],
+    \ 'priority': 0,
+    \ 'completor': function('asyncomplete#sources#buffer#completor'),
+    \ }))
+
+" completion source: asyncomplete-tags.vim
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options({
+    \ 'name': 'tags',
+    \ 'whitelist': ['c', 'cpp', 'python'],
+    \ 'priority': 1,
+    \ 'completor': function('asyncomplete#sources#tags#completor'),
+    \ 'config': {
+    \    'max_file_size': 50000000,
+    \  },
+    \ }))
 
 
 " vim-lsp
