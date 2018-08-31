@@ -73,3 +73,6 @@
 [submodule "bundle/asyncomplete-tags.vim"]
 	path = bundle/asyncomplete-tags.vim
 	url = http://github.com/prabirshrestha/asyncomplete-tags.vim
+[submodule "bundle/asyncomplete-file.vim"]
+	path = bundle/asyncomplete-file.vim
+	url = http://github.com/prabirshrestha/asyncomplete-file.vim

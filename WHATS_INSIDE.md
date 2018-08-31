@@ -75,8 +75,13 @@ For more details check out [mappings doc](MAPPINGS.md).
 ### System
 * **[pathogen.vim](https://github.com/tpope/vim-pathogen)** - runtimepath (plugin) manager
 * **[fzf](https://github.com/junegunn/fzf)** and **[fzf.vim](https://github.com/junegunn/fzf.vim)** - search files, lines, history, mappings etc using integrated `fzf` command line tool
-* **[L9](https://github.com/vim-scripts/L9)** and **[AutoComplPop](https://github.com/vim-scripts/AutoComplPop)** - _[to remove?]_ autopupup simple word completion engine (like in Sublime Text)
-* **[async.vim](https://github.com/prabirshrestha/async.vim)** and **[asyncomplete.vim](https://github.com/prabirshrestha/asyncomplete.vim)** - async job control and autocompletion engine
+* **[async.vim](https://github.com/prabirshrestha/async.vim)** - async job control normalization library
+* **[asyncomplete.vim](https://github.com/prabirshrestha/asyncomplete.vim)** - asynchronous autocompletion engine
+  * **[asyncomplete-buffer.vim](https://github.com/prabirshrestha/asyncomplete-buffer.vim)** - source for buffed-based word completion
+  * **[asyncomplete-tags.vim](https://github.com/prabirshrestha/asyncomplete-tags.vim)** - source for loaded tags
+  * **[asyncomplete-file.vim](https://github.com/prabirshrestha/asyncomplete-file.vim)** - source for filenames
+  * **[asyncomplete-lsp](https://github.com/prabirshrestha/asyncomplete-lsp.vim)** -  source for LSP client
+
 * **[Localvimrc](https://github.com/embear/vim-localvimrc)** - _[to remove?]_ source `.lvimrc` local config files found in directories from cwd to home
 * **[vim-bookmarks](https://github.com/MattesGroeger/vim-bookmarks)** - visual bookmarks and annotations
 
@@ -90,7 +95,7 @@ For more details check out [mappings doc](MAPPINGS.md).
 
 ### Coding, general
 * **[ALE](https://github.com/w0rp/ale)** - Asynchronous Linting Engine: multilanguage code linting and fixing (plus rudimentary LSP client)
-* **[vim-lsp](https://github.com/prabirshrestha/vim-lsp)** and **[asyncomplete-lsp](https://github.com/prabirshrestha/asyncomplete-lsp.vim)** - Language Server Protocol client and source provider for `asyncomplete.vim` engine
+* **[vim-lsp](https://github.com/prabirshrestha/vim-lsp)** - asynchronous Language Server Protocol client
 * **[fugitive](https://github.com/tpope/vim-fugitive)** - git integration, integrated with `vim-airline` (branch/status)
 * **[tagbar](https://github.com/majutsushi/tagbar)** - code outline viewer, integrated with `vim-airline` (classpath)
 * **[NERD Commenter](https://github.com/scrooloose/nerdcommenter)** - block comment/uncomment

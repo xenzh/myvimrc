@@ -289,12 +289,20 @@ call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options
 " completion source: asyncomplete-tags.vim
 au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options({
     \ 'name': 'tags',
-    \ 'whitelist': ['c', 'cpp', 'python'],
-    \ 'priority': 1,
+    \ 'whitelist': ['c', 'cpp', 'python', 'rust'],
+    \ 'priority': 0,
     \ 'completor': function('asyncomplete#sources#tags#completor'),
     \ 'config': {
     \    'max_file_size': 50000000,
     \  },
+    \ }))
+
+" completion source: asyncomplete-file.vim
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+    \ 'name': 'file',
+    \ 'whitelist': ['*'],
+    \ 'priority': 10,
+    \ 'completor': function('asyncomplete#sources#file#completor')
     \ }))
 
 
