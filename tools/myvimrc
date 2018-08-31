@@ -1,22 +1,43 @@
 #!/bin/bash
 
 show_usage_and_exit() {
-    echo -e "$2\n"
+    echo -e "$2\\n"
     echo -e "Usage: $0 <command> <args>"
-    echo -e "Commands: add-plugin, remove-plugin, update-plugins\n"
-    exit $1
+    echo -e "Commands: help, install, uninstall, update, add-plugin, remove-plugin, update-plugins\\n"
+    echo -e "  * help - show this message"
+    echo -e "  * install - [not implmemented] link dotfiles, init plugin submodules"
+    echo -e "  * uninstall - [not implmemented] unlink dotfiles"
+    echo -e "  * update - pull latest master and update plugins"
+    echo -e "  * add-plugin <http-url-to-github> - add new plugin submodule"
+    echo -e "  * remove-plugin <name-in-bundle-folder> - remove plugin submodule"
+    echo -e "  * update-plugins - init/update plugin submodules"
+    echo -e "  * update - pull latest master and update plugins"
+    echo -e "\\n"
+    exit "$1"
+}
+
+install() {
+    echo "Not implemented"
+    exit 1
+}
+
+update() {
+    echo -e "Pulling master..."
+    git pull origin master
+    update_plugins
+    echo -e "Done updating"
 }
 
 add_plugin() {
-    echo "Adding plugin $1"
+    echo "Adding plugin $1..."
     cd bundle
-    git submodule add $1
+    git submodule add "$1"
     echo "Plugin $1 succesfully added"
     echo "Don't forget to update WHATS_INSIDE.md!"
 }
 
 remove_plugin() {
-    echo "Removing_plugin $1"
+    echo "Removing_plugin $1..."
     git submodule deinit -f -- "bundle/$1"
     rm -rf ".git/modules/bundle/$1"
     git rm -f "bundle/$1"
@@ -31,14 +52,10 @@ update_plugins() {
     echo -e "Done updating plugins"
 }
 
-install() {
-    echo "TBD, sorry"
-}
-
 
 set -e
 
-basedir=$(dirname $0)
+basedir=$(dirname "$0")
 cd "$basedir/.." || exit 2
 
 if [ -z "$1" ]; then
@@ -49,22 +66,31 @@ command="$1"
 shift
 
 case $command in
+    "help")
+        show_usage_and_exit 0
+        ;;
+    "install")
+        install
+        ;;
+    "uninstall")
+        install
+        ;;
+    "update")
+        update
+        ;;
     "add-plugin")
         if [ -z "$1" ]; then
             show_usage_and_exit 2 "Please specify valid plugin github url (preferrably http)"
         fi
-        add_plugin $1
+        add_plugin "$1"
         ;;
     "remove-plugin")
         if [ -z "$1" ]; then
-            show_usage_and_exit 2 "Please specify plugin name"
+            show_usage_and_exit 3 "Please specify plugin name"
         fi
-        remove_plugin $1
+        remove_plugin "$1"
         ;;
     "update-plugins")
         update_plugins
-        ;;
-    "install")
-        install
         ;;
 esac
