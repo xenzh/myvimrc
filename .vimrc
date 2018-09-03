@@ -249,8 +249,15 @@ command! O %bd | e#
 command! Hi :so $VIMRUNTIME/syntax/hitest.vim
 
 
-" find word under cursor, open quickfix with results
-command! Gr :execute 'vimgrep '.expand('<cword>').' '.expand('%') | :copen
+" find selecton/repeat search, open quickfix with results
+function! FindAndQuickfix(what)
+    execute 'vimgrep "' . a:what . '" ' . expand('%') | copen
+endfunction
+
+command! -range Gr <line1>, <line2>call s:process_selection(function('FindAndQuickfix'))
+command! Gre :call FindAndQuickfix(@/)
+
+autocmd! FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
 
 
 
