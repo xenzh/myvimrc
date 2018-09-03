@@ -62,10 +62,17 @@ From development side it provides code highlighting, linting, autocompletion, qu
 
 Interesting features:
 * C++ compile flags
+
   Both `ALE` and `clangd` work best if provided with a set of compile flags for each file they process, `-I` in particular. There are several ways to specify them:
   * `compile_commands.json` - `clang` compilation database file, could be generated with `cmake` or tools like `bear`. Just put it in repo root folder, make sure it has right pathing (see `ccfix.py` tool), open vim and you're all set. Note that compilation database doesn't contain entries for header files - for them `vim` will try to get flags from matching cpp, and if it's missing will fall back to the next option.
   * `.clang` - if compilation database is missing or failed to load, `vim` tries to read `-I` flags from this file's lines and apply them to all h/cpp in this repo. Tools like `clang.vim` and `cquery` also accept files in this format, `clangd` doesn't.
   * `g:my_cpp_linter_flags` - specify flags manually in local vimrc file _(actually this might be broken)_.
+
+* Interactive `jq` shell
+
+  There is `:Jq` command for defined for `json` filetype. It opens one split for `jq` query and another for query result.
+  I made this after getting tired of constant need to do `jq ... | head` to figure out json structure
+
 
 For more details check out [mappings doc](MAPPINGS.md).
 

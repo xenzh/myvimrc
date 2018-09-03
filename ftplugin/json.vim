@@ -1,7 +1,10 @@
-" disable reinit when calling DoJqQuery (because it does setf json)
+" Do not reload this script
+" Oterwise filetype autocmd will try to reload functions being executed
+" after "setf json" call in DoJqQuery()
 if exists('*DoJqQuery')
     finish
 endif
+
 
 " formatting
 function! DoFmt()
@@ -17,14 +20,14 @@ function! DoFmt()
 endfunction
 
 
-" interactive jq wrapper
-function! DoJqQuery(query, json_bufwinnr, result_bufwinnr)
-    let json_bufwinnr = a:json_bufwinnr
-    let result_bufwinnr = a:result_bufwinnr
+" Interactive jq shell
+function! DoJqQuery(query, json_bufnr, result_bufnr)
+    let json_bufwinnr = bufwinnr(a:json_bufnr)
+    let result_bufwinnr = bufwinnr(a:result_bufnr)
     let returnto_bufwinnr = bufwinnr('%')
 
     " 1. Go to json buffer, call jq
-    execute a:json_bufwinnr . 'wincmd w'
+    execute json_bufwinnr . 'wincmd w'
     let shell_cmd = "jq '" . a:query . "'"
     let result = system(shell_cmd, join(getline(1, '$')))
 
@@ -42,53 +45,39 @@ function! DoJqQuery(query, json_bufwinnr, result_bufwinnr)
     execute returnto_bufwinnr . 'wincmd w'
 endfunction
 
-function! RunJqQuery()
-    " return if query is empty, close jq buffer if there is one
-    "if a:query == ""
-    "    if s:jq_bufwinnr == -1 && use_same_buffer == 0
-    "        execute(':bdelete ' . s:jq_bufwinnr)
-    "        let s:jq_bufwinnr = -1
-    "        return
-    "    endif
-    "    return
-    "endif
-endfunction
-
 function! StartJqSession()
-    " 1. this buffer is json buffer
-    let json_bufnr = bufnr('%')
+    " 1. this buffer is json buffer, and the only one opened
+    execute '%bd | e#'
+    let s:json_bufnr = bufnr('%')
 
     " 2. create query buffer
-    execute ':silent! bdelete! ' . s:query_bufwinnr
-    below new
-    let query_bufnr = bufnr('%')
+    execute ':sil! bdel! ' . bufwinnr(s:query_bufnr)
+    below 2new
+    let @a = "# Write your jq query on the following line. Save&Quit: <CR>, Cancel: <Esc>\n."
+    normal! gg
+    execute 'put! a'
+    let s:query_bufnr = bufnr('%')
 
-    autocmd! TextChangedI <buffer> :call DoJqQuery(getline(1), s:json_bufwinnr, s:result_bufwinnr)
-    autocmd! BufDelete <buffer> execute ':bdelete! ' . s:result_bufwinnr
+    " Normal mode, query window: <CR> - close query and jump to result; Esc - close query and result
+    command! -buffer Apply :execute 'sil! bd! ' . s:query_bufnr | :execute bufwinnr(s:result_bufnr) . 'wincmd w'
+    nnoremap <buffer> <CR> :Apply<CR>
+    command! -buffer Cancel :execute ':bd! ' . s:result_bufnr | :execute 'sil! bd! ' . s:query_bufnr
+    nnoremap <buffer> <Esc> :Cancel<CR>
+
+    autocmd! TextChangedI <buffer> :call DoJqQuery(getline(2), s:json_bufnr, s:result_bufnr)
 
     " 3. create results buffer
-    silent execute ':silent! bdelete! ' . s:result_bufwinnr
-    execute getwinnr(json_bufwinnr) . 'wincmd w'
+    silent execute ':sil! bd! ' . s:result_bufnr
+    execute bufwinnr(s:json_bufnr) . 'wincmd w'
     below vnew
-    let result_bufnr = bufnr('%')
-
-    let s:json_bufwinnr = getwinnr(json_bufnr)
-    let s:query_bufwinnr = getwinnr(query_bufnr)
-    let s:result_bufwinnr = getwinnr(result_bufnr)
+    let s:result_bufnr = bufnr('%')
 
     " 4 get ready for input
-    execute s:query_bufwinnr . 'wincmd w'
-
-    "echom s:json_bufwinnr
-    "echom s:query_bufwinnr
-    "echom s:result_bufwinnr
-
-    startinsert
+    execute bufwinnr(s:query_bufnr) . 'wincmd w'
+    startinsert! " startappend
 endfunction
 
-let s:query_bufwinnr = -1
-let s:result_bufwinnr = -1
+let s:query_bufnr = -1
+let s:result_bufnr = -1
 
-"command! -nargs=1 Jq :call DoJqQuery(<f-args>, bufwinnr('%'))
-"command! -nargs=1 Jqi :call DoJqQuery(<f-args>, -1)
-
+command! Jq :call StartJqSession()

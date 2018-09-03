@@ -1,7 +1,7 @@
 # My trusty dotfiles
 
-(What's inside)[WHATS\_INSIDE.md]
-(Mappings and commands)[MAPPINGS.md]
+[What's inside](WHATS\_INSIDE.md)
+[Mappings and commands](MAPPINGS.md)
 
 
 ## Installation

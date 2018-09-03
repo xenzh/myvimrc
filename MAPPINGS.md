@@ -33,7 +33,8 @@ Switch airline tabs/buffers:
 * `<leader>-+` and `<leader-->` - _vim-airline_, go to next/previous tab
 
 Search text and files:
-* `:Gr` - find word under cursor, open quickfix with results
+* `:Gr` - find selection, open quickfix with results
+* `:Gre` - display results of last search (`@/`) in quickfix
 * `gf` - _open file under cursor_, jump to file
 * _fzf.vim_, search files
   * `[p` - in current working directory
@@ -68,6 +69,12 @@ General:
 Code:
 * `:Fmt` - _jq/python/xmllint_, format source code (only for few filetypes)
 * `:Jsp` - _jq/python_, show selection as formatted json in a split. Useful when reading logs.
+* `:Jq` - _jq_, open interactive jq shell with result preview
+
+  Mappings for query buffer in normal mode:
+  * `<CR>` - discard query buffer and jump to result buffer
+  * `<Esc>` - discard query and result buffers
+
 * `ToHex`, `FromHex` - _xxd_, convert buffer contents to hex dump and read it back
 
 
