@@ -12,12 +12,12 @@ vimf() {
         loc=$(fzf)
     else
         cwd=$PWD
-        cd $1
+        cd "$1" || return
         loc=$(fzf)
         if [ -n "$loc" ]; then
             loc="$1/$loc"
         fi
-        cd $cwd
+        cd "$cwd" || return
     fi
 
     if [ -n "$loc" ]; then
@@ -28,16 +28,16 @@ vimf() {
 vimag() {
     cwd=$PWD
     if [ -n "$2" ]; then
-        cd $2
+        cd "$2" || return
     fi
     matches=$(ag --nogroup --column --color "$1" | fzf --ansi)
-    loc=$(echo "$matches" | ack "^(.*?)\:(\d+):.*" --output "\$1")
-    offset=$(echo $matches | ack "^(.*?)\:(\d+):.*" --output "\$2")
+    loc=$(echo "$matches" | ack "^(.*?)\\:(\\d+):.*" --output "\$1")
+    offset=$(echo "$matches" | ack "^(.*?)\\:(\\d+):.*" --output "\$2")
 
     if [ -n "$loc" ]; then
         if [ -n "$2" ]; then
             loc="$2/$loc"
-            cd $cwd
+            cd "$cwd" || return
         fi
 
         vim "$loc" "+$offset"
@@ -48,6 +48,12 @@ comms() {
     a="$1"; shift
     b="$1"; shift
     comm <(sort "$a") <(sort "$b") "$@"
+}
+
+listcolors() {
+    for i in {0..255} ; do
+        printf "\\x1b[38;5;%smcolour%s\\n" "${i}" "${i}"
+    done
 }
 
 alias g="git"
@@ -72,6 +78,8 @@ alias grpo="git remote prune origin"
 alias ggc="git gc --aggressive --prune=now"
 
 if [[ "$(type -t __git_complete)" == "function" ]]; then
+    PS1='\[\e]0;\u@\h:\w\a\][\u@\h \W$(__git_ps1 " (%s)")]\$ '
+
     __git_complete gc _git_checkout
     __git_complete gb _git_branch
     __git_complete gd _git_diff
