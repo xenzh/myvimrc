@@ -1,17 +1,4 @@
 "
-" MY Vimrc, one and only
-"
-" Other files:
-" * .lvimrc - local vim config files
-" * .clang - simple file with C++ compiler flags, linter uses it to locate headers
-" * compile_commands.json - clang compilation database for clangd/cquery code completion/navigation
-" * tags - ctags output file, used for code navigation
-"
-
-
-
-
-"
 " Basic config
 "
 
@@ -64,7 +51,7 @@ syntax on
 set cursorline
 
 
-" tabs, indents, line numbers, backspace and bell
+" tabs, indents, line numbers, backspace, disable bell
 set smarttab
 set tabstop=4
 set expandtab
@@ -75,6 +62,7 @@ set number
 set showmatch
 set backspace=indent,eol,start
 set visualbell
+set vb t_vb=""
 
 
 " show special chars
@@ -100,10 +88,6 @@ highlight BookmarkAnnotationLine ctermbg=237 ctermfg=79
 
 " git merge markers highlight
 match WildMenu '\v^(\<|\=|\>){7}([^=].+)?$'
-
-
-" Disable screen flashing on error
-set vb t_vb=""
 
 
 
@@ -152,7 +136,7 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 
-" Re-select visual block after indenting
+" Better indent: re-select visual block after each step
 vnoremap < <gv
 vnoremap > >gv
 
@@ -192,9 +176,9 @@ command! Wbd :w | :bd | call airline#extensions#tabline#buflist#invalidate()
 cnoreabbrev wd Wbd
 
 
-" formatting
+" Code formatting
+" See DoFmt() implementations for concrete filetypes
 function! DoFmt()
-  " See DoFmt() implementations for concrete filetypes
   echo 'Formatting is not implemented for this filetype (see .vim/ftplugin)'
 endfunction
 
@@ -249,15 +233,16 @@ command! O %bd | e#
 command! Hi :so $VIMRUNTIME/syntax/hitest.vim
 
 
-" find selecton/repeat search, open quickfix with results
+" find selecton/repeat search, open quickfix with results (and close it on <CR>)
 function! FindAndQuickfix(what)
     execute 'vimgrep "' . a:what . '" ' . expand('%') | copen
 endfunction
 
+autocmd! FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
+
 command! -range Gr <line1>, <line2>call s:process_selection(function('FindAndQuickfix'))
 command! Gre :call FindAndQuickfix(@/)
 
-autocmd! FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
 
 
 

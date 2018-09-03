@@ -42,6 +42,16 @@ Now, with other dotfiles and scripts it's kind of a mess, I guess adopting XDG d
 * **[xmllint](http://xmlsoft.org/xmllint.html)** - xml formatting
 * **[xxd](https://linux.die.net/man/1/xxd)** - file to hex and back conversions
 
+
+## Artifacts
+
+`vim` uses following files:
+* `.lvimrc` - (any folder between cwd and home) - local vim config files
+* `tags` - (any folder between cwd and home) - ctags output file, used for code navigation
+* `.clang` - (any folder between cwd and home) - text file with C++ flags (see "C++ compile flags" feature)
+* `compile\_commands.json` - (cmd) - clang compilation database (see "C++ compile flags" feature)
+
+
 ## Settings
 My linux dev environment is essentially `vim` inside of `tmux` inside of `xterm`. Settings described below are to ensure that everyone in this chain plays nicely with the others.
 
@@ -57,7 +67,8 @@ These settings are intended to be directly used as `tmux` config file.
 * Additional keyboard mappings
 
 ### vim
-This vim configuration is built mainly for C++/python/Rust development and includes a bunch of niceties to make life a bit easier (my vim-fu is still not very good).
+Configuration is built mainly for C++/python/Rust development and includes a bunch of niceties to make editing a bit easier in general.
+
 From development side it provides code highlighting, linting, autocompletion, quick files/tags navigation.
 
 Interesting features:
