@@ -40,7 +40,7 @@ set ignorecase
 set tags+=./tags;/
 
 
-" wild menu and popup autocompletion
+" wild menu and completion options
 set wildmenu
 set wildignore+=*.o,*.d,*.pyc
 set completeopt=longest,menuone
@@ -76,18 +76,6 @@ set background=dark
 colorscheme bubblegum-256-dark
 hi SpecialKey ctermfg=darkgray " should be set after set listchars and colorscheme
 hi TabLineSel ctermfg=darkgray
-
-" vim-airline colors
-let g:airline_theme='bubblegum'
-
-" vim-bookmarks colors
-highlight BookmarkSign ctermbg=237 ctermfg=79
-highlight BookmarkLine ctermbg=237 ctermfg=79
-highlight BookmarkAnnotationSign ctermbg=237 ctermfg=79
-highlight BookmarkAnnotationLine ctermbg=237 ctermfg=79
-
-" git merge markers highlight
-match WildMenu '\v^(\<|\=|\>){7}([^=].+)?$'
 
 
 
@@ -149,6 +137,9 @@ nnoremap N Nzz
 " Navigate git merge markers with ]c and [c
 nnoremap <silent> ]c /\v^(\<\|\=\|\>){7}([^=].+)?$<CR>
 nnoremap <silent> [c ?\v^(\<\|\=\|\>){7}([^=].+)\?$<CR>
+
+" markers highlight
+match WildMenu '\v^(\<|\=|\>){7}([^=].+)?$'
 
 
 " Auto-source .vimrc on saving, update ui
@@ -380,6 +371,9 @@ function! AirlineInit()
   endfunction
 autocmd User AirlineAfterInit call AirlineInit()
 
+" match vim-airline colors to main color theme
+let g:airline_theme='bubblegum'
+
 
 " rename (rename current file)
 cnoreabbrev rn Rename
@@ -398,10 +392,6 @@ function! LocalTags()
     let &tags=old_tags
 endfunction
 
-" open fzf when vim opened on a folder
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'Files' argv()[0] | endif
-
 nmap [p :Files<CR> " files in working dir
 nmap ]p :exe('Files ' . expand('%:p:h'))<CR> " files in directory of current file
 nmap ][p :Files ~<CR> " files in home dir
@@ -409,6 +399,22 @@ nmap ][p :Files ~<CR> " files in home dir
 nmap [o :call LocalTags()<CR> " tags in working dir
 nmap ]o :BTags<CR> " tags in this buffer
 nmap ][o :Tags<CR> " all tags
+
+" match fzf colors to main color theme
+let g:fzf_colors = {
+  \ 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment']
+  \ }
 
 
 " vim-bookmarks
@@ -423,6 +429,12 @@ let g:bookmark_center = 1
 
 let g:bookmark_disable_ctrlp = 1 " or ma in ctrlp list (not sorted!)
 let g:bookmark_location_list = 0 " quickfix or location list
+
+" better colors
+highlight BookmarkSign ctermbg=237 ctermfg=79
+highlight BookmarkLine ctermbg=237 ctermfg=79
+highlight BookmarkAnnotationSign ctermbg=237 ctermfg=79
+highlight BookmarkAnnotationLine ctermbg=237 ctermfg=79
 
 nmap ml <Plug>BookmarkShowAll
 
