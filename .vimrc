@@ -43,7 +43,7 @@ set tags+=./tags;/
 " wild menu and completion options
 set wildmenu
 set wildignore+=*.o,*.d,*.pyc
-set completeopt=longest,menuone
+set completeopt=longest,menuone,preview,noselect
 
 
 " syntax highlighting
@@ -104,10 +104,12 @@ hi TabLineSel ctermfg=darkgray
 :inoremap <Esc>OM <Enter>
 
 
-" autocompletion popup controls
+" autocompletion popup controls and preview autohide
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
+
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
 
 " split resize remappings
@@ -167,6 +169,39 @@ command! Wbd :w | :bd | call airline#extensions#tabline#buflist#invalidate()
 cnoreabbrev wd Wbd
 
 
+" close all buffers but this
+command! O %bd | e#
+
+
+" find selecton/repeat search, open quickfix with results (and close it on <CR>)
+function! FindAndQuickfix(what)
+    execute 'vimgrep "' . a:what . '" ' . expand('%') | copen
+endfunction
+
+autocmd! FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
+
+command! -range Gr <line1>, <line2>call s:process_selection(function('FindAndQuickfix'))
+command! Gre :call FindAndQuickfix(@/)
+
+
+" toggle space chars visibility
+function! DoToggleSpaceChars()
+  set list!
+  set number!
+endfunction
+
+command! ToggleSpaceChars :call DoToggleSpaceChars()
+nmap <F6> :ToggleSpaceChars<CR>
+
+
+" Convert buffer to hex / read buffer from xxd hex dump
+command! ToHex :%!xxd
+command! FromHex %s#^[^:]*: \(\%(\x\+ \)\+\) .*#\1# | %!xxd -r -p
+
+" list all highlight groups
+command! Hi :so $VIMRUNTIME/syntax/hitest.vim
+
+
 " Code formatting
 " See DoFmt() implementations for concrete filetypes
 function! DoFmt()
@@ -199,40 +234,6 @@ function! JsonToRsplit(sel)
 endfunction
 
 command! -range Jsp <line1>,<line2>call s:process_selection(function('JsonToRsplit'))
-
-
-" toggle space chars visibility
-function! DoToggleSpaceChars()
-  set list!
-  set number!
-endfunction
-
-command! ToggleSpaceChars :call DoToggleSpaceChars()
-nmap <F6> :ToggleSpaceChars<CR>
-
-
-" Convert buffer to hex / read buffer from xxd hex dump
-command! ToHex :%!xxd
-command! FromHex %s#^[^:]*: \(\%(\x\+ \)\+\) .*#\1# | %!xxd -r -p
-
-
-" close all buffers but this
-command! O %bd | e#
-
-
-" list all highlight groups
-command! Hi :so $VIMRUNTIME/syntax/hitest.vim
-
-
-" find selecton/repeat search, open quickfix with results (and close it on <CR>)
-function! FindAndQuickfix(what)
-    execute 'vimgrep "' . a:what . '" ' . expand('%') | copen
-endfunction
-
-autocmd! FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
-
-command! -range Gr <line1>, <line2>call s:process_selection(function('FindAndQuickfix'))
-command! Gre :call FindAndQuickfix(@/)
 
 
 
@@ -337,7 +338,7 @@ function! DoCheckSyntax()
 endfunction
 nmap <F5> :call DoCheckSyntax()<CR>
 
-command! C :ALEReset | :lcl
+command! C :ALEReset | :lcl | :pcl
 command! D :ALEDetail
 
 

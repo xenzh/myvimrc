@@ -98,6 +98,9 @@ Following mappings/commands are defined by plugins or are vim defaults. I keep t
     * `ma` - _[remapped to `ml`]_ - toggle list all bookmarks
     * `mn`, `mp` - jump to next/prev bookmark
     * `mc`, `mx` - clear boormarks in current buffer/in all buffers
+  * vim-multiple-cursors
+    * `Ctrl-n` -- start multicursor
+    * `Ctrl-v`, `Ctrl-n` - block select lines and start cursor on each of them
   * NERD Commenter
     * `<leader>-c, l` - comment selected lines with line comments (not block)
     * `<leader-c, u>` - uncomment selected lines
