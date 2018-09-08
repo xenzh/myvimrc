@@ -87,4 +87,23 @@ if [[ "$(type -t __git_complete)" == "function" ]]; then
     __git_complete gpl _git_branch
 fi
 
-export FZF_DEFAULT_COMMAND='ag --hidden -l --ignore .git -g ""'
+
+if [ -x "$(command -v ag)" ]; then
+    export FZF_DEFAULT_COMMAND='ag --hidden -l --ignore .git -g ""'
+else
+    export FZF_DEFAULT_COMMAND='find * -type f'
+fi
+
+if [ -x "$(command -v highlight)" ]; then
+    export LESSOPEN="| $(which highlight) %s --out-format xterm256 -l --force -s moria --no-trailing-nl"
+    export LESS=" -R"
+    alias less='less -m -N -g -i -J --line-numbers --underline-special'
+
+    fzf_preview_cmd="highlight --quiet -O xterm256 {} -s moria || cat {}"
+else
+    fzf_preview_cmd"=cat {}"
+fi
+
+fzf_colors="dark,fg:249,bg:235,hl:110,fg+:249,bg+:237,hl+:110,info:150,prompt:110,pointer:110,marker:110,spinner:110,header:24"
+export FZF_DEFAULT_OPTS="-m --preview='$fzf_preview_cmd' --preview-window right:60% --color=$fzf_colors"
+

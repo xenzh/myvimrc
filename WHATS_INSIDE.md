@@ -37,6 +37,7 @@ Now, with other dotfiles and scripts it's kind of a mess, I guess adopting XDG d
 * **[rustfmt](https://github.com/rust-lang-nursery/rustfmt)** - code formatting tool (install with `cargo`)
 
 ### Others:
+* **[highlight](https://andre-simon.de/docu/highlight/en/highlight.php)** - syntax highlighter used by default for `fzf` preview windows and `less`
 * **[python](https://www.python.org/)** - some tools are written in python, also used for json formatting as `jq` fallback.
 * **[jq](https://stedolan.github.io/jq/)** - json query tool, used for json formatting
 * **[xmllint](http://xmlsoft.org/xmllint.html)** - xml formatting

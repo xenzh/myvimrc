@@ -386,6 +386,9 @@ nmap <F8> :TagbarToggle<CR>
 
 
 " fzf.vim
+let g:fzf_buffers_jump = 1
+let g:fzf_layout = { 'down': '~55%' }
+
 function! LocalTags()
     let old_tags=&tags
     set tags=./tags;/
@@ -400,6 +403,10 @@ nmap ][p :Files ~<CR> " files in home dir
 nmap [o :call LocalTags()<CR> " tags in working dir
 nmap ]o :BTags<CR> " tags in this buffer
 nmap ][o :Tags<CR> " all tags
+
+" override :Ag, :Files to display preview
+command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, fzf#vim#with_preview('right:60%', '?'), <bang>0)
+command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, fzf#vim#with_preview('right:60%'), <bang>0)
 
 " match fzf colors to main color theme
 let g:fzf_colors = {
