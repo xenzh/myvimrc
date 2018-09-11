@@ -101,7 +101,7 @@ if [ -x "$(command -v highlight)" ]; then
 
     fzf_preview_cmd="highlight --quiet -O xterm256 {} -s moria || cat {}"
 else
-    fzf_preview_cmd"=cat {}"
+    fzf_preview_cmd="cat {}"
 fi
 
 fzf_colors="dark,fg:249,bg:235,hl:110,fg+:249,bg+:237,hl+:110,info:150,prompt:110,pointer:110,marker:110,spinner:110,header:24"

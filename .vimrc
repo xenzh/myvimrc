@@ -64,6 +64,8 @@ set backspace=indent,eol,start
 set visualbell
 set vb t_vb=""
 
+set splitbelow
+
 
 " show special chars
 set list
@@ -297,9 +299,16 @@ nmap ;; :LspDefinition<CR>
 nmap ;' :LspReferences<CR>
 nmap ;l :LspHover<CR>
 
+let g:my_lsp_catalog = {}
+
 function! GetLspStatusMessage()
-    "return lsp#get_server_status()
-    return ""
+    if has_key(g:my_lsp_catalog, &ft)
+        let server = g:my_lsp_catalog[&ft]
+        let status = lsp#get_server_status(server)
+        return status == "unknown" ? "no lsp" :  server . ": " . status
+    else
+        return "no lsp"
+    endif
 endfunction
 
 
@@ -321,7 +330,7 @@ augroup END
 
 let g:my_linter_running = 0
 function! GetLintingMessage()
-    return g:my_linter_running ? "[linting...]" : "[idle]"
+    return g:my_linter_running ? "linting..." : "idle"
 endfunction
 
 if !exists("my_global_ale_au_loaded")
@@ -368,7 +377,7 @@ autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
 function! AirlineInit()
     call airline#parts#define_function('lint-status', 'GetLintingMessage')
     call airline#parts#define_function('lsp-status', 'GetLspStatusMessage')
-    let g:airline_section_x = airline#section#create(['tagbar', ' | ', 'filetype', ' ', 'lint-status', ' ', 'lsp-status'])
+    let g:airline_section_x = airline#section#create(['tagbar', ' | ', 'filetype', ' (', 'lsp-status', ') [', 'lint-status', ']'])
   endfunction
 autocmd User AirlineAfterInit call AirlineInit()
 
@@ -392,21 +401,22 @@ let g:fzf_layout = { 'down': '~55%' }
 function! LocalTags()
     let old_tags=&tags
     set tags=./tags;/
-    execute ':Tags'
+    execute ':Tags!'
     let &tags=old_tags
 endfunction
 
-nmap [p :Files<CR> " files in working dir
-nmap ]p :exe('Files ' . expand('%:p:h'))<CR> " files in directory of current file
-nmap ][p :Files ~<CR> " files in home dir
+nmap [p :Files!<CR> " files in working dir
+nmap ]p :exe('Files! ' . expand('%:p:h'))<CR> " files in directory of current file
+nmap ][p :Files! ~<CR> " files in home dir
 
 nmap [o :call LocalTags()<CR> " tags in working dir
-nmap ]o :BTags<CR> " tags in this buffer
-nmap ][o :Tags<CR> " all tags
+nmap ]o :BTags!<CR> " tags in this buffer
+nmap ][o :Tags!<CR> " all tags
 
 " override :Ag, :Files to display preview
-command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, fzf#vim#with_preview('right:60%', '?'), <bang>0)
-command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, fzf#vim#with_preview('right:60%'), <bang>0)
+command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, fzf#vim#with_preview('right:60%', '?'), <bang>1)
+command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>,
+  \ fzf#vim#with_preview('right:60%', '?'), <bang>0)
 
 " match fzf colors to main color theme
 let g:fzf_colors = {

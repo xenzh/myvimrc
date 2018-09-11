@@ -11,4 +11,6 @@ if executable('pyls')
         \ 'whitelist': ['python'],
         \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:false}}}},
         \ })
+
+    let g:my_lsp_catalog = { 'python': 'pyls' }
 endif

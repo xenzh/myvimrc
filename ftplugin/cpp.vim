@@ -69,6 +69,8 @@ if executable('clangd')
         \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
         \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
         \ })
+
+    let g:my_lsp_catalog.cpp = 'clangd'
 endif
 
 
@@ -87,6 +89,8 @@ function! SetupCquery()
             \ 'initialization_options': { 'cacheDirectory': expand(g:my_cpp_cquery_cache_dir) },
             \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
             \ })
+
+        let g:my_lsp_catalog.cpp = 'cquery'
     endif
 endfunction
 
