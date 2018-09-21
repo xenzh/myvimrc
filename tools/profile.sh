@@ -1,11 +1,53 @@
 #!/bin/bash
 
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+
+
+# common aliases
+
 alias c=clear
 alias l="ls -lahH --group-directories-first"
 alias cl="c && l"
 alias x="xterm -uc -en en_US.UTF8"
-
 alias :e="vim"
+
+
+# git aliases, autocomplete and PS1
+
+alias g="git"
+alias gs="git status"
+alias gc="git checkout"
+alias gcm="git checkout master"
+alias gcb="git checkout -b"
+alias gm="git merge"
+alias gmm="git merge master"
+alias gmu="git merge upstream/master"
+alias gfu="git fetch upstream"
+alias gsu="git fetch upstream && git checkout master && git merge upstream/master && git push origin master"
+alias gr="git rebase -i"
+alias gl="git log"
+alias gb="git branch"
+alias gd="git diff"
+alias gpo="git push origin"
+alias gpl="git pull origin"
+alias gpom="git push origin master"
+alias gplm="git pull origin master"
+alias grpo="git remote prune origin"
+alias ggc="git gc --aggressive --prune=now"
+
+if [[ "$(type -t __git_complete)" == "function" ]]; then
+    PS1='\[\e]0;\u@\h:\w\a\][\u@\h \W$(__git_ps1 " (%s)")]\$ '
+
+    __git_complete gc _git_checkout
+    __git_complete gb _git_branch
+    __git_complete gd _git_diff
+    __git_complete gpo _git_branch
+    __git_complete gpl _git_branch
+fi
+
+
+# fzf convenience functions
 
 vimf() {
     if [ -z "$1" ]; then
@@ -44,6 +86,21 @@ vimag() {
     fi
 }
 
+vimh() {
+    loc=$(grep '^>' ~/.viminfo|cut -c3-|sed 's,~,'"$HOME"',' | fzf)
+    if [ -n "$loc" ]; then
+        vim "$loc"
+    fi
+}
+
+cdf() {
+    loc=$(find . -type d -not -path '*/\.*' | fzf --preview='ls -ahH --group-directories-first --color {}')
+    cd "$loc" || return
+}
+
+
+# other functions
+
 comms() {
     a="$1"; shift
     b="$1"; shift
@@ -56,46 +113,11 @@ listcolors() {
     done
 }
 
-alias g="git"
-alias gs="git status"
-alias gc="git checkout"
-alias gcm="git checkout master"
-alias gcb="git checkout -b"
-alias gm="git merge"
-alias gmm="git merge master"
-alias gmu="git merge upstream/master"
-alias gfu="git fetch upstream"
-alias gsu="git fetch upstream && git checkout master && git merge upstream/master && git push origin master"
-alias gr="git rebase -i"
-alias gl="git log"
-alias gb="git branch"
-alias gd="git diff"
-alias gpo="git push origin"
-alias gpl="git pull origin"
-alias gpom="git push origin master"
-alias gplm="git pull origin master"
-alias grpo="git remote prune origin"
-alias ggc="git gc --aggressive --prune=now"
 
-if [[ "$(type -t __git_complete)" == "function" ]]; then
-    PS1='\[\e]0;\u@\h:\w\a\][\u@\h \W$(__git_ps1 " (%s)")]\$ '
-
-    __git_complete gc _git_checkout
-    __git_complete gb _git_branch
-    __git_complete gd _git_diff
-    __git_complete gpo _git_branch
-    __git_complete gpl _git_branch
-fi
-
-
-if [ -x "$(command -v ag)" ]; then
-    export FZF_DEFAULT_COMMAND='ag --hidden -l --ignore .git -g ""'
-else
-    export FZF_DEFAULT_COMMAND='find * -type f'
-fi
+# highlight: better less, fzf preview
 
 if [ -x "$(command -v highlight)" ]; then
-    export LESSOPEN="| $(which highlight) %s --out-format xterm256 -l --force -s moria --no-trailing-nl"
+    export LESSOPEN="| $(command -v highlight) %s --out-format xterm256 -l --force -s moria --no-trailing-nl"
     export LESS=" -R"
     alias less='less -m -N -g -i -J --line-numbers --underline-special'
 
@@ -104,6 +126,19 @@ else
     fzf_preview_cmd="cat {}"
 fi
 
+
+# fzf config
+
+if [ -x "$(command -v ag)" ]; then
+    export FZF_DEFAULT_COMMAND='ag --hidden -l --ignore .git -g ""'
+else
+    export FZF_DEFAULT_COMMAND='find * -type f'
+fi
+
 fzf_colors="dark,fg:249,bg:235,hl:110,fg+:249,bg+:237,hl+:110,info:150,prompt:110,pointer:110,marker:110,spinner:110,header:24"
 export FZF_DEFAULT_OPTS="-m --preview='$fzf_preview_cmd' --preview-window right:60% --color=$fzf_colors"
 
+
+# ripgrep config
+
+export RIPGREP_CONFIG_PATH="$DIR/../.ripgrep"

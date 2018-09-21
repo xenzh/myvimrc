@@ -171,7 +171,8 @@ command! Wbd :w | :bd | call airline#extensions#tabline#buflist#invalidate()
 cnoreabbrev wd Wbd
 
 
-" close all buffers but this
+" close all buffers / close all buffers but this
+command! Z %bd
 command! O %bd | e#
 
 
