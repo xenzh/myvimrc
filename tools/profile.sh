@@ -1,7 +1,8 @@
 #!/bin/bash
 
-
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+THISDIR=$(dirname "$0")
+export RIPGREP_CONFIG_PATH="$THISDIR/../.ripgrep"
+SHELL="$( echo "$SHELL" | rg -o 'bash|zsh' )"
 
 
 # common aliases
@@ -36,14 +37,16 @@ alias gplm="git pull origin master"
 alias grpo="git remote prune origin"
 alias ggc="git gc --aggressive --prune=now"
 
-if [[ "$(type -t __git_complete)" == "function" ]]; then
-    PS1='\[\e]0;\u@\h:\w\a\][\u@\h \W$(__git_ps1 " (%s)")]\$ '
+if [ "$SHELL" = "bash" ]; then
+    if [[ "$(type -t __git_complete)" == "function" ]]; then
+        PS1='\[\e]0;\u@\h:\w\a\][\u@\h \W$(__git_ps1 " (%s)")]\$ '
 
-    __git_complete gc _git_checkout
-    __git_complete gb _git_branch
-    __git_complete gd _git_diff
-    __git_complete gpo _git_branch
-    __git_complete gpl _git_branch
+        __git_complete gc _git_checkout
+        __git_complete gb _git_branch
+        __git_complete gd _git_diff
+        __git_complete gpo _git_branch
+        __git_complete gpl _git_branch
+    fi
 fi
 
 
@@ -137,8 +140,3 @@ fi
 
 fzf_colors="dark,fg:249,bg:235,hl:110,fg+:249,bg+:237,hl+:110,info:150,prompt:110,pointer:110,marker:110,spinner:110,header:24"
 export FZF_DEFAULT_OPTS="-m --preview='$fzf_preview_cmd' --preview-window right:60% --color=$fzf_colors"
-
-
-# ripgrep config
-
-export RIPGREP_CONFIG_PATH="$DIR/../.ripgrep"
