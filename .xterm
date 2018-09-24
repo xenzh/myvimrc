@@ -1,26 +1,26 @@
-! Material Theme color schema
-xterm*foreground:      #dadada
-xterm*background:      #292929
-
-xterm*color0:          #000000
-xterm*color1:          #dd191d
-xterm*color2:          #0a8f08
-xterm*color3:          #afb42b
-xterm*color4:          #4e6cef
-xterm*color5:          #d81b60
-xterm*color6:          #00acc1
-xterm*color7:          #868686
-xterm*color8:          #121212
-xterm*color9:          #e84e40
-xterm*color10:         #2baf2b
-xterm*color11:         #d4e157
-xterm*color12:         #738ffe
-xterm*color13:         #ec407a
-xterm*color14:         #26c6da
-xterm*color15:         #dadada
-
-xterm*highlightColor:  #303f9f
-xterm*cursorColor:     #ffc400
+! xoria256 theme (from https://github.com/derekwyatt/dotfiles/blob/master/rxvt/themes/xoria256.rxvt)
+XTerm*color0         : #444444
+XTerm*color1         : #d78787
+XTerm*color2         : #afd787
+XTerm*color3         : #f7f7af
+XTerm*color4         : #87afd7
+XTerm*color5         : #d7afd7
+XTerm*color6         : #87afd7
+XTerm*color7         : #e6e6e6
+XTerm*color8         : #0a0a0a
+XTerm*color9         : #df8787
+XTerm*color10        : #afdf87
+XTerm*color11        : #ffffaf
+XTerm*color12        : #87afdf
+XTerm*color13        : #dfafdf
+XTerm*color14        : #87afd7
+XTerm*color15        : #eeeeee
+XTerm*colorBD        : #afafdf
+XTerm*colorIT        : _colorIT
+XTerm*colorUL        : #dfdfaf
+XTerm*foreground     : #d0d0d0
+XTerm*background     : #1c1c1c
+XTerm*cursorColor    : #ffaf00
 
 xterm*colorBDMode: true
 xterm*colorBD: #e5e5e5
