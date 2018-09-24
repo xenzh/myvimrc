@@ -51,6 +51,11 @@ fi
 
 
 # fzf convenience functions
+if [ -x "$(command -v highlight)" ]; then
+    fzf_preview_cmd="highlight --quiet -O xterm256 {1} -s moria || head -100 {1}"
+else
+    fzf_preview_cmd="head -100 {1}"
+fi
 
 vimf() {
     if [ -z "$1" ]; then
@@ -70,14 +75,18 @@ vimf() {
     fi
 }
 
-vimag() {
+vimg() {
     cwd=$PWD
     if [ -n "$2" ]; then
         cd "$2" || return
     fi
-    matches=$(ag --nogroup --column --color "$1" | fzf --ansi)
-    loc=$(echo "$matches" | ack "^(.*?)\\:(\\d+):.*" --output "\$1")
-    offset=$(echo "$matches" | ack "^(.*?)\\:(\\d+):.*" --output "\$2")
+    matches=$(
+        rg --vimgrep $1 |
+        awk -F: -v OFS=" " '{print $1,$2,$4}' |
+        fzf --preview="$fzf_preview_cmd | sed -n '{2},+100p'")
+
+    loc=$(echo "$matches" | awk '{print $1}')
+    offset=$(echo "$matches" | awk '{print $2}')
 
     if [ -n "$loc" ]; then
         if [ -n "$2" ]; then
@@ -90,14 +99,16 @@ vimag() {
 }
 
 vimh() {
-    loc=$(grep '^>' ~/.viminfo|cut -c3-|sed 's,~,'"$HOME"',' | fzf)
+    loc=$(grep '^>' ~/.viminfo | cut -c3- | sed 's,~,'"$HOME"',' | fzf)
     if [ -n "$loc" ]; then
         vim "$loc"
     fi
 }
 
 cdf() {
-    loc=$(find . -type d -not -path '*/\.*' | fzf --preview='ls -ahH --group-directories-first --color {}')
+    loc=$(
+        find . -type d -not -path '*/\.*' |
+        fzf --preview='ls -ahH --group-directories-first --color {}')
     cd "$loc" || return
 }
 
@@ -123,17 +134,13 @@ if [ -x "$(command -v highlight)" ]; then
     export LESSOPEN="| $(command -v highlight) %s --out-format xterm256 -l --force -s moria --no-trailing-nl"
     export LESS=" -R"
     alias less='less -m -N -g -i -J --line-numbers --underline-special'
-
-    fzf_preview_cmd="highlight --quiet -O xterm256 {} -s moria || cat {}"
-else
-    fzf_preview_cmd="cat {}"
 fi
 
 
 # fzf config
 
-if [ -x "$(command -v ag)" ]; then
-    export FZF_DEFAULT_COMMAND='ag --hidden -l --ignore .git -g ""'
+if [ -x "$(command -v rg)" ]; then
+    export FZF_DEFAULT_COMMAND="rg --hidden -l -g '!.git' ''"
 else
     export FZF_DEFAULT_COMMAND='find * -type f'
 fi

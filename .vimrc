@@ -414,8 +414,14 @@ nmap [o :call LocalTags()<CR> " tags in working dir
 nmap ]o :BTags!<CR> " tags in this buffer
 nmap ][o :Tags!<CR> " all tags
 
-" override :Ag, :Files to display preview
-command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, fzf#vim#with_preview('right:60%', '?'), <bang>1)
+" override :Rg, :Files to display preview
+command! -bang -nargs=* Rg call fzf#vim#grep(
+  \ 'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \ fzf#vim#with_preview('right:60%', '?'), <bang>1)
+
+cnoreabbrev Ag Rg
+cnoreabbrev rg Rg
+
 command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>,
   \ fzf#vim#with_preview('right:60%', '?'), <bang>0)
 

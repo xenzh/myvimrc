@@ -44,6 +44,8 @@ Search text and files:
   * `[o` - in current working directory
   * `]o` - in this buffer
   * `][o` - all loaded tags
+* _fzf.vim_, search text in files
+  * `:rg`, `:Ag` - grep files in current folder with `ripgrep`
 
 Code:
 * `]c` and `[c` - jump to next/previous git merge marker
@@ -63,6 +65,7 @@ General:
 * `<` and `>` - indent selection and reselect
 * `:W`, `:Q`, `:Wq`, `:WQ` - the same as `:wq`
 * `:O` - close all buffers but this
+* `:Z` - close all buffers
 * `:wd` - save and delete current buffer (just like `:wq` but for buffers)
 * `:rn` - _Rename_, rename current file inplace
 
@@ -86,6 +89,7 @@ Following mappings/commands are defined by plugins or are vim defaults. I keep t
   * `noh` - disable search results highlighting.
   * `:set noexpandtab` - `Tab` inserts tabs, not spaces. Use when editing code intended with tabs.
   * `:set wrap` / `:set nowrap` - enable/disable line wrapping.
+  * `:set magic` / `:set nomagic` - enable/disable regex match when searching
   * tags
     * `Ctrl-]` - go to definition of symbol under cursor
     * `:ta` - go to symbol definition
