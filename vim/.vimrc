@@ -14,6 +14,7 @@ set encoding=utf-8
 
 
 " use per-directory .vimrc-s
+set rtp^=~/.dotfiles/vim
 set exrc
 set secure
 

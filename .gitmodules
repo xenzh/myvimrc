@@ -1,90 +1,90 @@
 [submodule "bundle/a.vim"]
-	path = bundle/a.vim
+	path = vim/bundle/a.vim
 	url = http://github.com/vim-scripts/a.vim.git
 [submodule "bundle/nerdcommenter"]
-	path = bundle/nerdcommenter
+	path = vim/bundle/nerdcommenter
 	url = http://github.com/scrooloose/nerdcommenter.git
 [submodule "bundle/tagbar"]
-	path = bundle/tagbar
+	path = vim/bundle/tagbar
 	url = http://github.com/majutsushi/tagbar.git
 [submodule "bundle/vim-airline"]
-	path = bundle/vim-airline
+	path = vim/bundle/vim-airline
 	url = http://github.com/vim-airline/vim-airline.git
 [submodule "bundle/vim-cpp-enhanced-highlight"]
-	path = bundle/vim-cpp-enhanced-highlight
+	path = vim/bundle/vim-cpp-enhanced-highlight
 	url = http://github.com/octol/vim-cpp-enhanced-highlight.git
 [submodule "bundle/vim-fugitive"]
-	path = bundle/vim-fugitive
+	path = vim/bundle/vim-fugitive
 	url = http://github.com/tpope/vim-fugitive.git
 [submodule "bundle/vim-json"]
-	path = bundle/vim-json
+	path = vim/bundle/vim-json
 	url = http://github.com/elzr/vim-json
 [submodule "bundle/csv.vim"]
-	path = bundle/csv.vim
+	path = vim/bundle/csv.vim
 	url = http://github.com/chrisbra/csv.vim
 [submodule "bundle/vim-toml"]
-	path = bundle/vim-toml
+	path = vim/bundle/vim-toml
 	url = http://github.com/cespare/vim-toml
 [submodule "bundle/asyncomplete-lsp.vim"]
-	path = bundle/asyncomplete-lsp.vim
+	path = vim/bundle/asyncomplete-lsp.vim
 	url = http://github.com/prabirshrestha/asyncomplete-lsp.vim
 [submodule "bundle/asyncomplete.vim"]
-	path = bundle/asyncomplete.vim
+	path = vim/bundle/asyncomplete.vim
 	url = http://github.com/prabirshrestha/asyncomplete.vim
 [submodule "bundle/async.vim"]
-	path = bundle/async.vim
+	path = vim/bundle/async.vim
 	url = http://github.com/prabirshrestha/async.vim
 [submodule "bundle/rust.vim"]
-	path = bundle/rust.vim
+	path = vim/bundle/rust.vim
 	url = http://github.com/rust-lang/rust.vim
 [submodule "bundle/vim-airline-themes"]
-	path = bundle/vim-airline-themes
+	path = vim/bundle/vim-airline-themes
 	url = http://github.com/vim-airline/vim-airline-themes
 [submodule "bundle/vim-bookmarks"]
-	path = bundle/vim-bookmarks
+	path = vim/bundle/vim-bookmarks
 	url = http://github.com/MattesGroeger/vim-bookmarks.git
 [submodule "bundle/vim-localvimrc"]
-	path = bundle/vim-localvimrc
+	path = vim/bundle/vim-localvimrc
 	url = http://github.com/embear/vim-localvimrc.git
 [submodule "bundle/fzf"]
-	path = bundle/fzf
+	path = vim/bundle/fzf
 	url = http://github.com/junegunn/fzf
 [submodule "bundle/fzf.vim"]
-	path = bundle/fzf.vim
+	path = vim/bundle/fzf.vim
 	url = http://github.com/junegunn/fzf.vim
 [submodule "bundle/ale"]
-	path = bundle/ale
+	path = vim/bundle/ale
 	url = http://github.com/w0rp/ale
 [submodule "bundle/vim-lsp"]
-	path = bundle/vim-lsp
+	path = vim/bundle/vim-lsp
 	url = http://github.com/prabirshrestha/vim-lsp
 [submodule "bundle/Rename"]
-	path = bundle/Rename
+	path = vim/bundle/Rename
 	url = http://github.com/vim-scripts/Rename
 [submodule "bundle/open_file_under_cursor.vim"]
-	path = bundle/open_file_under_cursor.vim
+	path = vim/bundle/open_file_under_cursor.vim
 	url = http://github.com/amix/open_file_under_cursor.vim
 [submodule "bundle/vim-multiple-cursors"]
-	path = bundle/vim-multiple-cursors
+	path = vim/bundle/vim-multiple-cursors
 	url = http://github.com/terryma/vim-multiple-cursors
 [submodule "bundle/asyncomplete-buffer.vim"]
-	path = bundle/asyncomplete-buffer.vim
+	path = vim/bundle/asyncomplete-buffer.vim
 	url = http://github.com/prabirshrestha/asyncomplete-buffer.vim
 [submodule "bundle/asyncomplete-tags.vim"]
-	path = bundle/asyncomplete-tags.vim
+	path = vim/bundle/asyncomplete-tags.vim
 	url = http://github.com/prabirshrestha/asyncomplete-tags.vim
 [submodule "bundle/asyncomplete-file.vim"]
-	path = bundle/asyncomplete-file.vim
+	path = vim/bundle/asyncomplete-file.vim
 	url = http://github.com/prabirshrestha/asyncomplete-file.vim
 [submodule "oh-my-zsh"]
-	path = oh-my-zsh
+	path = oh-my-zsh/oh-my-zsh
 	url = http://github.com/robbyrussell/oh-my-zsh
 [submodule "oh-my-zsh-custom/plugins/zsh-autosuggestions"]
-	path = oh-my-zsh-custom/plugins/zsh-autosuggestions
+	path = oh-my-zsh/custom/plugins/zsh-autosuggestions
 	url = http://github.com/zsh-users/zsh-autosuggestions
 [submodule "oh-my-zsh-custom/plugins/zsh-syntax-highlighting"]
-	path = oh-my-zsh-custom/plugins/zsh-syntax-highlighting
+	path = oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 	url = http://github.com/zsh-users/zsh-syntax-highlighting
 [submodule "oh-my-zsh-custom/themes/geometry"]
-	path = oh-my-zsh-custom/themes/geometry
+	path = oh-my-zsh/custom/themes/geometry
 	url = http://github.com/geometry-zsh/geometry
