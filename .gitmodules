@@ -77,14 +77,14 @@
 	path = vim/bundle/asyncomplete-file.vim
 	url = http://github.com/prabirshrestha/asyncomplete-file.vim
 [submodule "oh-my-zsh"]
-	path = oh-my-zsh/oh-my-zsh
+	path = zsh/oh-my-zsh
 	url = http://github.com/robbyrussell/oh-my-zsh
 [submodule "oh-my-zsh-custom/plugins/zsh-autosuggestions"]
-	path = oh-my-zsh/custom/plugins/zsh-autosuggestions
+	path = zsh/custom/plugins/zsh-autosuggestions
 	url = http://github.com/zsh-users/zsh-autosuggestions
 [submodule "oh-my-zsh-custom/plugins/zsh-syntax-highlighting"]
-	path = oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+	path = zsh/custom/plugins/zsh-syntax-highlighting
 	url = http://github.com/zsh-users/zsh-syntax-highlighting
 [submodule "oh-my-zsh-custom/themes/geometry"]
-	path = oh-my-zsh/custom/themes/geometry
+	path = zsh/custom/themes/geometry
 	url = http://github.com/geometry-zsh/geometry

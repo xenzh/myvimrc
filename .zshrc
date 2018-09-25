@@ -1,6 +1,6 @@
 thisdir="$( cd "$(dirname ${(%):-%N})" > /dev/null && pwd)"
 
-export ZSH=$thisdir/oh-my-zsh/oh-my-zsh
+export ZSH=$thisdir/zsh/oh-my-zsh
 ZSH_CUSTOM=$ZSH/../custom
 
 
