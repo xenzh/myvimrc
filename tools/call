@@ -81,8 +81,11 @@ DEFAULT_FILEPATH = path.join(path.dirname(path.realpath(__file__)), ".call-templ
 
 
 def load(filepath):
-    with open(filepath, "r") as file_obj:
-        return json.load(file_obj)
+    try:
+        with open(filepath, "r") as file_obj:
+            return json.load(file_obj)
+    except IOError:
+        return {}
 
 
 def multi_replace(where, subst):
@@ -237,9 +240,13 @@ def main():
     templ = {}
     for def_file in set(own_args.defs):
         single_templ = load(def_file)
-        templ.update(single_templ)
+        if single_templ:
+            templ.update(single_templ)
+            populate_template_args(parser, single_templ)
 
-    populate_template_args(parser, single_templ)
+    if not templ:
+        print("No templates loaded, exiting")
+        exit(1)
 
     args = parser.parse_known_args()
     cmd = process(args[0], args[1], templ)

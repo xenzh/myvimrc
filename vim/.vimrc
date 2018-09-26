@@ -176,8 +176,7 @@ command! Wbd :w | :bd | call airline#extensions#tabline#buflist#invalidate()
 cnoreabbrev wd Wbd
 
 
-" close all buffers / close all buffers but this
-command! Z %bd
+" close all buffers but this
 command! O %bd | e#
 
 
@@ -419,6 +418,8 @@ nmap [o :call LocalTags()<CR> " tags in working dir
 nmap ]o :BTags!<CR> " tags in this buffer
 nmap ][o :Tags!<CR> " all tags
 
+command! Z %bd | :Files!
+
 " override :Rg, :Files to display preview
 command! -bang -nargs=* Rg call fzf#vim#grep(
   \ 'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
@@ -468,6 +469,9 @@ highlight BookmarkAnnotationLine ctermbg=237 ctermfg=79
 
 nmap ml <Plug>BookmarkShowAll
 
+
+" matchit (% jumps tags)
+runtime macros/matchit.vim
 
 " vim-lsp and asyncomplete.vim debugging (uncomment to enable logging)
 "let g:lsp_log_verbose = 1

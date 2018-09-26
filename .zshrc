@@ -14,8 +14,8 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 
 plugins=(
+  z
   git
-  aws
   dirhistory
   docker
   pip
@@ -31,6 +31,8 @@ source $ZSH/oh-my-zsh.sh
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=59'
 
+# expand and complete all wildcards before cursor
+bindkey TAB expand-or-complete-prefix
 
 # User configuration
 
