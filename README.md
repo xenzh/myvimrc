@@ -12,31 +12,22 @@ cd ~/.dotfiles
 git submodule init
 git submodule update
 ```
-2. Make `.vimrc` symlink
+2. Make symlinks / source scripts
 ```
 ln -s ~/.dotfiles/vim/.vimrc ~/.vimrc
-```
-3. Make `.tmux.conf` symlink
-```
 ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
+ln -s ~/.dotfiles/.zshrc ~/.zshrc
+source ~/.dotfiles/tools/profile.sh
 ```
-4. Include `.xterm` to your `.Xresources` or `.Xdefaults` (just add following line at the end of the file)
+3. Include `.xterm` to your `.Xresources` or `.Xdefaults` (just add following line at the end of the file)
 ```
 #include ".dotfiles/.xterm"
 ```
-5. Reload `.Xresources` or `.Xdefaults`
+4. Reload `.Xresources` or `.Xdefaults`
 ```
 xrdb -load ./.Xresources
 ```
-6. Source profile tweaks (just add following line to your `.bashrc`)
-```
-source ~/.dotfiles/tools/profile.sh
-```
-Or make `.zshrc` symlink
-```
-ln -s ~/.dotfiles/.zshrc ~/.zshrc
-```
-7. Restart xterm session and have fun!
+5. Restart xterm session and have fun!
 
 ## How to add, remove and update vim plugins
 

@@ -139,6 +139,10 @@ nnoremap n nzz
 nnoremap N Nzz
 
 
+" No highlight
+nnoremap <ESC><ESC> :noh<CR>
+
+
 " Navigate git merge markers with ]c and [c
 nnoremap <silent> ]c /\v^(\<\|\=\|\>){7}([^=].+)?$<CR>
 nnoremap <silent> [c ?\v^(\<\|\=\|\>){7}([^=].+)\?$<CR>
