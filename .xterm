@@ -34,7 +34,7 @@ xterm*utf8: 1
 
 xterm*renderFont: true
 xterm*faceName: DejaVu Sans Mono:style=Regular
-xterm*faceSize: 10
+xterm*faceSize: 11
 xterm*boldFont: *-mono-*-*-*-12-*
 xterm*boldMode: false
 

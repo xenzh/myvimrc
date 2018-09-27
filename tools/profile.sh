@@ -2,7 +2,7 @@
 
 THISDIR=$(dirname "$0")
 export RIPGREP_CONFIG_PATH="$THISDIR/../.ripgrep"
-SHELL="$( echo "$SHELL" | rg -o 'bash|zsh' )"
+SHELL="$( echo "$0" | rg -o 'bash|zsh' )"
 
 
 
@@ -86,19 +86,19 @@ export FZF_DEFAULT_OPTS="-m --preview='$fzf_file_preview_cmd' --preview-window r
 
 vimf() {
     if [ -z "$1" ]; then
-        loc=$(fzf)
+        loc=$(fzf | awk -v ORS=' ' '{print}')
     else
         cwd=$PWD
         cd "$1" || return
         loc=$(fzf)
         if [ -n "$loc" ]; then
-            loc="$1/$loc"
+            loc=$(echo "$loc" | awk -v ORS=' ' -v basepath="$1" '{print basepath "/" $0}')
         fi
         cd "$cwd" || return
     fi
 
     if [ -n "$loc" ]; then
-        vim "$loc"
+        echo "$loc" | xargs vim
     fi
 }
 
@@ -110,7 +110,7 @@ vimg() {
     matches=$(
         rg --vimgrep "$1" |
         awk -F: -v OFS=" " '{print $1,$2,$4}' |
-        fzf --preview="$fzf_file_preview_cmd | sed -n '{2},+100p'")
+        fzf +m --preview="$fzf_file_preview_cmd | sed -n '{2},+100p'")
 
     loc=$(echo "$matches" | awk '{print $1}')
     offset=$(echo "$matches" | awk '{print $2}')

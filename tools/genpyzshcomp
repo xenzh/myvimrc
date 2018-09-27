@@ -1,0 +1,8 @@
+#!/usr/bin/env python3
+
+from genzshcomp import CompletionGenerator
+from optparse import OptionParser
+
+parser = OptionParser()
+gen = CompletionGenerator('lore', parser)
+print(gen.get())
