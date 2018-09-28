@@ -1,9 +1,9 @@
 #!/bin/bash
 
-THISDIR=$(dirname "$0")
-export RIPGREP_CONFIG_PATH="$THISDIR/../.ripgrep"
-SHELL="$( echo "$0" | rg -o 'bash|zsh' )"
+mydir=$(dirname "$0")
+export RIPGREP_CONFIG_PATH="$mydir/../.ripgrep"
 
+myshell="$( ps -p "$$" | rg -o 'bash|zsh' )"
 
 
 #
@@ -45,7 +45,7 @@ alias gpom="git push origin master"
 alias grpo="git remote prune origin"
 alias ggc="git gc --aggressive --prune=now"
 
-if [ "$SHELL" = "bash" ]; then
+if [ "$myshell" = "bash" ]; then
     if [[ "$(type -t __git_complete)" == "function" ]]; then
         PS1='\[\e]0;\u@\h:\w\a\][\u@\h \W$(__git_ps1 " (%s)")]\$ '
 
@@ -63,11 +63,8 @@ fi
 # fzf config
 #
 
-if [ -x "$(command -v highlight)" ]; then
-    fzf_file_preview_cmd="highlight --quiet -O xterm256 {1} -s moria || head -100 {1}"
-else
-    fzf_file_preview_cmd="head -100 {1}"
-fi
+fzf_preview="$mydir/preview"
+fzf_preview_cmd="$fzf_preview {}"
 
 if [ -x "$(command -v rg)" ]; then
     export FZF_DEFAULT_COMMAND="rg --hidden -l -g '!.git' ''"
@@ -76,7 +73,7 @@ else
 fi
 
 fzf_colors="dark,fg:249,bg:235,hl:110,fg+:249,bg+:237,hl+:110,info:150,prompt:110,pointer:110,marker:110,spinner:110,header:24"
-export FZF_DEFAULT_OPTS="-m --preview='$fzf_file_preview_cmd' --preview-window right:60% --color=$fzf_colors"
+export FZF_DEFAULT_OPTS="-m --preview='$fzf_preview_cmd' --preview-window right:60% --color=$fzf_colors"
 
 
 
@@ -98,7 +95,7 @@ vimf() {
     fi
 
     if [ -n "$loc" ]; then
-        echo "$loc" | xargs vim
+        vim $(echo "$loc") # split args. don't do xargs vim, it breaks the terminal!
     fi
 }
 
@@ -110,7 +107,7 @@ vimg() {
     matches=$(
         rg --vimgrep "$1" |
         awk -F: -v OFS=" " '{print $1,$2,$4}' |
-        fzf +m --preview="$fzf_file_preview_cmd | sed -n '{2},+100p'")
+        fzf +m --preview="$fzf_preview {1} {2}")
 
     loc=$(echo "$matches" | awk '{print $1}')
     offset=$(echo "$matches" | awk '{print $2}')
@@ -133,11 +130,27 @@ vimh() {
 }
 
 cdf() {
-    loc=$(
-        find . -type d -not -path '*/\.*' |
-        fzf --preview='ls -ahH --group-directories-first --color {}')
+    loc=$(find . -type d -not -path '*/\.*' | fzf)
     cd "$loc" || return
 }
+
+unalias z 2> /dev/null
+if [ "$myshell" = "zsh" ]; then
+    z() {
+      if [[ -z "$*" ]]; then
+        cd "$(_z -l 2>&1 | fzf +s --tac --preview="$fzf_preview {2}" | sed 's/^[0-9,.]* *//')" || exit 1
+      else
+        _last_z_args="$*"
+        _z "$@"
+      fi
+    }
+
+    compctl -U -K _z_zsh_tab_completion z
+
+    zz() {
+      cd "$(_z -l 2>&1 | sed 's/^[0-9,.]* *//' | fzf -q "$_last_z_args")" || exit 1
+    }
+fi
 
 
 # other functions

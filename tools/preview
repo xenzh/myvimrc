@@ -1,0 +1,40 @@
+#!/usr/bin/env zsh
+
+usage() {
+    echo "Usage: $1 entity [sub-entity]"
+    echo "  entity: folder"
+    echo "  entity: file, sub-entity: line"
+}
+
+if [ -z "$1" ]; then
+    usage "$0"
+    exit 1
+fi
+
+vimfzf_preview_bin="$(dirname $0)/../vim/bundle/fzf.vim/bin/preview.sh"
+
+if [ -d "$1" ]; then
+    # folder
+    ls -ahH --group-directories-first --color "$1"
+elif [ -f "$1" ]; then
+    # file
+    if [ -n "$2" ]; then
+        # line number, use line highlighter from fzf.vim bundle
+        "$vimfzf_preview_bin" "$1:$2"
+    else
+        # just file
+        if [ -x "$(command -v highlight)" ]; then
+            highlight --quiet -O xterm256 -s moria "$1" || cat "$1"
+        else
+            cat "$1"
+        fi
+    fi
+#elif [ -f "$2" ]; then
+#    # ctags entry
+#    "$vimfzf_preview_bin" "$2"
+fi
+
+# TODO:
+# * interactive cd can't work out of the box with fzf (consecituve dirs are not getting prepended)
+# * interactive ls like cd (my own plugin/override), maybe even rg?
+# * preview for ctags entries

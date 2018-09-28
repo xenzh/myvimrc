@@ -21,6 +21,7 @@ plugins=(
   pip
   python
   tmux
+  zsh-interactive-cd
   zsh-autosuggestions
   zsh-syntax-highlighting
 )

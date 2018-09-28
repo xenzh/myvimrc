@@ -16,10 +16,69 @@ show_usage_and_exit() {
     exit "$1"
 }
 
+
+install_flag="$HOME/.myvimrc-installed"
+
+backup() {
+    if [ -f "$2" ]; then
+        $1 "$2" "$2.backup"
+    fi
+}
+
 install() {
     echo "Not implemented"
     exit 1
+
+    if [ -f "$install_flag" ]; then
+        echo "myvimrc is already installed, bailing out"
+        exit 1
+    fi
+
+    update_submodules
+
+    # xterm
+    xresources="$HOME/.Xresources"
+    if [ ! -f "$xresources" ]; then
+        xresources="$HOME/.Xdefaults"
+    fi
+    backup "cp" "$xresources"
+    echo "#include \"$PWD/.xterm\"" >> "$xresources"
+
+
+    # zsh
+    backup "mv" "$HOME/.zshrc"
+    ln -s .zshrc ~/.zshrc
+
+    old_shell=""
+    if [ "$SHELL" != "/bin/zsh" ]; then
+        old_shell=$SHELL
+        chsh -s /bin/zsh
+    fi
+
+    # tmux
+    backup "mv" "$HOME/.tmux.conf"
+    ln -s .tmux.conf ~/.tmux.conf
+
+    # vim
+    backup "mv" "$HOME/.vimrc"
+    ln -s .vimrc ~/.vimrc
+
+    touch "$install_flag"
+    echo "$old_shell" >> "$install_flag"
 }
+
+uninstall() {
+    echo "Not implemented"
+    exit 1
+
+    if [ ! -f "$install_flag" ]; then
+        echo "myvimrc is not installed, bailing out"
+        exit 1
+    fi
+
+    rm -f "$install_flag"
+}
+
 
 update() {
     echo -e "Pulling master..."
@@ -46,7 +105,6 @@ remove_vim_plugin() {
 
 update_submodules() {
     echo -e "Updating submodules..."
-    cd bundle
     git submodule init
     git submodule update
     echo -e "Done updating submodules"
@@ -73,7 +131,7 @@ case $command in
         install
         ;;
     "uninstall")
-        install
+        uninstall
         ;;
     "update")
         update
