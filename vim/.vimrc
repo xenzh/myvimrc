@@ -8,12 +8,16 @@
 set mouse=a
 
 
-" use utf-8 everywhere
+" leader key is space
+let g:mapleader=" "
+
+
+" utf-8 everywhere
 scriptencoding utf-8
 set encoding=utf-8
 
 
-" use per-directory .vimrc-s
+" use per-directory .vimrc-s and custom .vim folder
 set rtp^=~/.dotfiles/vim
 set exrc
 set secure
@@ -35,6 +39,8 @@ set showmatch
 set hlsearch
 set incsearch
 set ignorecase
+set smartcase
+set magic
 
 
 " load ctags (recursive downtop)
@@ -65,7 +71,15 @@ set backspace=indent,eol,start
 set visualbell
 set vb t_vb=""
 
+
+" splits are to the right and at the bottom
+set splitright
 set splitbelow
+
+
+" folding (see autocommands below)
+set foldmethod=manual
+set nofoldenable
 
 
 " show special chars
@@ -143,12 +157,22 @@ nnoremap N Nzz
 nnoremap <ESC><ESC> :noh<CR>
 
 
-" Navigate git merge markers with ]c and [c
+" Navigate git merge markers with ]c and [c, highlight markers
 nnoremap <silent> ]c /\v^(\<\|\=\|\>){7}([^=].+)?$<CR>
 nnoremap <silent> [c ?\v^(\<\|\=\|\>){7}([^=].+)\?$<CR>
-
-" markers highlight
 match WildMenu '\v^(\<|\=|\>){7}([^=].+)?$'
+
+
+" autosave and autoload folds
+autocmd BufWinLeave *.* mkview
+autocmd BufWinEnter *.* silent loadview
+
+
+" create syntax folds and then switch to manual mode
+augroup vimrc
+  au BufReadPre * setlocal foldmethod=syntax
+  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
+augroup END
 
 
 " Auto-source .vimrc on saving, update ui
@@ -210,7 +234,6 @@ command! Hi :so $VIMRUNTIME/syntax/hitest.vim
 
 
 " Code formatting
-" See DoFmt() implementations for concrete filetypes
 function! DoFmt()
   echo 'Formatting is not implemented for this filetype (see .vim/ftplugin)'
 endfunction

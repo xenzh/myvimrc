@@ -40,6 +40,7 @@ Search text and files:
   * `[p` - in current working directory
   * `]p` - near current file
   * `][p` -in user home directory
+  * `:F` - in arbitrary directory
 * _fzf.vim_, search tags
   * `[o` - in current working directory
   * `]o` - in this buffer
@@ -95,6 +96,11 @@ Following mappings/commands are defined by plugins or are vim defaults. I keep t
     * `:ta` - go to symbol definition
     * `g]` - list symbol definitions
     * `Ctrl-t` - go back
+  * Folding
+    * `zf` - in visual mode, create a fold
+    * `zo`, `zc`, `za` - open, close, toggle one fold level under the cursor. O/C/A - for all levels
+    * `zm`, `zM` - close next level/all folds
+    * `zr`, `zR` - open next level/all folds
 * Plugins
   * vim-bookmarks
     * `mm` -- toggle bookmark at current line
