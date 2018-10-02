@@ -33,8 +33,3 @@ elif [ -f "$1" ]; then
 #    # ctags entry
 #    "$vimfzf_preview_bin" "$2"
 fi
-
-# TODO:
-# * interactive cd can't work out of the box with fzf (consecituve dirs are not getting prepended)
-# * interactive ls like cd (my own plugin/override), maybe even rg?
-# * preview for ctags entries

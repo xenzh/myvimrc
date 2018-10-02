@@ -44,4 +44,7 @@ else
 fi
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
+autoload -U zmv
+alias mmv='noglob zmv -W'
+
 source $thisdir/tools/profile.sh

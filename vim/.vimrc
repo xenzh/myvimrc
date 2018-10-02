@@ -316,6 +316,19 @@ function! GetLspStatusMessage()
     endif
 endfunction
 
+command! LspDisable if has_key(g:my_lsp_catalog, &ft) | call lsp#stop_server(g:my_lsp_catalog[&ft]) | endif
+
+function! ToggleCompletion()
+    if g:asyncomplete_auto_popup == 1
+        let g:asyncomplete_auto_popup = 0
+        execute 'LspDisable'
+        call lsp#disable()
+        echo 'Completion and LSP are disabled'
+    endif
+endfunction
+
+nmap <F7> :call ToggleCompletion()<CR>
+
 
 " ale
 let g:ale_linters = {}
@@ -418,6 +431,7 @@ nmap [o :call LocalTags()<CR> " tags in working dir
 nmap ]o :BTags!<CR> " tags in this buffer
 nmap ][o :Tags!<CR> " all tags
 
+command! -nargs=1 -complete=file F :Files! <args>
 command! Z %bd | :Files!
 
 " override :Rg, :Files to display preview
