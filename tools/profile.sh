@@ -38,14 +38,19 @@ alias gcm="git checkout master"
 alias gcb="git checkout -b"
 alias gmm="git merge master"
 alias gsu="git fetch upstream && git checkout master && git merge upstream/master && git push origin master"
-alias gr="git rebase -i"
-alias gl="git log"
 alias gb="git branch"
 alias gd="git diff"
 alias gpo="git push origin"
 alias gpom="git push origin master"
 alias grpo="git remote prune origin"
 alias ggc="git gc --aggressive --prune=now"
+
+alias gl="git log --oneline --color=always | fzf --ansi --preview='git show --color=always {1}'"
+alias gr="gl | awk '{print \$1}' | xargs git rebase -i"
+
+alias gbf="git branch | fzf --preview='git diff --color=always master {1}'"
+alias gcf="gbf | xargs git checkout"
+
 
 if [ "$myshell" = "bash" ]; then
     if [[ "$(type -t __git_complete)" == "function" ]]; then
