@@ -29,6 +29,8 @@ fi
 # git aliases, autocomplete and PS1
 #
 
+alias vimrc="vim $mydir/../vim/.vimrc"
+
 alias g="git"
 alias gs="git status --ignore-submodules=dirty"
 alias gc="git checkout"
@@ -133,6 +135,12 @@ cdf() {
     loc=$(find . -type d -not -path '*/\.*' | fzf)
     cd "$loc" || return
 }
+
+lf() {
+    loc=$(find . -type d -not -path '*/\.*' | fzf)
+    l "$loc" || return
+}
+
 
 unalias z 2> /dev/null
 if [ "$myshell" = "zsh" ]; then

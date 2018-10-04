@@ -4,7 +4,7 @@
 
 
 " enable mouse
-" Shift+Wheel to X-paste from x clipboard!
+" Shift-select to X-yank, Shift+Wheel to X-paste
 set mouse=a
 
 
@@ -17,8 +17,13 @@ scriptencoding utf-8
 set encoding=utf-8
 
 
-" use per-directory .vimrc-s and custom .vim folder
-set rtp^=~/.dotfiles/vim
+" custom runtimepath for vim and after folders
+let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+let s:customrtp = s:path . ',' . s:path . '/after'
+exe 'set rtp^=' . s:customrtp
+
+
+" allow secure per-project .vimrc
 set exrc
 set secure
 
@@ -80,6 +85,7 @@ set splitbelow
 " folding (see autocommands below)
 set foldmethod=manual
 set nofoldenable
+set foldlevel=99
 
 
 " show special chars
@@ -152,9 +158,8 @@ vnoremap > >gv
 nnoremap n nzz
 nnoremap N Nzz
 
-
 " No highlight
-nnoremap <ESC><ESC> :noh<CR>
+nnoremap <leader>l :noh<CR>
 
 
 " Navigate git merge markers with ]c and [c, highlight markers
@@ -171,7 +176,7 @@ autocmd BufWinEnter *.* silent loadview
 " create syntax folds and then switch to manual mode
 augroup vimrc
   au BufReadPre * setlocal foldmethod=syntax
-  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
+  au BufWinEnter * if &fdm == 'syntax' | setlocal foldmethod=manual | set nofoldenable | endif
 augroup END
 
 
@@ -507,7 +512,7 @@ highlight BookmarkAnnotationLine ctermbg=237 ctermfg=79
 nmap ml <Plug>BookmarkShowAll
 
 
-" matchit (% jumps tags)
+" matchit (% jumps tags for html/xml-like filetypes)
 runtime macros/matchit.vim
 
 " vim-lsp and asyncomplete.vim debugging (uncomment to enable logging)
