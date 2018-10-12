@@ -17,10 +17,10 @@ scriptencoding utf-8
 set encoding=utf-8
 
 
-" custom runtimepath for vim and after folders
+" custom runtimepath for vim and vim/after folders
 let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 let s:customrtp = s:path . ',' . s:path . '/after'
-exe 'set rtp^=' . s:customrtp
+exe 'set rtp=' . &rtp . ',' . s:customrtp
 
 
 " allow secure per-project .vimrc
@@ -84,8 +84,7 @@ set splitbelow
 
 " folding (see autocommands below)
 set foldmethod=manual
-set nofoldenable
-set foldlevel=99
+set foldlevelstart=99
 
 
 " show special chars
@@ -168,15 +167,11 @@ nnoremap <silent> [c ?\v^(\<\|\=\|\>){7}([^=].+)\?$<CR>
 match WildMenu '\v^(\<|\=|\>){7}([^=].+)?$'
 
 
-" autosave and autoload folds
-autocmd BufWinLeave *.* mkview
-autocmd BufWinEnter *.* silent loadview
-
-
-" create syntax folds and then switch to manual mode
-augroup vimrc
-  au BufReadPre * setlocal foldmethod=syntax
-  au BufWinEnter * if &fdm == 'syntax' | setlocal foldmethod=manual | set nofoldenable | endif
+" save/load views, create syntax folds and then switch to manual mode
+augroup folds
+  au BufReadPre  * setlocal foldmethod=syntax
+  au BufWinEnter * if &fdm == 'syntax' | setlocal foldmethod=manual | endif | silent loadview
+  au BufWinLeave * mkview!
 augroup END
 
 
@@ -236,6 +231,15 @@ command! FromHex %s#^[^:]*: \(\%(\x\+ \)\+\) .*#\1# | %!xxd -r -p
 
 " list all highlight groups
 command! Hi :so $VIMRUNTIME/syntax/hitest.vim
+
+
+" Big file mode
+function! ToggleBigFileMode()
+    set cursorline!
+    set lazyredraw!
+    call ToggleCompletion()
+endfunction
+nmap <leader>b :call ToggleBigFileMode()<CR>
 
 
 " Code formatting
@@ -352,6 +356,9 @@ function! ToggleCompletion()
         execute 'LspDisable'
         call lsp#disable()
         echo 'Completion and LSP are disabled'
+    else
+        let g:asyncomplete_auto_popup = 1
+        echo 'Completion is enabled (but LSP is still down)'
     endif
 endfunction
 

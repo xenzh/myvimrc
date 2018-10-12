@@ -13,9 +13,10 @@ myshell="$( ps -p "$$" | rg -o 'bash|zsh' )"
 alias c=clear
 alias l="ls -lahH --group-directories-first"
 alias cl="c && l"
+alias rmd="rm -rf"
+alias duh="du -d 1 -h"
 alias x="xterm -uc -en en_US.UTF8"
 alias :e="vim"
-alias duh="du -d 1 -h"
 
 if [ -x "$(command -v highlight)" ]; then
     export LESSOPEN="| $(command -v highlight) %s --out-format xterm256 -l --force -s moria --no-trailing-nl"
@@ -45,7 +46,7 @@ alias gpom="git push origin master"
 alias grpo="git remote prune origin"
 alias ggc="git gc --aggressive --prune=now"
 
-alias gl="git log --oneline --color=always | fzf --ansi --preview='git show --color=always {1}'"
+alias gl="git log --oneline --color=always | fzf --ansi --preview='git show --color=always {1}' | rg '^(\\S+)' -o"
 alias gr="gl | awk '{print \$1}' | xargs git rebase -i"
 
 alias gbf="git branch | fzf --preview='git diff --color=always master {1}'"
