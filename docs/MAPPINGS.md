@@ -12,6 +12,7 @@ Following mappings and commands are added in `.vimrc`.
 * `F6` - toggle line numbers and space chars (useful for working with system clipboard)
 * `F8` - _tagbar_, toggle code outline view
 * `ml` - _vim-bookmarks_, show all bookmarks
+* `<leader>-b` - toggle "big file mode"
 
 
 ### Navigation
@@ -35,6 +36,7 @@ Switch airline tabs/buffers:
 Search text and files:
 * `:Gr` - find selection, open quickfix with results
 * `:Gre` - display results of last search (`@/`) in quickfix
+* `<leader>-l` - no highlight
 * `gf` - _open file under cursor_, jump to file
 * _fzf.vim_, search files
   * `[p` - in current working directory
@@ -49,7 +51,10 @@ Search text and files:
   * `:rg`, `:Ag` - grep files in current folder with `ripgrep`
 
 Code:
-* `]c` and `[c` - jump to next/previous git merge marker
+* `]c` and `[c` - jump to next/previous git merge marker_
+* _asyncomplete.vim_
+  * `<F7>` - toggle completion popup and LSP client
+  * `C-Space` - _insert mode_ show completion popup
 * _vim-lsp_
   * `;;` - go to symbol definition
   * `;'` - find references

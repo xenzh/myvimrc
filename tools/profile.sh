@@ -15,7 +15,7 @@ alias l="ls -lahH --group-directories-first"
 alias cl="c && l"
 alias rmd="rm -rf"
 alias duh="du -d 1 -h"
-alias x="xterm -uc -en en_US.UTF8"
+alias x="xterm -uc -en en_US.UTF8 -lcc $(which luit)"
 alias :e="vim"
 
 if [ -x "$(command -v highlight)" ]; then

@@ -82,9 +82,10 @@ set splitright
 set splitbelow
 
 
-" folding (see autocommands below)
+" folding (see autocommands below) - don't save cwd along with a view!
 set foldmethod=manual
 set foldlevelstart=99
+set viewoptions-=options
 
 
 " show special chars
@@ -133,6 +134,9 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
+" Fix <C-Space> (terminal doesn't understand <C-Space> and sends ^@ or <Nul> instead)
+imap <C-@> <C-Space>
+
 
 " split resize remappings
 nmap <F9>  :resize -3<CR>
@@ -157,6 +161,7 @@ vnoremap > >gv
 nnoremap n nzz
 nnoremap N Nzz
 
+
 " No highlight
 nnoremap <leader>l :noh<CR>
 
@@ -169,9 +174,9 @@ match WildMenu '\v^(\<|\=|\>){7}([^=].+)?$'
 
 " save/load views, create syntax folds and then switch to manual mode
 augroup folds
-  au BufReadPre  * setlocal foldmethod=syntax
-  au BufWinEnter * if &fdm == 'syntax' | setlocal foldmethod=manual | endif | silent loadview
-  au BufWinLeave * mkview!
+  au BufReadPre  *.* setlocal foldmethod=syntax
+  au BufWinEnter *.* if &fdm == 'syntax' | setlocal foldmethod=manual | endif | silent loadview
+  au BufWinLeave *.* mkview!
 augroup END
 
 
@@ -301,6 +306,9 @@ let g:asyncomplete_smart_completion = 1
 let g:asyncomplete_auto_popup = 1
 let g:asyncomplete_remove_duplicates = 1
 
+" force show completion popup
+imap <C-Space> <Plug>(asyncomplete_force_refresh)
+
 " completion source: asyncomplete-buffer.vim
 call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
     \ 'name': 'buffer',
@@ -353,12 +361,12 @@ command! LspDisable if has_key(g:my_lsp_catalog, &ft) | call lsp#stop_server(g:m
 function! ToggleCompletion()
     if g:asyncomplete_auto_popup == 1
         let g:asyncomplete_auto_popup = 0
-        execute 'LspDisable'
         call lsp#disable()
-        echo 'Completion and LSP are disabled'
+        echo 'Autocompletion and LSP are disabled (but <C-Space> still works)'
     else
         let g:asyncomplete_auto_popup = 1
-        echo 'Completion is enabled (but LSP is still down)'
+        call lsp#enable()
+        echo 'Autocompletion and LSP are enabled'
     endif
 endfunction
 
