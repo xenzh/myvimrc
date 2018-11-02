@@ -82,10 +82,13 @@ set splitright
 set splitbelow
 
 
-" folding (see autocommands below) - don't save cwd along with a view!
-set foldmethod=manual
+" folds
+set foldmethod=syntax
 set foldlevelstart=99
-set viewoptions-=options
+
+
+" views: don't save cwd and folds
+set viewoptions-=options,folds
 
 
 " show special chars
@@ -172,11 +175,10 @@ nnoremap <silent> [c ?\v^(\<\|\=\|\>){7}([^=].+)\?$<CR>
 match WildMenu '\v^(\<|\=|\>){7}([^=].+)?$'
 
 
-" save/load views, create syntax folds and then switch to manual mode
-augroup folds
-  au BufReadPre  *.* setlocal foldmethod=syntax
-  au BufWinEnter *.* if &fdm == 'syntax' | setlocal foldmethod=manual | endif | silent loadview
-  au BufWinLeave *.* mkview!
+" save/load views
+augroup views
+    au! BufWinLeave * if expand('%') != '' && &buftype !~ 'nofile' | mkview! | endif
+    au! BufWinEnter * if expand('%') != '' && &buftype !~ 'nofile' | silent loadview | endif
 augroup END
 
 
@@ -201,8 +203,8 @@ command! WQ :wq
 
 
 " :wd - save and delete the buffer (and refresh tagline, see below)
-command! Wbd :w | :bd | call airline#extensions#tabline#buflist#invalidate()
-cnoreabbrev wd Wbd
+command! Wd :w | :bd | call airline#extensions#tabline#buflist#invalidate()
+cnoreabbrev wd Wd
 
 
 " close all buffers but this
@@ -228,6 +230,11 @@ endfunction
 
 command! ToggleSpaceChars :call DoToggleSpaceChars()
 nmap <F6> :ToggleSpaceChars<CR>
+
+
+" i don't care who you are, just get closed
+command! Acl :ccl | :pcl | :lcl
+cnoreabbrev acl Acl
 
 
 " Convert buffer to hex / read buffer from xxd hex dump

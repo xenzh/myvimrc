@@ -42,7 +42,7 @@ Search text and files:
   * `[p` - in current working directory
   * `]p` - near current file
   * `][p` -in user home directory
-  * `:F` - in arbitrary directory
+  * `:F <dir>` - in arbitrary directory
 * _fzf.vim_, search tags
   * `[o` - in current working directory
   * `]o` - in this buffer
@@ -71,7 +71,8 @@ General:
 * `<` and `>` - indent selection and reselect
 * `:W`, `:Q`, `:Wq`, `:WQ` - the same as `:wq`
 * `:O` - close all buffers but this
-* `:Z` - close all buffers
+* `:Z` - _fzf.vim_ close all buffers and open fzf file picker
+* `:acl` - close preview, quickfix and location list
 * `:wd` - save and delete current buffer (just like `:wq` but for buffers)
 * `:rn` - _Rename_, rename current file inplace
 
