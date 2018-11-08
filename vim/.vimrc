@@ -175,6 +175,10 @@ nnoremap <silent> [c ?\v^(\<\|\=\|\>){7}([^=].+)\?$<CR>
 match WildMenu '\v^(\<|\=|\>){7}([^=].+)?$'
 
 
+" no filetype is text filetype
+au! BufEnter * if &filetype == "" | setlocal ft=text | endif
+
+
 " save/load views
 augroup views
     au! BufWinLeave * if expand('%') != '' && &buftype !~ 'nofile' | mkview! | endif
@@ -233,8 +237,8 @@ nmap <F6> :ToggleSpaceChars<CR>
 
 
 " i don't care who you are, just get closed
-command! Acl :ccl | :pcl | :lcl
-cnoreabbrev acl Acl
+command! AllClose :ccl | :pcl | :lcl
+cnoreabbrev acl AllClose
 
 
 " Convert buffer to hex / read buffer from xxd hex dump
@@ -250,6 +254,7 @@ function! ToggleBigFileMode()
     set cursorline!
     set lazyredraw!
     call ToggleCompletion()
+    exe 'AirlineToggle'
 endfunction
 nmap <leader>b :call ToggleBigFileMode()<CR>
 
@@ -411,6 +416,7 @@ endif
 
 function! DoCheckSyntax()
     let g:ale_open_list = 1
+    execute 'Gcd'
     execute 'ALELint'
 endfunction
 nmap <F5> :call DoCheckSyntax()<CR>
