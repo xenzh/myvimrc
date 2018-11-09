@@ -102,6 +102,7 @@ For more details check out [mappings doc](MAPPINGS.md).
 
 ### Behavior
 * **[vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)** - Sublime Text-like multiple cursors
+* **[vim-sneak](https://github.com/justinmk/vim-sneak)** - jump to any location specified by two characters
 * **[Rename](https://github.com/vim-scripts/Rename)** - rename file opened in current buffer
 * **[Open file under cursor](https://github.com/amix/open_file_under_cursor.vim)** - opens file under cursor, duh
 
@@ -112,6 +113,7 @@ For more details check out [mappings doc](MAPPINGS.md).
 * **[ALE](https://github.com/w0rp/ale)** - Asynchronous Linting Engine: multilanguage code linting and fixing (plus rudimentary LSP client)
 * **[vim-lsp](https://github.com/prabirshrestha/vim-lsp)** - asynchronous Language Server Protocol client
 * **[fugitive](https://github.com/tpope/vim-fugitive)** - git integration, integrated with `vim-airline` (branch/status)
+* **[vim-gitgutter](https://github.com/airblade/vim-gitgutter)** - inline git diff signs, integrated with `vim-airline` (diff summary)
 * **[tagbar](https://github.com/majutsushi/tagbar)** - code outline viewer, integrated with `vim-airline` (classpath)
 * **[NERD Commenter](https://github.com/scrooloose/nerdcommenter)** - block comment/uncomment
 * **[a.vim](https://github.com/vim-scripts/a.vim)** - quick switch between associated files (h/cpp, etc)

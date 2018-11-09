@@ -91,3 +91,9 @@
 [submodule "zsh/custom/plugins/zsh-interactive-cd"]
 	path = zsh/custom/plugins/zsh-interactive-cd
 	url = http://github.com/changyuheng/zsh-interactive-cd
+[submodule "vim/bundle/vim-gitgutter"]
+	path = vim/bundle/vim-gitgutter
+	url = http://github.com/airblade/vim-gitgutter
+[submodule "vim/bundle/vim-sneak"]
+	path = vim/bundle/vim-sneak
+	url = http://github.com/justinmk/vim-sneak

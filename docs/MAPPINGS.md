@@ -107,6 +107,19 @@ Following mappings/commands are defined by plugins or are vim defaults. I keep t
     * `zo`, `zc`, `za` - open, close, toggle one fold level under the cursor. O/C/A - for all levels
     * `zm`, `zM` - close next level/all folds
     * `zr`, `zR` - open next level/all folds
+  * Movement / text objects
+    * commands
+      * `c` - change (remove, switch to insert mode)
+      * `d` - delete
+    * text object type
+      * `i` - inner (iw - inner word, excluding spaces)
+      * `a` - outer (aw including spaces)
+    * text objects
+      * `w` - word
+      * `t` - tag
+      * all types of quotes: `, ', "
+      * `s` - sententce (block, limited by dots)
+      * `p` - paragraph (block, limited by newlines)
 * Plugins
   * vim-bookmarks
     * `mm` -- toggle bookmark at current line

@@ -48,6 +48,10 @@ set smartcase
 set magic
 
 
+" plugin trigger delay
+set updatetime=750
+
+
 " load ctags (recursive downtop)
 set tags+=./tags;/
 
@@ -96,12 +100,34 @@ set list
 set listchars=tab:→→,trail:·,space:·
 
 
-" color scheme and tweaks
+" 256 color terminal
 set term=xterm-256color
+
+
+" color scheme and overrides
+function! OverrideColors()
+    hi SpecialKey ctermfg=darkgray
+    hi TabLineSel ctermfg=darkgray
+
+    " sneak
+     hi link Sneak WildMenu
+     hi link SneakScope WildMenu
+     hi link SneakLabel WildMenu
+
+    " vim-bookmarks
+    hi BookmarkSign ctermbg=237 ctermfg=79
+    hi BookmarkLine ctermbg=237 ctermfg=79
+    hi BookmarkAnnotationSign ctermbg=237 ctermfg=79
+    hi BookmarkAnnotationLine ctermbg=237 ctermfg=79
+endfunction
+
+augroup ColorOverrides
+    au!
+    au ColorScheme * call OverrideColors()
+augroup END
+
 set background=dark
 colorscheme bubblegum-256-dark
-hi SpecialKey ctermfg=darkgray " should be set after set listchars and colorscheme
-hi TabLineSel ctermfg=darkgray
 
 
 
@@ -196,7 +222,7 @@ function! RefreshUI()
     redrawstatus!
   endif
 endfunction
-autocmd! bufwritepost $MYVIMRC,.vimrc source $MYVIMRC | :call RefreshUI()
+autocmd! bufwritepost $MYVIMRC,.vimrc nested source $MYVIMRC | :call RefreshUI()
 
 
 " I like to hold Shift for a bit longer than necessary
@@ -302,7 +328,6 @@ command! -range Jsp <line1>,<line2>call s:process_selection(function('JsonToRspl
 " pathogen
 filetype off
 call pathogen#infect()
-call pathogen#helptags()
 filetype plugin indent on
 
 
@@ -425,6 +450,17 @@ command! C :ALEReset | :lcl | :pcl
 command! D :ALEDetail
 
 
+" sneak
+let g:sneak#label = 1
+let g:sneak#s_next = 1
+let g:sneak#use_ic_scs = 1 " use ignorecase/smartcase
+
+
+" git-gutter
+nmap ]h <Plug>GitGutterNextHunk
+nmap [h <Plug>GitGutterPrevHunk
+
+
 " vim-airline, buffer tab selection remappings
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#ale#enabled = 1
@@ -530,12 +566,6 @@ let g:bookmark_center = 1
 
 let g:bookmark_disable_ctrlp = 1 " or ma in ctrlp list (not sorted!)
 let g:bookmark_location_list = 0 " quickfix or location list
-
-" better colors
-highlight BookmarkSign ctermbg=237 ctermfg=79
-highlight BookmarkLine ctermbg=237 ctermfg=79
-highlight BookmarkAnnotationSign ctermbg=237 ctermfg=79
-highlight BookmarkAnnotationLine ctermbg=237 ctermfg=79
 
 nmap ml <Plug>BookmarkShowAll
 
