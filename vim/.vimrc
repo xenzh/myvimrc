@@ -109,6 +109,9 @@ function! OverrideColors()
     hi SpecialKey ctermfg=darkgray
     hi TabLineSel ctermfg=darkgray
 
+    " ALE
+    hi link ALEWarning SpellLocal
+
     " sneak
      hi link Sneak WildMenu
      hi link SneakScope WildMenu
