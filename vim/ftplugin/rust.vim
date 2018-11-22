@@ -11,4 +11,6 @@ if executable('rls')
         \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
         \ 'whitelist': ['rust'],
         \ })
+
+    let g:my_lsp_catalog.rust = 'rls'
 endif
