@@ -17,6 +17,12 @@ alias rmd="rm -rf"
 alias duh="du -d 1 -h"
 alias x="xterm -uc -en en_US.UTF8 -lcc $(which luit)"
 alias :e="vim"
+alias vi="vim -u NONE"
+
+function gdbi() {
+    gdb-add-index "$1"
+    gdb --args "$@"
+}
 
 if [ -x "$(command -v highlight)" ]; then
     export LESSOPEN="| $(command -v highlight) %s --out-format xterm256 -l --force -s moria --no-trailing-nl"

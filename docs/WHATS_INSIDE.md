@@ -46,7 +46,7 @@ This package contains:
 * `.lvimrc` - (any folder between cwd and home) - local vim config files
 * `tags` - (any folder between cwd and home) - ctags output file, used for code navigation
 * `.clang` - (any folder between cwd and home) - text file with C++ flags (see "C++ compile flags" feature)
-* `compile_commands.json` - (cmd) - clang compilation database (see "C++ compile flags" feature)
+* `compile_commands.json` - (cwd) - clang compilation database (see "C++ compile flags" feature)
 
 
 ## Settings

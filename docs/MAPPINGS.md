@@ -51,7 +51,8 @@ Search text and files:
   * `:rg`, `:Ag` - grep files in current folder with `ripgrep`
 
 Code:
-* `]c` and `[c` - jump to next/previous git merge marker_
+* `]c` and `[c` - jump to next/previous git merge marker
+* `]h` and `[h` - _vim-gitgutter_, jump to next/previous change
 * _asyncomplete.vim_
   * `<F7>` - toggle completion popup and LSP client
   * `C-Space` - _insert mode_ show completion popup
@@ -130,6 +131,10 @@ Following mappings/commands are defined by plugins or are vim defaults. I keep t
   * vim-multiple-cursors
     * `Ctrl-n` -- start multicursor
     * `Ctrl-v`, `Ctrl-n` - block select lines and start cursor on each of them
+  * vim-sneak
+    * `s{char}{char}` - move to next instance of `{char}{char}`
+    * `s` or `S` - go to next/previous match
+    * `{two backticks}` (vim builtin) - go back to start
   * NERD Commenter
     * `<leader>-c, l` - comment selected lines with line comments (not block)
     * `<leader-c, u>` - uncomment selected lines
