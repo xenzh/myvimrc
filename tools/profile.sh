@@ -72,6 +72,16 @@ if [ "$myshell" = "bash" ]; then
 fi
 
 
+#
+# fzf config
+#
+
+alias cb="cargo build"
+alias cba="cargo build --all"
+alias ct="cargo test"
+alias cr="cargo run"
+alias cbr="cargo build --all && cargo run"
+
 
 #
 # fzf config
