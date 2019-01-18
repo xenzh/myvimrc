@@ -64,9 +64,6 @@
 [submodule "bundle/open_file_under_cursor.vim"]
 	path = vim/bundle/open_file_under_cursor.vim
 	url = http://github.com/amix/open_file_under_cursor.vim
-[submodule "bundle/vim-multiple-cursors"]
-	path = vim/bundle/vim-multiple-cursors
-	url = http://github.com/terryma/vim-multiple-cursors
 [submodule "bundle/asyncomplete-buffer.vim"]
 	path = vim/bundle/asyncomplete-buffer.vim
 	url = http://github.com/prabirshrestha/asyncomplete-buffer.vim
@@ -97,3 +94,6 @@
 [submodule "vim/bundle/vim-sneak"]
 	path = vim/bundle/vim-sneak
 	url = http://github.com/justinmk/vim-sneak
+[submodule "vim/bundle/vim-visual-multi"]
+	path = vim/bundle/vim-visual-multi
+	url = http://github.com/mg979/vim-visual-multi

@@ -101,7 +101,7 @@ For more details check out [mappings doc](MAPPINGS.md).
 * **[vim-bookmarks](https://github.com/MattesGroeger/vim-bookmarks)** - visual bookmarks and annotations
 
 ### Behavior
-* **[vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)** - Sublime Text-like multiple cursors
+* **[vim-visual-multi](https://github.com/mg979/vim-visual-multi)** - Sublime Text-like multiple cursors
 * **[vim-sneak](https://github.com/justinmk/vim-sneak)** - jump to any location specified by two characters
 * **[Rename](https://github.com/vim-scripts/Rename)** - rename file opened in current buffer
 * **[Open file under cursor](https://github.com/amix/open_file_under_cursor.vim)** - opens file under cursor, duh

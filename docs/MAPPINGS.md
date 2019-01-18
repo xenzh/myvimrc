@@ -128,9 +128,12 @@ Following mappings/commands are defined by plugins or are vim defaults. I keep t
     * `ma` - _[remapped to `ml`]_ - toggle list all bookmarks
     * `mn`, `mp` - jump to next/prev bookmark
     * `mc`, `mx` - clear boormarks in current buffer/in all buffers
-  * vim-multiple-cursors
-    * `Ctrl-n` -- start multicursor
-    * `Ctrl-v`, `Ctrl-n` - block select lines and start cursor on each of them
+  * vim-visual-multi
+    * `C-Up` / `C-Down` -- add cursors downwards/upwards
+    * `Ctrl-n` -- start multicursor at current word; add cursor at the next occurence of the word
+    * `<leader>-A` -- cursor at each word in current file
+    * `g-Space` -- cursor at current position
+    * See https://github.com/mg979/vim-visual-multi/wiki/Mappings for a full list
   * vim-sneak
     * `s{char}{char}` - move to next instance of `{char}{char}`
     * `s` or `S` - go to next/previous match
