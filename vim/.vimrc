@@ -526,6 +526,8 @@ nmap [o :call LocalTags()<CR> " tags in working dir
 nmap ]o :BTags!<CR> " tags in this buffer
 nmap ][o :Tags!<CR> " all tags
 
+nmap <F2> "zyiw:exe ":Rg ".@z.""<CR>
+
 command! -nargs=1 -complete=file F :Files! <args>
 command! Z %bd | :Files!
 

@@ -49,6 +49,7 @@ Search text and files:
   * `][o` - all loaded tags
 * _fzf.vim_, search text in files
   * `:rg`, `:Ag` - grep files in current folder with `ripgrep`
+  * `<F2>` - :rg word_under_cursor
 
 Code:
 * `]c` and `[c` - jump to next/previous git merge marker

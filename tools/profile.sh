@@ -153,6 +153,13 @@ vimh() {
     fi
 }
 
+viml() {
+    loc=$(grep '^>' ~/.viminfo | cut -c3- | sed 's,~,'"$HOME"',' | head -1 | fzf -1)
+    if [ -n "$loc" ]; then
+        vim "$loc"
+    fi
+}
+
 cdf() {
     loc=$(find . -type d -not -path '*/\.*' | fzf)
     cd "$loc" || return
