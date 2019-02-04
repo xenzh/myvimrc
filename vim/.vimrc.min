@@ -1,0 +1,26 @@
+" custom runtimepath for vim and vim/after folders
+let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+exe 'set rtp=' . &rtp . ',' . s:path
+
+
+" backups and swap files
+set nobackup
+set nowb
+set noswapfile
+
+
+" search
+set incsearch
+set hlsearch
+set ignorecase
+
+
+set number
+set cursorline
+
+set nocompatible
+set history=50
+
+
+set background=dark
+colorscheme bubblegum-256-dark

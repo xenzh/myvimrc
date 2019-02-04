@@ -23,6 +23,13 @@ let s:customrtp = s:path . ',' . s:path . '/after'
 exe 'set rtp=' . &rtp . ',' . s:customrtp
 
 
+" Initial package management setup
+let s:use_vim8_packages = has('packages')
+if s:use_vim8_packages
+    exe 'set pp=' . s:path
+endif
+
+
 " allow secure per-project .vimrc
 set exrc
 set secure
@@ -327,18 +334,21 @@ command! -range Jsp <line1>,<line2>call s:process_selection(function('JsonToRspl
 " Common plugins config
 "
 
-
-" pathogen
 filetype off
-call pathogen#infect()
+if s:use_vim8_packages
+    packloadall
+else
+    " fall back to pathogen
+    call pathogen#infect(s:path . '/pack/bundle/start/{}', s:path . '/pack/bundle/opt/{}')
+endif
 filetype plugin indent on
 
 
 " localvimrc
+let g:localvimrc_ask = 0
+let g:localvimrc_sandbox = 0
 let g:localvimrc_name = ["~/.lvimrc"]
 let g:localvimrc_event = ["VimEnter"]
-let g:localvimrc_sandbox = 0
-let g:localvimrc_ask = 0
 
 
 " asyncomplete.vim
