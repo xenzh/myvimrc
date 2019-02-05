@@ -1,6 +1,7 @@
 " custom runtimepath for vim and vim/after folders
 let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 exe 'set rtp=' . &rtp . ',' . s:path
+"exe 'set pp=' . s:path
 
 
 " backups and swap files
