@@ -3,6 +3,10 @@
 "
 
 
+" leader key is space
+let g:mapleader=" "
+
+
 " Make vim understand numpad escape sequences
 :inoremap <Esc>Oq 1
 :inoremap <Esc>Or 2

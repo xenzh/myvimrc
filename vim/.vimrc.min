@@ -1,2 +1,2 @@
-let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
-exe 'source ' s:path . '/.vimrc.common'
+" load basic settings
+exe 'source ' . fnamemodify(resolve(expand('<sfile>:p')), ':h') . '/.vimrc.common'

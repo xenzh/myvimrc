@@ -1,16 +1,13 @@
 let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+
+
+" load basic settings
 exe 'source ' s:path . '/.vimrc.common'
 
 
-" syntax highlighting
-syntax on
-
-
-" use standard vim8 package manager
+" setup package management (vim8 pack by default, fall back to pathogen)
 if has('packages')
     exe 'set pp=' . s:path
-
-" fall back to pathogen
 else
     filetype off
     let s:config_path = s:path . '/pack/0-mine/start/config/'
@@ -24,4 +21,7 @@ else
     exe 'source ' . s:config_path . 'plugin/plugins.vim'
 endif
 
+
+" enable syntax highlighting and filetype plugins
+syntax on
 filetype plugin indent on
