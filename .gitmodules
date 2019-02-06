@@ -1,78 +1,3 @@
-[submodule "bundle/a.vim"]
-	path = vim/bundle/a.vim
-	url = http://github.com/vim-scripts/a.vim.git
-[submodule "bundle/nerdcommenter"]
-	path = vim/bundle/nerdcommenter
-	url = http://github.com/scrooloose/nerdcommenter.git
-[submodule "bundle/tagbar"]
-	path = vim/bundle/tagbar
-	url = http://github.com/majutsushi/tagbar.git
-[submodule "bundle/vim-airline"]
-	path = vim/bundle/vim-airline
-	url = http://github.com/vim-airline/vim-airline.git
-[submodule "bundle/vim-cpp-enhanced-highlight"]
-	path = vim/bundle/vim-cpp-enhanced-highlight
-	url = http://github.com/octol/vim-cpp-enhanced-highlight.git
-[submodule "bundle/vim-fugitive"]
-	path = vim/bundle/vim-fugitive
-	url = http://github.com/tpope/vim-fugitive.git
-[submodule "bundle/vim-json"]
-	path = vim/bundle/vim-json
-	url = http://github.com/elzr/vim-json
-[submodule "bundle/csv.vim"]
-	path = vim/bundle/csv.vim
-	url = http://github.com/chrisbra/csv.vim
-[submodule "bundle/vim-toml"]
-	path = vim/bundle/vim-toml
-	url = http://github.com/cespare/vim-toml
-[submodule "bundle/asyncomplete-lsp.vim"]
-	path = vim/bundle/asyncomplete-lsp.vim
-	url = http://github.com/prabirshrestha/asyncomplete-lsp.vim
-[submodule "bundle/asyncomplete.vim"]
-	path = vim/bundle/asyncomplete.vim
-	url = http://github.com/prabirshrestha/asyncomplete.vim
-[submodule "bundle/async.vim"]
-	path = vim/bundle/async.vim
-	url = http://github.com/prabirshrestha/async.vim
-[submodule "bundle/rust.vim"]
-	path = vim/bundle/rust.vim
-	url = http://github.com/rust-lang/rust.vim
-[submodule "bundle/vim-airline-themes"]
-	path = vim/bundle/vim-airline-themes
-	url = http://github.com/vim-airline/vim-airline-themes
-[submodule "bundle/vim-bookmarks"]
-	path = vim/bundle/vim-bookmarks
-	url = http://github.com/MattesGroeger/vim-bookmarks.git
-[submodule "bundle/vim-localvimrc"]
-	path = vim/bundle/vim-localvimrc
-	url = http://github.com/embear/vim-localvimrc.git
-[submodule "bundle/fzf"]
-	path = vim/bundle/fzf
-	url = http://github.com/junegunn/fzf
-[submodule "bundle/fzf.vim"]
-	path = vim/bundle/fzf.vim
-	url = http://github.com/junegunn/fzf.vim
-[submodule "bundle/ale"]
-	path = vim/bundle/ale
-	url = http://github.com/w0rp/ale
-[submodule "bundle/vim-lsp"]
-	path = vim/bundle/vim-lsp
-	url = http://github.com/prabirshrestha/vim-lsp
-[submodule "bundle/Rename"]
-	path = vim/bundle/Rename
-	url = http://github.com/vim-scripts/Rename
-[submodule "bundle/open_file_under_cursor.vim"]
-	path = vim/bundle/open_file_under_cursor.vim
-	url = http://github.com/amix/open_file_under_cursor.vim
-[submodule "bundle/asyncomplete-buffer.vim"]
-	path = vim/bundle/asyncomplete-buffer.vim
-	url = http://github.com/prabirshrestha/asyncomplete-buffer.vim
-[submodule "bundle/asyncomplete-tags.vim"]
-	path = vim/bundle/asyncomplete-tags.vim
-	url = http://github.com/prabirshrestha/asyncomplete-tags.vim
-[submodule "bundle/asyncomplete-file.vim"]
-	path = vim/bundle/asyncomplete-file.vim
-	url = http://github.com/prabirshrestha/asyncomplete-file.vim
 [submodule "oh-my-zsh"]
 	path = zsh/oh-my-zsh
 	url = http://github.com/robbyrussell/oh-my-zsh
@@ -88,12 +13,90 @@
 [submodule "zsh/custom/plugins/zsh-interactive-cd"]
 	path = zsh/custom/plugins/zsh-interactive-cd
 	url = http://github.com/changyuheng/zsh-interactive-cd
-[submodule "vim/bundle/vim-gitgutter"]
-	path = vim/bundle/vim-gitgutter
+[submodule "vim/pack/2-bundle/start/a.vim"]
+	path = vim/pack/2-bundle/start/a.vim
+	url = http://github.com/vim-scripts/a.vim.git
+[submodule "vim/pack/2-bundle/start/nerdcommenter"]
+	path = vim/pack/2-bundle/start/nerdcommenter
+	url = http://github.com/scrooloose/nerdcommenter.git
+[submodule "vim/pack/2-bundle/start/tagbar"]
+	path = vim/pack/2-bundle/start/tagbar
+	url = http://github.com/majutsushi/tagbar.git
+[submodule "vim/pack/2-bundle/start/vim-airline"]
+	path = vim/pack/2-bundle/start/vim-airline
+	url = http://github.com/vim-airline/vim-airline.git
+[submodule "vim/pack/2-bundle/start/vim-cpp-enhanced-highlight"]
+	path = vim/pack/2-bundle/start/vim-cpp-enhanced-highlight
+	url = http://github.com/octol/vim-cpp-enhanced-highlight.git
+[submodule "vim/pack/2-bundle/start/vim-fugitive"]
+	path = vim/pack/2-bundle/start/vim-fugitive
+	url = http://github.com/tpope/vim-fugitive.git
+[submodule "vim/pack/2-bundle/start/vim-json"]
+	path = vim/pack/2-bundle/start/vim-json
+	url = http://github.com/elzr/vim-json
+[submodule "vim/pack/2-bundle/start/csv.vim"]
+	path = vim/pack/2-bundle/start/csv.vim
+	url = http://github.com/chrisbra/csv.vim
+[submodule "vim/pack/2-bundle/start/vim-toml"]
+	path = vim/pack/2-bundle/start/vim-toml
+	url = http://github.com/cespare/vim-toml
+[submodule "vim/pack/2-bundle/start/asyncomplete-lsp.vim"]
+	path = vim/pack/2-bundle/start/asyncomplete-lsp.vim
+	url = http://github.com/prabirshrestha/asyncomplete-lsp.vim
+[submodule "vim/pack/2-bundle/start/asyncomplete.vim"]
+	path = vim/pack/2-bundle/start/asyncomplete.vim
+	url = http://github.com/prabirshrestha/asyncomplete.vim
+[submodule "vim/pack/2-bundle/start/async.vim"]
+	path = vim/pack/2-bundle/start/async.vim
+	url = http://github.com/prabirshrestha/async.vim
+[submodule "vim/pack/2-bundle/start/rust.vim"]
+	path = vim/pack/2-bundle/start/rust.vim
+	url = http://github.com/rust-lang/rust.vim
+[submodule "vim/pack/2-bundle/start/vim-airline-themes"]
+	path = vim/pack/2-bundle/start/vim-airline-themes
+	url = http://github.com/vim-airline/vim-airline-themes
+[submodule "vim/pack/2-bundle/start/vim-bookmarks"]
+	path = vim/pack/2-bundle/start/vim-bookmarks
+	url = http://github.com/MattesGroeger/vim-bookmarks.git
+[submodule "vim/pack/2-bundle/start/vim-localvimrc"]
+	path = vim/pack/2-bundle/start/vim-localvimrc
+	url = http://github.com/embear/vim-localvimrc.git
+[submodule "vim/pack/2-bundle/start/fzf"]
+	path = vim/pack/2-bundle/start/fzf
+	url = http://github.com/junegunn/fzf
+[submodule "vim/pack/2-bundle/start/fzf.vim"]
+	path = vim/pack/2-bundle/start/fzf.vim
+	url = http://github.com/junegunn/fzf.vim
+[submodule "vim/pack/2-bundle/start/ale"]
+	path = vim/pack/2-bundle/start/ale
+	url = http://github.com/w0rp/ale
+[submodule "vim/pack/2-bundle/start/vim-lsp"]
+	path = vim/pack/2-bundle/start/vim-lsp
+	url = http://github.com/prabirshrestha/vim-lsp
+[submodule "vim/pack/2-bundle/start/Rename"]
+	path = vim/pack/2-bundle/start/Rename
+	url = http://github.com/vim-scripts/Rename
+[submodule "vim/pack/2-bundle/start/open_file_under_cursor.vim"]
+	path = vim/pack/2-bundle/start/open_file_under_cursor.vim
+	url = http://github.com/amix/open_file_under_cursor.vim
+[submodule "vim/pack/2-bundle/start/asyncomplete-buffer.vim"]
+	path = vim/pack/2-bundle/start/asyncomplete-buffer.vim
+	url = http://github.com/prabirshrestha/asyncomplete-buffer.vim
+[submodule "vim/pack/2-bundle/start/asyncomplete-tags.vim"]
+	path = vim/pack/2-bundle/start/asyncomplete-tags.vim
+	url = http://github.com/prabirshrestha/asyncomplete-tags.vim
+[submodule "vim/pack/2-bundle/start/asyncomplete-file.vim"]
+	path = vim/pack/2-bundle/start/asyncomplete-file.vim
+	url = http://github.com/prabirshrestha/asyncomplete-file.vim
+[submodule "vim/pack/2-bundle/start/vim-gitgutter"]
+	path = vim/pack/2-bundle/start/vim-gitgutter
 	url = http://github.com/airblade/vim-gitgutter
-[submodule "vim/bundle/vim-sneak"]
-	path = vim/bundle/vim-sneak
+[submodule "vim/pack/2-bundle/start/vim-sneak"]
+	path = vim/pack/2-bundle/start/vim-sneak
 	url = http://github.com/justinmk/vim-sneak
-[submodule "vim/bundle/vim-visual-multi"]
-	path = vim/bundle/vim-visual-multi
+[submodule "vim/pack/2-bundle/start/vim-visual-multi"]
+	path = vim/pack/2-bundle/start/vim-visual-multi
 	url = http://github.com/mg979/vim-visual-multi
+[submodule "vim/pack/2-bundle/start/vim-gutentags"]
+	path = vim/pack/2-bundle/start/vim-gutentags
+	url = http://github.com/ludovicchabant/vim-gutentags

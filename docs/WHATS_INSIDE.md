@@ -88,7 +88,7 @@ For more details check out [mappings doc](MAPPINGS.md).
 ## VIM Plugins
 
 ### System
-* **[pathogen.vim](https://github.com/tpope/vim-pathogen)** - runtimepath (plugin) manager
+* **[pathogen.vim](https://github.com/tpope/vim-pathogen)** - runtimepath (plugin) manager (by default vim8 pack manager is used, pathogen is a fallback for earlier vim versions)
 * **[fzf](https://github.com/junegunn/fzf)** and **[fzf.vim](https://github.com/junegunn/fzf.vim)** - search files, lines, history, mappings etc using integrated `fzf` command line tool
 * **[async.vim](https://github.com/prabirshrestha/async.vim)** - async job control normalization library
 * **[asyncomplete.vim](https://github.com/prabirshrestha/asyncomplete.vim)** - asynchronous autocompletion engine
@@ -114,6 +114,7 @@ For more details check out [mappings doc](MAPPINGS.md).
 * **[vim-lsp](https://github.com/prabirshrestha/vim-lsp)** - asynchronous Language Server Protocol client
 * **[fugitive](https://github.com/tpope/vim-fugitive)** - git integration, integrated with `vim-airline` (branch/status)
 * **[vim-gitgutter](https://github.com/airblade/vim-gitgutter)** - inline git diff signs, integrated with `vim-airline` (diff summary)
+* **[vim-gutentags](https://github.com/ludovicchabant/vim-gutentags)** - automatic management for project tag files
 * **[tagbar](https://github.com/majutsushi/tagbar)** - code outline viewer, integrated with `vim-airline` (classpath)
 * **[NERD Commenter](https://github.com/scrooloose/nerdcommenter)** - block comment/uncomment
 * **[a.vim](https://github.com/vim-scripts/a.vim)** - quick switch between associated files (h/cpp, etc)

@@ -17,7 +17,7 @@ alias rmd="rm -rf"
 alias duh="du -d 1 -h"
 alias x="xterm -uc -en en_US.UTF8 -lcc $(which luit)"
 alias :e="vim"
-alias vi="vim -u NONE"
+alias vi="vim -u $mydir/../vim/.vimrc.min"
 
 function gdbi() {
     gdb-add-index "$1"
