@@ -13,20 +13,15 @@ if has('packages')
 " fall back to pathogen
 else
     filetype off
+    let s:config_path = s:path . '/pack/0-mine/start/config/'
 
-    " directly source preload stuff
-    exe 'source ' . s:path . '/pack/0-preload/start/config/plugin/plugins.vim'
-
-    " populate runtimepath with plugins locations
+    " populate runtimepath with plugins bundle and user /after locations
     call pathogen#infect(s:path . '/pack/2-bundle/start/{}', s:path . '/pack/2-bundle/opt/{}')
+    exe 'set rtp=' . &rtp . ',' . s:config_path . 'after'
 
     " source order-insensitive user settings directly
-    let s:config_path = s:path . '/pack/4-mine/start/config/'
     exe 'source ' . s:config_path . 'plugin/mappings.vim'
     exe 'source ' . s:config_path . 'plugin/plugins.vim'
-
-    " populate runtimepath with 'after' location (user ftplugins and postload stuff)
-    exe 'set rtp=' . &rtp . ',' . s:config_path . 'after'
 endif
 
 filetype plugin indent on

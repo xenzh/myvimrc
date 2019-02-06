@@ -97,3 +97,6 @@
 [submodule "vim/pack/2-bundle/start/vim-visual-multi"]
 	path = vim/pack/2-bundle/start/vim-visual-multi
 	url = http://github.com/mg979/vim-visual-multi
+[submodule "vim/pack/2-bundle/start/vim-gutentags"]
+	path = vim/pack/2-bundle/start/vim-gutentags
+	url = http://github.com/ludovicchabant/vim-gutentags

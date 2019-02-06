@@ -1,3 +1,10 @@
+" localvimrc
+let g:localvimrc_ask = 0
+let g:localvimrc_sandbox = 0
+let g:localvimrc_name = ["~/.lvimrc"]
+let g:localvimrc_event = ["VimEnter"]
+
+
 " asyncomplete.vim
 let g:asyncomplete_smart_completion = 0 " you need lua for this
 let g:asyncomplete_auto_popup = 1
@@ -15,15 +22,15 @@ call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options
     \ }))
 
 " completion source: asyncomplete-tags.vim
-au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options({
-    \ 'name': 'tags',
-    \ 'whitelist': ['c', 'cpp', 'python', 'rust'],
-    \ 'priority': 0,
-    \ 'completor': function('asyncomplete#sources#tags#completor'),
-    \ 'config': {
-    \    'max_file_size': 50000000,
-    \  },
-    \ }))
+"au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options({
+"    \ 'name': 'tags',
+"    \ 'whitelist': ['c', 'cpp', 'python', 'rust'],
+"    \ 'priority': 0,
+"    \ 'completor': function('asyncomplete#sources#tags#completor'),
+"    \ 'config': {
+"    \    'max_file_size': 50000000,
+"    \  },
+"    \ }))
 
 " completion source: asyncomplete-file.vim
 au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
