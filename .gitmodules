@@ -17,19 +17,19 @@
 	path = vim/pack/2-bundle/start/a.vim
 	url = http://github.com/vim-scripts/a.vim.git
 [submodule "vim/pack/2-bundle/start/nerdcommenter"]
-	path = vim/pack/2-bundle/start/nerdcommenter
+	path = vim/pack/2-bundle/opt/nerdcommenter
 	url = http://github.com/scrooloose/nerdcommenter.git
 [submodule "vim/pack/2-bundle/start/tagbar"]
-	path = vim/pack/2-bundle/start/tagbar
+	path = vim/pack/2-bundle/opt/tagbar
 	url = http://github.com/majutsushi/tagbar.git
 [submodule "vim/pack/2-bundle/start/vim-airline"]
-	path = vim/pack/2-bundle/start/vim-airline
+	path = vim/pack/2-bundle/opt/vim-airline
 	url = http://github.com/vim-airline/vim-airline.git
 [submodule "vim/pack/2-bundle/start/vim-cpp-enhanced-highlight"]
-	path = vim/pack/2-bundle/start/vim-cpp-enhanced-highlight
+	path = vim/pack/2-bundle/opt/vim-cpp-enhanced-highlight
 	url = http://github.com/octol/vim-cpp-enhanced-highlight.git
 [submodule "vim/pack/2-bundle/start/vim-fugitive"]
-	path = vim/pack/2-bundle/start/vim-fugitive
+	path = vim/pack/2-bundle/opt/vim-fugitive
 	url = http://github.com/tpope/vim-fugitive.git
 [submodule "vim/pack/2-bundle/start/vim-json"]
 	path = vim/pack/2-bundle/start/vim-json
@@ -41,19 +41,19 @@
 	path = vim/pack/2-bundle/start/vim-toml
 	url = http://github.com/cespare/vim-toml
 [submodule "vim/pack/2-bundle/start/asyncomplete-lsp.vim"]
-	path = vim/pack/2-bundle/start/asyncomplete-lsp.vim
+	path = vim/pack/2-bundle/opt/asyncomplete-lsp.vim
 	url = http://github.com/prabirshrestha/asyncomplete-lsp.vim
 [submodule "vim/pack/2-bundle/start/asyncomplete.vim"]
-	path = vim/pack/2-bundle/start/asyncomplete.vim
+	path = vim/pack/2-bundle/opt/asyncomplete.vim
 	url = http://github.com/prabirshrestha/asyncomplete.vim
 [submodule "vim/pack/2-bundle/start/async.vim"]
-	path = vim/pack/2-bundle/start/async.vim
+	path = vim/pack/2-bundle/opt/async.vim
 	url = http://github.com/prabirshrestha/async.vim
 [submodule "vim/pack/2-bundle/start/rust.vim"]
-	path = vim/pack/2-bundle/start/rust.vim
+	path = vim/pack/2-bundle/opt/rust.vim
 	url = http://github.com/rust-lang/rust.vim
 [submodule "vim/pack/2-bundle/start/vim-airline-themes"]
-	path = vim/pack/2-bundle/start/vim-airline-themes
+	path = vim/pack/2-bundle/opt/vim-airline-themes
 	url = http://github.com/vim-airline/vim-airline-themes
 [submodule "vim/pack/2-bundle/start/vim-bookmarks"]
 	path = vim/pack/2-bundle/start/vim-bookmarks
@@ -68,10 +68,10 @@
 	path = vim/pack/2-bundle/start/fzf.vim
 	url = http://github.com/junegunn/fzf.vim
 [submodule "vim/pack/2-bundle/start/ale"]
-	path = vim/pack/2-bundle/start/ale
+	path = vim/pack/2-bundle/opt/ale
 	url = http://github.com/w0rp/ale
 [submodule "vim/pack/2-bundle/start/vim-lsp"]
-	path = vim/pack/2-bundle/start/vim-lsp
+	path = vim/pack/2-bundle/opt/vim-lsp
 	url = http://github.com/prabirshrestha/vim-lsp
 [submodule "vim/pack/2-bundle/start/Rename"]
 	path = vim/pack/2-bundle/start/Rename
@@ -80,16 +80,16 @@
 	path = vim/pack/2-bundle/start/open_file_under_cursor.vim
 	url = http://github.com/amix/open_file_under_cursor.vim
 [submodule "vim/pack/2-bundle/start/asyncomplete-buffer.vim"]
-	path = vim/pack/2-bundle/start/asyncomplete-buffer.vim
+	path = vim/pack/2-bundle/opt/asyncomplete-buffer.vim
 	url = http://github.com/prabirshrestha/asyncomplete-buffer.vim
 [submodule "vim/pack/2-bundle/start/asyncomplete-tags.vim"]
-	path = vim/pack/2-bundle/start/asyncomplete-tags.vim
+	path = vim/pack/2-bundle/opt/asyncomplete-tags.vim
 	url = http://github.com/prabirshrestha/asyncomplete-tags.vim
 [submodule "vim/pack/2-bundle/start/asyncomplete-file.vim"]
-	path = vim/pack/2-bundle/start/asyncomplete-file.vim
+	path = vim/pack/2-bundle/opt/asyncomplete-file.vim
 	url = http://github.com/prabirshrestha/asyncomplete-file.vim
 [submodule "vim/pack/2-bundle/start/vim-gitgutter"]
-	path = vim/pack/2-bundle/start/vim-gitgutter
+	path = vim/pack/2-bundle/opt/vim-gitgutter
 	url = http://github.com/airblade/vim-gitgutter
 [submodule "vim/pack/2-bundle/start/vim-sneak"]
 	path = vim/pack/2-bundle/start/vim-sneak
@@ -98,5 +98,5 @@
 	path = vim/pack/2-bundle/start/vim-visual-multi
 	url = http://github.com/mg979/vim-visual-multi
 [submodule "vim/pack/2-bundle/start/vim-gutentags"]
-	path = vim/pack/2-bundle/start/vim-gutentags
+	path = vim/pack/2-bundle/opt/vim-gutentags
 	url = http://github.com/ludovicchabant/vim-gutentags

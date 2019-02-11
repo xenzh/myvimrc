@@ -66,8 +66,8 @@ nnoremap <leader>l :noh<CR>
 
 
 " Navigate git merge markers with ]c and [c, highlight markers
-nnoremap <silent> ]c /\v^(\<\|\=\|\>){7}([^=].+)?$<CR>
-nnoremap <silent> [c ?\v^(\<\|\=\|\>){7}([^=].+)\?$<CR>
+"nnoremap <silent> ]c /\v^(\<\|\=\|\>){7}([^=].+)?$<CR>
+"nnoremap <silent> [c ?\v^(\<\|\=\|\>){7}([^=].+)\?$<CR>
 match WildMenu '\v^(\<|\=|\>){7}([^=].+)?$'
 
 

@@ -102,6 +102,6 @@ else
 endif
 
 function! PackAdd(name)
-    exe 'packadd ' . a:name . '-config'
     exe 'packadd ' . a:name
+    exe 'packadd ' . a:name . '-config'
 endfunction
