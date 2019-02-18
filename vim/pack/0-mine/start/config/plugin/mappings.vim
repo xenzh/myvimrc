@@ -103,7 +103,7 @@ command! WQ :wq
 
 
 " :wd - save and delete the buffer (and refresh tagline, see below)
-command! Wd :w | :bd | call airline#extensions#tabline#buflist#invalidate()
+command! Wd :w | :bd | silent! call airline#extensions#tabline#buflist#invalidate()
 cnoreabbrev wd Wd
 
 
