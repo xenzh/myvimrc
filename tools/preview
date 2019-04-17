@@ -11,7 +11,7 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-vimfzf_preview_bin="$(dirname $0)/../vim/bundle/fzf.vim/bin/preview.sh"
+vimfzf_preview_bin="$(dirname $0)/../vim/pack/2-bundle/start/fzf.vim/bin/preview.sh"
 
 if [ -d "$1" ]; then
     # folder

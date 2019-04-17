@@ -6,7 +6,7 @@ let g:localvimrc_event = ["VimEnter"]
 
 
 " asyncomplete.vim
-let g:asyncomplete_smart_completion = 0 " you need lua for this
+let g:asyncomplete_smart_completion = 0 " you need lua for this / looks broken!
 let g:asyncomplete_auto_popup = 1
 let g:asyncomplete_remove_duplicates = 1
 
@@ -43,6 +43,7 @@ au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#source
 
 " vim-lsp
 let g:lsp_auto_enable = 1
+let g:lsp_diagnostics_enabled = 0
 
 nmap ;; :LspDefinition<CR>
 nmap ;' :LspReferences<CR>

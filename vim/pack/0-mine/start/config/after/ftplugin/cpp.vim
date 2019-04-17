@@ -63,9 +63,17 @@ call LoadCppFlags()
 
 " start clangd (via vim-lsp plugin)
 if executable('clangd')
+    let clangd_version = matchlist(system('clangd -version'), '^clangd version \(\d\+\)')[1]
+    let Cmd = {server_info->['clangd']}
+
+    " clangd 9 has background symbol indexing, would be a shame not to use it
+    if clangd_version >= 9
+        let Cmd = {servier_info->['clangd', '-background-index', '-all-scopes-completion']}
+    endif
+
     au User lsp_setup call lsp#register_server({
         \ 'name': 'clangd',
-        \ 'cmd': {server_info->['clangd']},
+        \ 'cmd': Cmd,
         \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
         \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
         \ })

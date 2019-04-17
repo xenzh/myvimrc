@@ -11,7 +11,7 @@ myshell="$( ps -p "$$" | rg -o 'bash|zsh' )"
 #
 
 alias c=clear
-alias l="ls -lahH --group-directories-first"
+alias l="ls -lahH --group-directories-first --color=auto"
 alias cl="c && l"
 alias rmd="rm -rf"
 alias duh="du -d 1 -h"
@@ -44,7 +44,7 @@ alias gc="git checkout"
 alias gcm="git checkout master"
 alias gcb="git checkout -b"
 alias gmm="git merge master"
-alias gsu="git fetch upstream && git checkout master && git merge upstream/master && git push origin master"
+alias gsu="git fetch upstream && git checkout master && git merge upstream/master && git push origin master && git pull"
 alias gb="git branch"
 alias gd="git diff"
 alias gpo="git push origin"
@@ -70,6 +70,34 @@ if [ "$myshell" = "bash" ]; then
         __git_complete gpl _git_branch
     fi
 fi
+
+
+#
+# docker aliases
+#
+
+alias di="docker images"
+alias did="docker rmi"
+
+alias dc="docker ps -a"
+alias dcd="docker rm"
+alias dcp="docker container prune"
+
+alias dv="docker volume ls"
+alias dvd="docker volume rm"
+alias dvp="docker system df -v | grep \"VOLUME NAME\" -A 999 | awk '\$3 == \"0B\" {print \$1}' | xargs docker volume rm"
+
+dvc() {
+    docker volume create --name "$2"
+    docker run --rm -it -v "$1:/from" -v "$2:/to" alpine ash -c "cd /from && cp -av . /to"
+}
+
+alias dr="docker run"
+alias db="docker build"
+alias ds="docker stats"
+alias dss="docker system df -v"
+
+alias dalp="docker run --rm -it alpine:latest ash"
 
 
 #
@@ -202,4 +230,8 @@ listcolors() {
     for i in {0..255} ; do
         printf "\\x1b[38;5;%smcolour%s\\n" "${i}" "${i}"
     done
+}
+
+cing() {
+    curl --connect-timeout 1 -Is "$1" > /dev/null && echo "$1: ok" || echo "$1: fail"
 }
