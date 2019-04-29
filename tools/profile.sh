@@ -3,7 +3,7 @@
 mydir=$(dirname "$0")
 export RIPGREP_CONFIG_PATH="$mydir/../.ripgrep"
 
-myshell="$( ps -p "$$" | rg -o 'bash|zsh' )"
+myshell="$( ps -p "$$" | grep -o 'bash\|zsh' )"
 
 
 #
@@ -13,16 +13,16 @@ myshell="$( ps -p "$$" | rg -o 'bash|zsh' )"
 alias c=clear
 alias l="ls -lahH --group-directories-first --color=auto"
 alias cl="c && l"
-alias rmd="rm -rf"
 alias duh="du -d 1 -h"
 alias x="xterm -uc -en en_US.UTF8 -lcc $(which luit)"
+
+if command -v nvim > /dev/null 2>&1; then
+    alias vim="nvim"
+fi
+
 alias :e="vim"
 alias vi="vim -u $mydir/../vim/.vimrc.min"
 
-function gdbi() {
-    gdb-add-index "$1"
-    gdb --args "$@"
-}
 
 if [ -x "$(command -v highlight)" ]; then
     export LESSOPEN="| $(command -v highlight) %s --out-format xterm256 -l --force -s moria --no-trailing-nl"
@@ -35,8 +35,6 @@ fi
 #
 # git aliases, autocomplete and PS1
 #
-
-alias vimrc="vim $mydir/../vim/.vimrc"
 
 alias g="git"
 alias gs="git status --ignore-submodules=dirty"
@@ -57,6 +55,8 @@ alias gr="gl | awk '{print \$1}' | xargs git rebase -i"
 
 alias gbf="git branch | fzf --preview='git diff --color=always master {1}'"
 alias gcf="gbf | xargs git checkout"
+
+alias gcd='cd $(git rev-parse --show-toplevel)'
 
 
 if [ "$myshell" = "bash" ]; then
@@ -95,7 +95,7 @@ dvc() {
 alias dr="docker run"
 alias db="docker build"
 alias ds="docker stats"
-alias dss="docker system df -v"
+alias dss="dvp > /dev/null 2>&1 ; docker system df -v"
 
 alias dalp="docker run --rm -it alpine:latest ash"
 
@@ -174,15 +174,25 @@ vimg() {
     fi
 }
 
+__get_oldfile_from_fzf() {
+    loc=""
+    if [ -x $(command -v nvim) ]; then
+        loc=$(nvim --headless +':new +setl\ buftype=nofile | 0put =v:oldfiles' +'w >> /dev/stdout' +qa! | fzf)
+    else
+        loc=$(grep '^>' ~/.viminfo | cut -c3- | sed 's,~,'"$HOME"',' | fzf)
+    fi
+    return "$loc"
+}
+
 vimh() {
-    loc=$(grep '^>' ~/.viminfo | cut -c3- | sed 's,~,'"$HOME"',' | fzf)
+    loc=$(__get_oldfile_from_fzf)
     if [ -n "$loc" ]; then
         vim "$loc"
     fi
 }
 
 viml() {
-    loc=$(grep '^>' ~/.viminfo | cut -c3- | sed 's,~,'"$HOME"',' | head -1 | fzf -1)
+    loc=$(__get_oldfile_from_fzf)
     if [ -n "$loc" ]; then
         vim "$loc"
     fi

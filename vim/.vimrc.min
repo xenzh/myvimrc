@@ -1,2 +1,8 @@
 " load basic settings
-exe 'source ' . fnamemodify(resolve(expand('<sfile>:p')), ':h') . '/.vimrc.common'
+let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+
+exe 'source ' . s:path . '/.vimrc.common'
+exe 'source ' . s:path . '/pack/0-mine/start/config/plugin/mappings.vim'
+exe 'source ' . s:path . '/pack/0-mine/start/config/plugin/colors.vim'
+
+set history=50

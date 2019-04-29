@@ -113,7 +113,7 @@ command! O %bd | e#
 
 " find selecton/repeat search, open quickfix with results (and close it on <CR>)
 function! FindAndQuickfix(what)
-    execute 'vimgrep "' . a:what . '" ' . expand('%') | copen
+    execute 'vimgrep "' . a:what . '" ' . expand('%') | copen | setlocal nowrap
 endfunction
 
 autocmd! FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
@@ -143,16 +143,6 @@ command! FromHex %s#^[^:]*: \(\%(\x\+ \)\+\) .*#\1# | %!xxd -r -p
 
 " list all highlight groups
 command! Hi :so $VIMRUNTIME/syntax/hitest.vim
-
-
-" Big file mode
-function! ToggleBigFileMode()
-    set cursorline!
-    set lazyredraw!
-    call ToggleCompletion()
-    exe 'AirlineToggle'
-endfunction
-nmap <leader>b :call ToggleBigFileMode()<CR>
 
 
 " Code formatting

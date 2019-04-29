@@ -11,6 +11,7 @@ This package contains:
 
 ### Requirements
 * **[vim](https://www.vim.org/) >= 8.0** - this setup uses `ALE` and `vim-lsp` for linting and autocompletion, they depend on async jobs introduced in vim 8
+  * **[nvim](https://neovim.io/)** - alternative, will be used instead of `vim` if available
 * **[git](https://git-scm.com/) >= 1.8.3** - well, this package is a git repo, and vim plugins are git submodules. Also used by some plugins (like `fugitive`)
 * **[rg](https://github.com/BurntSushi/ripgrep)** - grep, even better than `ag`. Used as default `fzf` backend, in some tools and by `fzf.vim` (:Rg, :Ag and :rg)
 * **[fzf](https://github.com/junegunn/fzf)** - fuzzy finder tool, tightly integrated with the editor as an internal search engine for nearly everything

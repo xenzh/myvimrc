@@ -6,9 +6,10 @@ let g:localvimrc_event = ["VimEnter"]
 
 
 " asyncomplete.vim
-let g:asyncomplete_smart_completion = 0 " you need lua for this / looks broken!
 let g:asyncomplete_auto_popup = 1
 let g:asyncomplete_remove_duplicates = 1
+let g:asyncomplete_auto_completeopt = 0
+let g:asyncomplete_min_chars = 3
 
 " force show completion popup
 imap <C-Space> <Plug>(asyncomplete_force_refresh)
@@ -186,15 +187,22 @@ function! LocalTags()
     let &tags=old_tags
 endfunction
 
-nmap [p :Files!<CR> " files in working dir
-nmap ]p :exe('Files! ' . expand('%:p:h'))<CR> " files in directory of current file
-nmap ][p :Files! ~<CR> " files in home dir
+" files in working dir
+nmap [p :Files!<CR>
+" files in directory of current file
+nmap ]p :exe('Files! ' . expand('%:p:h'))<CR>
+" files in home dir
+nmap ][p :Files! ~<CR>
 
-nmap [o :call LocalTags()<CR> " tags in working dir
-nmap ]o :BTags!<CR> " tags in this buffer
-nmap ][o :Tags!<CR> " all tags
+" tags in working dir
+nmap [o :call LocalTags()<CR>
+" tags in this buffer
+nmap ]o :BTags!<CR>
+" all tags
+nmap ][o :Tags!<CR>
 
 nmap <F2> "zyiw:exe ":Rg ".@z.""<CR>
+command! Grr :exe ":Rg " . @/<CR>
 
 command! -nargs=1 -complete=file F :Files! <args>
 command! Z %bd | :Files!

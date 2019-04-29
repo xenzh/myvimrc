@@ -3,8 +3,12 @@
 "
 
 
-" Set terminal, enable mouse (Shift-select to X-yank, Shift+Wheel to X-paste)
-set term=xterm-256color
+" Set terminal, disable vim compatibility, enable mouse
+if !has('nvim')
+    set term=xterm-256color
+    set nocp
+endif
+
 set mouse=a
 
 
@@ -52,7 +56,7 @@ set magic
 " wild menu and completion options
 set wildmenu
 set wildignore+=*.o,*.d,*.pyc
-set completeopt=longest,menuone,preview,noselect
+set completeopt=longest,menuone,preview,noselect,noinsert
 
 
 " folds
