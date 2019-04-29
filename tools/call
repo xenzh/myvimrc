@@ -68,6 +68,7 @@ Template definition syntax:
 from __future__ import print_function
 
 import argparse
+import collections
 import json
 import re
 
@@ -91,6 +92,14 @@ def load(filepath):
 def multi_replace(where, subst):
     regex = re.compile("({})".format("|".join(map(re.escape, subst.keys()))))
     return regex.sub(lambda mo: subst[mo.string[mo.start():mo.end()]], where)
+
+
+def merge_templates(tgt, src):
+    for k, _ in src.iteritems():
+        if k in tgt and isinstance(tgt[k], dict) and isinstance(src[k], collections.Mapping):
+            merge_templates(tgt[k], src[k])
+        else:
+            tgt[k] = src[k]
 
 
 def populate_arg(subparser, arg):
@@ -162,8 +171,7 @@ def populate_group(subparsers, name, group_name, data):
     return subparser
 
 
-def populate_template_args(parser, contents):
-    subparsers = parser.add_subparsers(dest="cmd", title="commands")
+def populate_template_args(subparsers, contents):
     for cmd, cmd_data in contents["commands"].items():
         subparser = populate_group(subparsers, cmd, "command options", cmd_data)
 
@@ -238,11 +246,13 @@ def main():
     populate_own_args(parser)
 
     templ = {}
+    subparsers = parser.add_subparsers(dest="cmd", title="commands")
+
     for def_file in set(own_args.defs):
         single_templ = load(def_file)
         if single_templ:
-            templ.update(single_templ)
-            populate_template_args(parser, single_templ)
+            merge_templates(templ, single_templ)
+            populate_template_args(subparsers, single_templ)
 
     if not templ:
         print("No templates loaded, exiting")
