@@ -174,25 +174,25 @@ vimg() {
     fi
 }
 
-__get_oldfile_from_fzf() {
+__get_oldfile_from_cmd() {
     loc=""
     if [ -x $(command -v nvim) ]; then
-        loc=$(nvim --headless +':new +setl\ buftype=nofile | 0put =v:oldfiles' +'w >> /dev/stdout' +qa! | fzf)
+        loc=$(nvim --headless +':new +setl\ buftype=nofile | 0put =v:oldfiles' +'w >> /dev/stdout' +qa!)
     else
-        loc=$(grep '^>' ~/.viminfo | cut -c3- | sed 's,~,'"$HOME"',' | fzf)
+        loc=$(grep '^>' ~/.viminfo | cut -c3- | sed 's,~,'"$HOME"',')
     fi
-    return "$loc"
+    echo "$loc"
 }
 
 vimh() {
-    loc=$(__get_oldfile_from_fzf)
+    loc=$(__get_oldfile_from_cmd | fzf)
     if [ -n "$loc" ]; then
         vim "$loc"
     fi
 }
 
 viml() {
-    loc=$(__get_oldfile_from_fzf)
+    loc=$(__get_oldfile_from_cmd | head -1 | fzf -1)
     if [ -n "$loc" ]; then
         vim "$loc"
     fi
