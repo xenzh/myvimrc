@@ -176,7 +176,7 @@ vimg() {
 
 __get_oldfile_from_cmd() {
     loc=""
-    if [ -x $(command -v nvim) ]; then
+    if command -v nvim; then
         loc=$(nvim --headless +':new +setl\ buftype=nofile | 0put =v:oldfiles' +'w >> /dev/stdout' +qa!)
     else
         loc=$(grep '^>' ~/.viminfo | cut -c3- | sed 's,~,'"$HOME"',')
