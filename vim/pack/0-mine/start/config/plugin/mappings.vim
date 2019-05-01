@@ -78,7 +78,7 @@ au! BufEnter * if &filetype == "" | setlocal ft=text | endif
 " save/load views
 augroup views
     au! BufWinLeave * if expand('%') != '' && &buftype !~ 'nofile' | mkview! | endif
-    au! BufWinEnter * if expand('%') != '' && &buftype !~ 'nofile' | silent loadview | endif
+    au! BufWinEnter * if expand('%') != '' && &buftype !~ 'nofile' | silent! loadview | endif
 augroup END
 
 

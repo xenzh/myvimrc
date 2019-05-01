@@ -185,14 +185,14 @@ __get_oldfile_from_cmd() {
 }
 
 vimh() {
-    loc=$(__get_oldfile_from_cmd | fzf)
+    loc=$(__get_oldfile_from_cmd | grep -v 'nvim$' | fzf)
     if [ -n "$loc" ]; then
         vim "$loc"
     fi
 }
 
 viml() {
-    loc=$(__get_oldfile_from_cmd | head -1 | fzf -1)
+    loc=$(__get_oldfile_from_cmd | grep -v 'nvim$' | head -1 | fzf -1)
     if [ -n "$loc" ]; then
         vim "$loc"
     fi
