@@ -63,11 +63,11 @@ call LoadCppFlags()
 
 " start clangd (via vim-lsp plugin)
 if executable('clangd')
-    let clangd_version = matchlist(system('clangd -version'), '^clangd version \(\d\+\)')[1]
-    let Cmd = {server_info->['clangd']}
+    let clangd_version = matchlist(system('clangd -version'), '^clangd version \(\d\+\)')
 
-    " clangd 9 has background symbol indexing, would be a shame not to use it
-    if clangd_version >= 9
+    let Cmd = {server_info->['clangd']}
+    if len(clangd_version) > 1 && clangd_version[1] >= 9
+        " clangd 9 has background symbol indexing, would be a shame not to use it
         let Cmd = {servier_info->['clangd', '-background-index', '-all-scopes-completion']}
     endif
 
