@@ -56,7 +56,7 @@ set magic
 " wild menu and completion options
 set wildmenu
 set wildignore+=*.o,*.d,*.pyc
-set completeopt=longest,menuone,preview,noselect,noinsert
+set completeopt=menuone,preview,noselect,noinsert
 
 
 " folds
