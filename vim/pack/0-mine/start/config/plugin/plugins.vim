@@ -9,10 +9,16 @@ let g:localvimrc_event = ["VimEnter"]
 let g:asyncomplete_auto_popup = 1
 let g:asyncomplete_remove_duplicates = 1
 let g:asyncomplete_auto_completeopt = 0
-let g:asyncomplete_min_chars = 3
+let g:asyncomplete_min_chars = 1
 
 " force show completion popup
 imap <C-Space> <Plug>(asyncomplete_force_refresh)
+
+" Better accept/cancel completion item mappings, close preview after completion
+inoremap <expr> <CR> pumvisible() ? asyncomplete#close_popup() : "\<CR>"
+inoremap <expr> <ESC> pumvisible() ? asyncomplete#cancel_popup() : "\<ESC>"
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
 
 " completion source: asyncomplete-buffer.vim
 call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({

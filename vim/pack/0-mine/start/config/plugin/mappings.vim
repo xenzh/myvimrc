@@ -26,13 +26,6 @@ let g:mapleader=" "
 :inoremap <Esc>OM <Enter>
 
 
-" autocompletion popup controls and preview autohide
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
-
-autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
-
 " Fix <C-Space> (terminal doesn't understand <C-Space> and sends ^@ or <Nul> instead)
 imap <C-@> <C-Space>
 

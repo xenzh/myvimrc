@@ -119,9 +119,9 @@ fzf_preview="$mydir/preview"
 fzf_preview_cmd="$fzf_preview {}"
 
 if [ -x "$(command -v rg)" ]; then
-    export FZF_DEFAULT_COMMAND="rg --hidden -l -g '!.git' ''"
+    export FZF_DEFAULT_COMMAND="rg --hidden -l -g '!.git' -g '!*.o' -g '!*.d' ''"
 else
-    export FZF_DEFAULT_COMMAND='find * -type f'
+    export FZF_DEFAULT_COMMAND="find * -type f | grep -v '.git\|\.d$\|\.o$'"
 fi
 
 fzf_colors="dark,fg:249,bg:235,hl:110,fg+:249,bg+:237,hl+:110,info:150,prompt:110,pointer:110,marker:110,spinner:110,header:24"
