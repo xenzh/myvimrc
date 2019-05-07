@@ -82,9 +82,6 @@
 [submodule "vim/pack/2-bundle/start/asyncomplete-buffer.vim"]
 	path = vim/pack/2-bundle/start/asyncomplete-buffer.vim
 	url = http://github.com/prabirshrestha/asyncomplete-buffer.vim
-[submodule "vim/pack/2-bundle/start/asyncomplete-tags.vim"]
-	path = vim/pack/2-bundle/start/asyncomplete-tags.vim
-	url = http://github.com/prabirshrestha/asyncomplete-tags.vim
 [submodule "vim/pack/2-bundle/start/asyncomplete-file.vim"]
 	path = vim/pack/2-bundle/start/asyncomplete-file.vim
 	url = http://github.com/prabirshrestha/asyncomplete-file.vim
