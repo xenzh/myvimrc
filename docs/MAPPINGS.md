@@ -59,12 +59,14 @@ Code:
   * `C-Space` - _insert mode_ show completion popup
 * _vim-lsp_
   * `;;` - go to symbol definition
-  * `;'` - find references
   * `;l` - symbol hover info
+  * `;'` - find references
 * _ALE_
   * `F5` - check syntax and open location list if there are warnings/errors
   * `:C` - clean all error/warning indicators, close location list
   * `:D` - show preview window with error/warning description
+  * `,,` - go to previous ALE error/warning
+  * `..` - go to next ALE error/warning
 
 
 ### Editing
