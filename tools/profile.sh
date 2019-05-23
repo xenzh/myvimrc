@@ -1,7 +1,8 @@
 #!/bin/bash
 
 mydir=$(dirname "$0")
-export RIPGREP_CONFIG_PATH="$mydir/../.ripgrep"
+export MYVIMRC_ROOT_PATH="$mydir/.."
+export RIPGREP_CONFIG_PATH="$MYVIMRC_ROOT_PATH/.ripgrep"
 
 myshell="$( ps -p "$$" | grep -o 'bash\|zsh' )"
 
@@ -10,6 +11,7 @@ myshell="$( ps -p "$$" | grep -o 'bash\|zsh' )"
 # common aliases
 #
 
+alias q=exit
 alias c=clear
 alias l="ls -lahH --group-directories-first --color=auto"
 alias cl="c && l"

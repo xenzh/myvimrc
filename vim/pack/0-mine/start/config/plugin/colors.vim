@@ -23,6 +23,8 @@ function! OverrideColors()
 
     " ALE
     hi link ALEWarning SpellLocal
+    hi link ALEVirtualTextError SpellCap
+    hi link ALEVirtualTextStyleError SpellRare
 
     " sneak
     hi link Sneak WildMenu

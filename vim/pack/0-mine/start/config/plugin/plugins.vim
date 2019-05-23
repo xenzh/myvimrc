@@ -28,17 +28,6 @@ call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options
     \ 'completor': function('asyncomplete#sources#buffer#completor'),
     \ }))
 
-" completion source: asyncomplete-tags.vim
-"au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options({
-"    \ 'name': 'tags',
-"    \ 'whitelist': ['c', 'cpp', 'python', 'rust'],
-"    \ 'priority': 0,
-"    \ 'completor': function('asyncomplete#sources#tags#completor'),
-"    \ 'config': {
-"    \    'max_file_size': 50000000,
-"    \  },
-"    \ }))
-
 " completion source: asyncomplete-file.vim
 au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
     \ 'name': 'file',
@@ -94,6 +83,9 @@ let g:ale_cache_executable_check_failures = 1
 let g:ale_completion_enabled = 1
 let g:ale_open_list = 0
 
+let g:ale_virtualtext_cursor = 1
+let g:ale_virtualtext_prefix = '    > '
+
 let g:ale_lint_on_text_changed = 0
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_save = 1
@@ -127,6 +119,9 @@ nmap <F5> :call DoCheckSyntax()<CR>
 
 command! C :ALEReset | :lcl | :pcl
 command! D :ALEDetail
+
+nmap ,, :ALEPrevious<CR>
+nmap .. :ALENext<CR>
 
 
 " sneak
@@ -218,6 +213,29 @@ function! LocalTags()
     let &tags=old_tags
 endfunction
 
+function! s:format_error(item) abort
+  return (a:item.bufnr ? bufname(a:item.bufnr) : '')
+        \ . '|' . (a:item.lnum  ? a:item.lnum : '')
+        \ . (a:item.col ? ' col ' . a:item.col : '')
+        \ . '|' . substitute(a:item.text, '\v^\s*', ' ', '')
+endfunction
+
+function! s:handle_symbol_line(symb)
+    echo a:symv[0]
+endfunction
+
+function! Sy()
+    "let opts = fzf#vim#with_preview()
+    "echom opts
+    let l:opts = {
+        \ 'source': map(getqflist(), {k, val -> s:format_error(val)}),
+        \ 'sink': function('s:handle_symbol_line'),
+        \ 'options': ' --prompt="Symbol> "'
+        \ }
+    call fzf#run(fzf#wrap(l:opts))
+endfunction
+"au! BufReadPost quickfix :call LspDocSymbols()<CR>
+
 " files in working dir
 nmap [p :Files!<CR>
 " files in directory of current file
@@ -225,10 +243,10 @@ nmap ]p :exe('Files! ' . expand('%:p:h'))<CR>
 " files in home dir
 nmap ][p :Files! ~<CR>
 
-" tags in working dir
-nmap [o :call LocalTags()<CR>
 " tags in this buffer
-nmap ]o :BTags!<CR>
+nmap [o :LspDocumentSymbol<CR>
+" tags in working dir
+nmap ]o :call LocalTags()<CR>
 " all tags
 nmap ][o :Tags!<CR>
 

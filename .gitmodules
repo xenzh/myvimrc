@@ -97,3 +97,6 @@
 [submodule "vim/pack/2-bundle/start/vim-gutentags"]
 	path = vim/pack/2-bundle/start/vim-gutentags
 	url = http://github.com/ludovicchabant/vim-gutentags
+[submodule "tmux/plugins/tpm"]
+	path = tmux/plugins/tpm
+	url = http://github.com/tmux-plugins/tpm
