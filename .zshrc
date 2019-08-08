@@ -15,12 +15,15 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 plugins=(
   z
+  fzf
   git
   dirhistory
   docker
   pip
   python
   tmux
+  vscode
+  web-search
   zsh-interactive-cd
   zsh-autosuggestions
   zsh-syntax-highlighting

@@ -14,9 +14,8 @@ let g:asyncomplete_min_chars = 1
 " force show completion popup
 imap <C-Space> <Plug>(asyncomplete_force_refresh)
 
-" Better accept/cancel completion item mappings, close preview after completion
+" Better accept completion item mappings, close preview after completion
 inoremap <expr> <CR> pumvisible() ? asyncomplete#close_popup() : "\<CR>"
-inoremap <expr> <ESC> pumvisible() ? asyncomplete#cancel_popup() : "\<ESC>"
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
 
@@ -97,16 +96,11 @@ augroup CloseLoclistWindowGroup
     autocmd QuitPre * if empty(&buftype) | lclose | endif
 augroup END
 
-let g:my_linter_running = 0
-function! GetLintingMessage()
-    return g:my_linter_running ? "linting..." : "idle"
-endfunction
-
 if !exists("my_global_ale_au_loaded")
     let my_global_ale_au_loaded = 1
     augroup ALEProgress
-        autocmd User ALELintPre let g:my_linter_running = 1 | redrawstatus
-        autocmd User ALELintPost let g:my_linter_running = 0 | let g:ale_open_list = 0 | redrawstatus
+        autocmd User ALELintPre redrawstatus
+        autocmd User ALELintPost let g:ale_open_list = 0 | redrawstatus
     augroup end
 endif
 
@@ -159,9 +153,8 @@ nmap <leader>+ <Plug>AirlineSelectNextTab
 autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
 
 function! AirlineInit()
-    call airline#parts#define_function('lint-status', 'GetLintingMessage')
     call airline#parts#define_function('lsp-status', 'GetLspStatusMessage')
-    let g:airline_section_x = airline#section#create(['tagbar', ' | ', 'filetype', ' (', 'lsp-status', ') [', 'lint-status', ']'])
+    let g:airline_section_x = airline#section#create(['tagbar', ' | ', 'filetype', ' [', 'lsp-status', ']'])
   endfunction
 autocmd User AirlineAfterInit call AirlineInit()
 

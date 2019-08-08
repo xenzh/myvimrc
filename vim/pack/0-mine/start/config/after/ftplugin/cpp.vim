@@ -52,7 +52,7 @@ function! LoadCppFlags()
     let flags = ['-Wno-unknown-warning-option', '-Qunused-arguments']
     let flags = GetCppFlagsFromClangDb(flags)
     if len (flags) == 2
-        let flags += ['-std=c++14', '-Wall']
+        let flags += ['-std=c++17', '-Wall']
         let flags = GetCppFlagsFromClangFile(flags)
     endif
     let g:my_cpp_linter_flags = join(flags, ' ')

@@ -1,2 +1,3 @@
 .netrwhist
 tmux/plugins/tmux-mem-cpu-load/*
+tmux/plugins/tmux-zsh-vim-titles/*

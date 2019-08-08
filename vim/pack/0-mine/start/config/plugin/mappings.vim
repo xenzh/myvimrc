@@ -29,6 +29,18 @@ let g:mapleader=" "
 " Fix <C-Space> (terminal doesn't understand <C-Space> and sends ^@ or <Nul> instead)
 imap <C-@> <C-Space>
 
+" Make sure ESC from insert mode doesn't wait for input and falls back to
+" normal mode immediately.
+" Note: it breaks any ESC-* mappings
+if !has('gui_running')
+    set timeoutlen=10
+    augroup FastEscape
+        autocmd!
+        au InsertEnter * set timeoutlen=0
+        au InsertLeave * set timeoutlen=1000
+    augroup END
+endif
+
 
 " split resize remappings
 nmap <F9>  :resize -3<CR>
