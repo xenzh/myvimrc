@@ -39,6 +39,7 @@ au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#source
 " vim-lsp
 let g:lsp_auto_enable = 1
 let g:lsp_diagnostics_enabled = 0
+let g:lsp_hightlight_references_enabled = 1
 
 nmap ;; :LspDefinition<CR>
 nmap ;' :LspReferences<CR>
@@ -125,8 +126,8 @@ let g:sneak#use_ic_scs = 1 " use ignorecase/smartcase
 
 
 " git-gutter
-nmap ]h <Plug>GitGutterNextHunk
-nmap [h <Plug>GitGutterPrevHunk
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
 
 
 " vim-airline, buffer tab selection remappings
