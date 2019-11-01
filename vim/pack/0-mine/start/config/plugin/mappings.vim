@@ -116,6 +116,11 @@ cnoreabbrev wd Wd
 command! O %bd | e#
 
 
+" close buffer but save the split
+command! Bdd :bp |:bd #
+cnoreabbrev bdd Bdd
+
+
 " find selecton/repeat search, open quickfix with results (and close it on <CR>)
 function! FindAndQuickfix(what)
     execute 'vimgrep "' . a:what . '" ' . expand('%') | copen | setlocal nowrap

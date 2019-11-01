@@ -1,3 +1,5 @@
+set cc=120
+
 " ale
 let g:ale_linters.cpp = ['clang', 'clangtidy']
 
