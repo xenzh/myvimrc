@@ -35,6 +35,9 @@ source $ZSH/oh-my-zsh.sh
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=59'
 
+# print a newline before each command
+precmd() { print "" }
+
 # expand and complete all wildcards before cursor
 bindkey TAB expand-or-complete-prefix
 
