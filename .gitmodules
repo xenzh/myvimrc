@@ -7,9 +7,6 @@
 [submodule "oh-my-zsh-custom/plugins/zsh-syntax-highlighting"]
 	path = zsh/custom/plugins/zsh-syntax-highlighting
 	url = http://github.com/zsh-users/zsh-syntax-highlighting
-[submodule "oh-my-zsh-custom/themes/geometry"]
-	path = zsh/custom/themes/geometry
-	url = http://github.com/geometry-zsh/geometry
 [submodule "zsh/custom/plugins/zsh-interactive-cd"]
 	path = zsh/custom/plugins/zsh-interactive-cd
 	url = http://github.com/changyuheng/zsh-interactive-cd
