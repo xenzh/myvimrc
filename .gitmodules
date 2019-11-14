@@ -97,3 +97,6 @@
 [submodule "tmux/plugins/tpm"]
 	path = tmux/plugins/tpm
 	url = http://github.com/tmux-plugins/tpm
+[submodule "zsh/custom/themes/geometry"]
+	path = zsh/custom/themes/geometry
+	url = http://github.com/geometry-zsh/geometry
