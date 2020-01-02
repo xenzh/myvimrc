@@ -126,6 +126,7 @@ For more details check out [mappings doc](MAPPINGS.md).
 * **[vim-json](https://github.com/elzr/vim-json)** - better json highlighting and validation
 * **[vim-toml](https://github.com/cespare/vim-toml)** - syntax highlighting for TOML
 * **[csv.vim](https://github.com/chrisbra/csv.vim)** - column-based csv representation
+* **[wandbox-vim](https://github.com/rhysd/wandbox-vim)** - wandbox online compiler plugin
 
 
 ## Tools

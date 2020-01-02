@@ -144,6 +144,8 @@ Following mappings/commands are defined by plugins or are vim defaults. I keep t
   * NERD Commenter
     * `<leader>-c, l` - comment selected lines with line comments (not block)
     * `<leader-c, u>` - uncomment selected lines
+  * wandbox-vim
+    * `:Wandbox [--options=warning,c++1y,boost-1.55]` - compile and run current buffer with Wandbox
 
 
 ## tmux
