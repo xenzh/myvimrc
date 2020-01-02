@@ -36,10 +36,7 @@ source $ZSH/oh-my-zsh.sh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=59'
 
 # Geometry theme customizations
-# 1. print a newline before each command
-precmd() { print "" }
-
-# 2. Bring back custom git details separator
+# 1. Bring back custom git details separator
 GEOMETRY_GIT_SEPARATOR=' :: '
 
 geometry_git_custom() {
@@ -70,6 +67,7 @@ GEOMETRY_INFO=(geometry_hostname geometry_docker_machine geometry_jobs)
 
 # expand and complete all wildcards before cursor
 bindkey TAB expand-or-complete-prefix
+
 
 # User configuration
 

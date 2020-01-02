@@ -84,6 +84,8 @@ alias did="docker rmi"
 alias dc="docker ps -a"
 alias dcd="docker rm"
 alias dcp="docker container prune"
+alias drm="docker container ls -a | awk '!/NAMES/ {print \$NF}' | fzf --preview='docker container logs {}' | xargs docker rm -f"
+
 
 alias dv="docker volume ls"
 alias dvd="docker volume rm"
