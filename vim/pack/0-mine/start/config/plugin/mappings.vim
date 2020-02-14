@@ -45,15 +45,13 @@ endif
 " split resize remappings
 nmap <F9>  :resize -3<CR>
 nmap <F10> :resize +3<CR>
-nmap <F11> :vertical resize -3<CR>
-nmap <F12> :vertical resize +3<CR>
+nmap <F11> :vertical resize +3<CR>
+nmap <F12> :vertical resize -3<CR>
 
 
-" Split navigation: C-<x> instead of C-W C-<x>
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+" Make */# searches case-sensitive
+:nnoremap * /\<<C-R>=expand('<cword>')<CR>\><CR>
+:nnoremap # ?\<<C-R>=expand('<cword>')<CR>\><CR>
 
 
 " Better indent: re-select visual block after each step
