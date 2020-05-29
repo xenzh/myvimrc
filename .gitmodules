@@ -99,7 +99,8 @@
 	url = http://github.com/tmux-plugins/tpm
 [submodule "zsh/custom/themes/geometry"]
 	path = zsh/custom/themes/geometry
-	url = http://github.com/geometry-zsh/geometry
+    url = http://github.com/geometry-zsh/geometry
+	branch = main
 [submodule "vim/pack/2-bundle/start/wandbox-vim"]
 	path = vim/pack/2-bundle/start/wandbox-vim
 	url = https://github.com/rhysd/wandbox-vim
