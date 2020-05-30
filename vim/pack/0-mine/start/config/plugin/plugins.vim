@@ -298,6 +298,6 @@ nmap ml <Plug>BookmarkShowAll
 runtime macros/matchit.vim
 
 " vim-lsp and asyncomplete.vim debugging (uncomment to enable logging)
-"let g:lsp_log_verbose = 1
+let g:lsp_log_verbose = 1
 "let g:lsp_log_file = expand('~/lsp-vim.log')
 "let g:asyncomplete_log_file = expand('~/lsp-asyncomplete.log')
