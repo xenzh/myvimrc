@@ -65,6 +65,9 @@ Code:
   * `F5` - check syntax and open location list if there are warnings/errors
   * `:C` - clean all error/warning indicators, close location list
   * `:D` - show preview window with error/warning description
+  * `:LL` - list ALE linters for current usetype
+  * `:AL <name>` - enable ALE linter for current usetype
+  * `:DL <name>` - disable ALE linter for current usetype
   * `,,` - go to previous ALE error/warning
   * `..` - go to next ALE error/warning
 

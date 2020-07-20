@@ -105,12 +105,24 @@ if !exists("my_global_ale_au_loaded")
     augroup end
 endif
 
-function! DoCheckSyntax()
-    let g:ale_open_list = 1
-    execute 'Gcd'
-    execute 'ALELint'
+function! AleAddLinter(lang, name)
+    let current = get(g:ale_linters, a:lang, [])
+    let matching = filter(copy(current), "v:val == a:name")
+    if empty(matching)
+        call add(current, a:name)
+        let g:ale_linters = {a:lang: current}
+    endif
 endfunction
-nmap <F5> :call DoCheckSyntax()<CR>
+
+function! AleRemoveLinter(lang, name)
+    let current = get(g:ale_linters, a:lang, [])
+    let without = filter(copy(current), "v:val != a:name")
+    let g:ale_linters = {a:lang: without}
+endfunction
+
+command! LL echo g:ale_linters
+command! -nargs=1 AL call AleAddLinter(&filetype, <f-args>)
+command! -nargs=1 DL call AleRemoveLinter(&filetype, <f-args>)
 
 command! C :ALEReset | :lcl | :pcl
 command! D :ALEDetail
