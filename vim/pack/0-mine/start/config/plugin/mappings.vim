@@ -119,6 +119,17 @@ command! Bdd :bp |:bd #
 cnoreabbrev bdd Bdd
 
 
+" <Esc> to switch terminal to normal mode, Ctrl-R to pass buffer to terminal,
+:tnoremap <Esc> <C-\><C-n>
+:tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+
+" Persist terminal buffer (for airline-tabline visibility)
+augroup terminalairline
+    au! TermOpen * set hidden
+    au! TermClose * set nohidden
+augroup END
+
+
 " find selecton/repeat search, open quickfix with results (and close it on <CR>)
 function! FindAndQuickfix(what)
     execute 'vimgrep "' . a:what . '" ' . expand('%') | copen | setlocal nowrap
@@ -141,7 +152,7 @@ nmap <F6> :ToggleSpaceChars<CR>
 
 
 " i don't care who you are, just get closed
-command! AllClose :ccl | :pcl | :lcl
+command! AllClose :ccl | :pcl | :lcl | :helpclose
 cnoreabbrev acl AllClose
 
 
