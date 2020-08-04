@@ -33,7 +33,7 @@ imap <C-@> <C-Space>
 " normal mode immediately.
 " Note: it breaks any ESC-* mappings
 if !has('gui_running')
-    set timeoutlen=10
+    set timeoutlen=1000
     augroup FastEscape
         autocmd!
         au InsertEnter * set timeoutlen=0
