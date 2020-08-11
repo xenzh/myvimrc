@@ -43,13 +43,9 @@ Search text and files:
   * `]p` - near current file
   * `][p` -in user home directory
   * `:F <dir>` - in arbitrary directory
-* _fzf.vim_, search tags
-  * `[o` - in current working directory
-  * `]o` - in this buffer
-  * `][o` - all loaded tags
 * _fzf.vim_, search text in files
   * `:rg`, `:Ag` - grep files in current folder with `ripgrep`
-  * `<F2>` - :rg word_under_cursor
+  * `<F2>` - :rg word\_under\_cursor
 
 Code:
 * `]c` and `[c` - jump to next/previous git merge marker

@@ -213,13 +213,7 @@ endif
 let g:fzf_buffers_jump = 1
 let g:fzf_layout = { 'down': '~55%' }
 
-function! LocalTags()
-    let old_tags=&tags
-    set tags=./tags;/
-    execute ':Tags!'
-    let &tags=old_tags
-endfunction
-
+" [WIP] Fzf-ify vim-lsp's quickfix contents
 function! s:format_error(item) abort
   return (a:item.bufnr ? bufname(a:item.bufnr) : '')
         \ . '|' . (a:item.lnum  ? a:item.lnum : '')
@@ -243,6 +237,24 @@ function! Sy()
 endfunction
 "au! BufReadPost quickfix :call LspDocSymbols()<CR>
 
+" Make sure <Esc> in fzf does not get overwritten with custom mapping
+function! s:FzfEscMap()
+    let g:my_tesc_mapping = maparg('<Esc>', 't')
+    tmap <Esc> <C-d>
+endfunction
+
+function! s:FzfEscUnmap()
+    if exists('g:my_tesc_mapping')
+        exe 'tmap <Esc> ' . g:my_tesc_mapping
+    endif
+endfunction
+
+augroup FzfEscPushPop
+    au! FileType fzf
+    au FileType fzf call s:FzfEscMap()
+        \| au BufLeave <buffer> call s:FzfEscUnmap()
+augroup END
+
 " files in working dir
 nmap [p :Files!<CR>
 " files in directory of current file
@@ -250,17 +262,11 @@ nmap ]p :exe('Files! ' . expand('%:p:h'))<CR>
 " files in home dir
 nmap ][p :Files! ~<CR>
 
-" tags in this buffer
-nmap [o :LspDocumentSymbol<CR>
-" tags in working dir
-nmap ]o :call LocalTags()<CR>
-" all tags
-nmap ][o :Tags!<CR>
-
+" Fzf-search word under cursor
 nmap <F2> "zyiw:exe ":Rg ".@z.""<CR>
-command! Grr :exe ":Rg " . @/<CR>
-
+" Fullscreen short :Files command
 command! -nargs=1 -complete=file F :Files! <args>
+" close all buffers, open file picker
 command! Z %bd | :Files!
 
 " override :Rg, :Files to display preview
