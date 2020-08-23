@@ -1,8 +1,16 @@
-let g:ale_linters = {'rust': ['cargo']}
+let g:ale_linters.rust = ['cargo', 'rustfmt']
+let g:ale_fixers.rust = ['rustfmt']
 
 let g:ale_rust_cargo_use_check = 1
 let g:ale_rust_cargo_check_tests = 1
 let g:ale_rust_cargo_check_all_targets = 1
+
+
+" formatting
+function! DoFmt()
+    execute ':ALEFix rustfmt'
+endfunction
+
 
 " start RLS (via vim-lsp plugin)
 if executable('rls')
