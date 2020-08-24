@@ -125,10 +125,11 @@ cnoreabbrev bdd Bdd
 
 " Persist terminal buffer (for airline-tabline visibility)
 if has("nvim")
-    augroup terminalairline
-        au! TermOpen * set hidden
-        au! TermClose * set nohidden
-    augroup END
+    set nohidden
+    "augroup terminalairline
+    "    au! TermOpen * set hidden
+    "    au! TermClose * set nohidden
+    "augroup END
 endif
 
 
@@ -156,6 +157,7 @@ nmap <F6> :ToggleSpaceChars<CR>
 " i don't care who you are, just get closed
 command! AllClose :ccl | :pcl | :lcl | :helpclose
 cnoreabbrev acl AllClose
+cnoreabbrev Acl AllClose
 
 
 " Convert buffer to hex / read buffer from xxd hex dump
