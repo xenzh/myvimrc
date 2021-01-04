@@ -125,7 +125,7 @@ cnoreabbrev bdd Bdd
 
 " Persist terminal buffer (for airline-tabline visibility)
 if has("nvim")
-    set nohidden
+    set hidden
     "augroup terminalairline
     "    au! TermOpen * set hidden
     "    au! TermClose * set nohidden

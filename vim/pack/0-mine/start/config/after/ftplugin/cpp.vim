@@ -5,7 +5,7 @@ let g:ale_linters.cpp = ['clang', 'clangtidy']
 
 let g:my_cpp_linter_flags = []
 let g:my_cpp_linter_default_flags = ['-std=c++17']
-let g:my_cpp_linter_extra_flags = ['-Wno-unknown-warning-option', '-Wall']
+let g:my_cpp_linter_extra_flags = ['-Wno-unknown-warning-option', '-Wno-infinite-recursion', '-Wall']
 
 function! SetAleClangOptions()
     let g:ale_cpp_clang_options = join(g:my_cpp_linter_flags, ' ')
