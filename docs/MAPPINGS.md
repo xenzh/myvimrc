@@ -37,6 +37,7 @@ Search text and files:
 * `:Gr` - find selection, open quickfix with results
 * `:Gre` - display results of last search (`@/`) in quickfix
 * `<leader>-l` - no highlight
+* `<leader>-n` - retab and remove trailing spaces
 * `gf` - _open file under cursor_, jump to file
 * _fzf.vim_, search files
   * `[p` - in current working directory

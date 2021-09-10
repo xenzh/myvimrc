@@ -59,6 +59,10 @@ vnoremap < <gv
 vnoremap > >gv
 
 
+" Re-select pasted text
+nnoremap gv `[v`]
+
+
 " Search results are always centered
 nnoremap n nzz
 nnoremap N Nzz
@@ -66,6 +70,10 @@ nnoremap N Nzz
 
 " No highlight
 nnoremap <leader>l :noh<CR>
+
+
+" retab and remove trailing spaces
+nnoremap <leader>n :retab \| :%s/\s\+$//g<CR>
 
 
 " Navigate git merge markers with ]c and [c, highlight markers

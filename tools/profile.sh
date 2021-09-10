@@ -16,6 +16,7 @@ alias c=clear
 alias l="ls -lahH --group-directories-first --color=auto"
 alias cl="c && l"
 alias duh="du -d 1 -h"
+alias bell="echo -e '\07'"
 alias x="xterm -uc -en en_US.UTF8 -lcc $(which luit)"
 
 if command -v nvim > /dev/null 2>&1; then
@@ -53,6 +54,7 @@ alias grpo="git remote prune origin"
 alias ggc="git gc --aggressive --prune=now"
 
 alias gl="git log --oneline --color=always | fzf --ansi --preview='git show --color=always {1}' | rg '^(\\S+)' -o"
+alias gll="git log --graph --color --oneline --decorate --all"
 alias gr="gl | awk '{print \$1}' | xargs git rebase -i"
 
 alias gbf="git branch | fzf --preview='git diff --color=always master {1}'"
