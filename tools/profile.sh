@@ -75,6 +75,13 @@ if [ "$myshell" = "bash" ]; then
     fi
 fi
 
+#
+# C++ config and aliases
+#
+
+export CMAKE_GENERATOR="Ninja"
+alias nj="ninja"
+
 
 #
 # docker aliases
@@ -107,7 +114,7 @@ alias dalp="docker run --rm -it alpine:latest ash"
 
 
 #
-# fzf config
+# rust/cargo config
 #
 
 alias cb="cargo build"

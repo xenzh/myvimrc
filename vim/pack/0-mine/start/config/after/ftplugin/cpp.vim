@@ -51,7 +51,7 @@ function! GetCppFlagsFromClangDb()
     let jq_fmt = "jq '.[] | select(.file | contains(\"%s\"))' %s | jq -s '.[0]? | .arguments[]?, (.command? | split(\" \") | .[])'"
 
     let flags = []
-    for clangdb_file in findfile('compile_commands.json', '**1;', -1)
+    for clangdb_file in findfile('compile_commands.json', '**1', -1)
         if !filereadable(clangdb_file)
             continue
         endif
