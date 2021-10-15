@@ -30,20 +30,71 @@ endif
 
 
 function! GetCppFlagsFromClangDb()
-    " clang db does not include info for headers, try to get it from matching cpp or bail out
-    let thisfile = expand('%')
-    if expand('%:e') == 'h' && filereadable(expand('%:r') . '.cpp')
-        let thisfile = expand('%:r') . '.cpp'
+    " clang db only includes entries for *.cpp files, so for headers:
+    " * try locating matching *.cpp file;
+    " * try using any *.cpp from the same folder;
+    " * try using any *.cpp file from compilation database.
+    let forfile = expand('%')
+    if expand('%:e') == 'h'
+        if filereadable(expand('%:r') . '.cpp')
+            let forfile = expand('%:r') . '.cpp'
+        else
+            let samedir = split(globpath(fnamemodify(forfile, ':p:h'), '*.cpp'), '\n')
+            if (len(samedir) > 0)
+                let forfile = samedir[0]
+            else
+                let forfile = '.cpp'
+            endif
+        endif
     endif
-    let jq = printf("jq '.[] | select(.file | contains(\"%s\"))' ./compile_commands.json | jq -s '.[0]? | .arguments[]?'", thisfile)
+
+    let jq_fmt = "jq '.[] | select(.file | contains(\"%s\"))' %s | jq -s '.[0]? | .arguments[]?, (.command? | split(\" \") | .[])'"
 
     let flags = []
-    for clangdb_file in findfile('compile_commands.json', '.;', -1)
+    for clangdb_file in findfile('compile_commands.json', '**1;', -1)
         if !filereadable(clangdb_file)
             continue
         endif
-        let entry = system(jq)
-        let flags += filter(split(substitute(entry, '\"', '', 'g'), '\n'), {idx, val -> val[0] == '-' && val != '-o'})
+
+        let clangdb_dir = fnamemodify(clangdb_file, ':p:h')
+
+        " Find file entry, parse .arguments or .commands key as newline separated list
+        let result = system(printf(jq_fmt, forfile, clangdb_file))
+        if v:shell_error != 0
+            let result = system(printf(jq_fmt, '.cpp', clangdb_file))
+        endif
+        let arguments = split(substitute(result, '\"', '', 'g'), '\n')
+
+        " Filter and transform argument list:
+        " * Ignore flags aside from -I, -isystem and -std
+        " * For -isystem, format two list elements into a single path.
+        " * If include path are relative, add clangdb_dir to them.
+        let item = 0
+        let includes = []
+        while(item < len(arguments))
+            if arguments[item][0:1] ==# '-I'
+                let iflag = arguments[item]
+                if iflag[2] != '/'
+                    let iflag = '-I' . clangdb_dir . '/' . iflag[2:]
+                endif
+                call add(includes, iflag)
+            elseif arguments[item][0:len('-isystem') - 1] ==# '-isystem'
+                let path = arguments[item + 1]
+                if path[0] != '/'
+                    let path = clangdb_dir . '/' . path
+                endif
+                call add(includes, arguments[item] . ' ' . path)
+                let item += 1
+            elseif arguments[item][0:len('-std=') - 1] ==# '-std='
+                call add(includes, arguments[item])
+            endif
+            let item += 1
+        endwhile
+
+        if len(includes) > 0
+            echom printf('Loaded C++ flags from "%s" for "%s"', clangdb_file, forfile)
+        endif
+        let flags += includes
     endfor
     return flags
 endfunction
