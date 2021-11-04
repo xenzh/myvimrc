@@ -48,7 +48,7 @@ function! GetCppFlagsFromClangDb()
         endif
     endif
 
-    let jq_fmt = "jq '.[] | select(.file | contains(\"%s\"))' %s | jq -s '.[0]? | .arguments[]?, (.command? | split(\" \") | .[])'"
+    let jq_fmt = "jq '.[] | select(.file | contains(\"%s\"))' %s | jq -s '.[0]? | .arguments[]?, (.command? | split(\" \")? | .[]?)'"
 
     let flags = []
     for clangdb_file in findfile('compile_commands.json', '**1', -1)
@@ -62,6 +62,9 @@ function! GetCppFlagsFromClangDb()
         let result = system(printf(jq_fmt, forfile, clangdb_file))
         if v:shell_error != 0
             let result = system(printf(jq_fmt, '.cpp', clangdb_file))
+            if v:shell_error != 0
+                echom printf("Failed to parse clang database: %s", result)
+            endif
         endif
         let arguments = split(substitute(result, '\"', '', 'g'), '\n')
 
@@ -79,12 +82,16 @@ function! GetCppFlagsFromClangDb()
                 endif
                 call add(includes, iflag)
             elseif arguments[item][0:len('-isystem') - 1] ==# '-isystem'
-                let path = arguments[item + 1]
-                if path[0] != '/'
-                    let path = clangdb_dir . '/' . path
+                if len(arguments[item]) > len('-isystem')
+                    call add(includes, arguments[item])
+                else
+                    let path = arguments[item + 1]
+                    if path[0] != '/'
+                        let path = clangdb_dir . '/' . path
+                    endif
+                    call add(includes, arguments[item] . ' ' . path)
+                    let item += 1
                 endif
-                call add(includes, arguments[item] . ' ' . path)
-                let item += 1
             elseif arguments[item][0:len('-std=') - 1] ==# '-std='
                 call add(includes, arguments[item])
             endif

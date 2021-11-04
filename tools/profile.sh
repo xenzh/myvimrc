@@ -39,17 +39,14 @@ fi
 # git aliases, autocomplete and PS1
 #
 
+
 alias g="git"
 alias gs="git status --ignore-submodules=dirty"
 alias gc="git checkout"
-alias gcm="git checkout master"
 alias gcb="git checkout -b"
-alias gmm="git merge master"
-alias gsu="git fetch upstream && git checkout master && git merge upstream/master && git push origin master && git pull"
 alias gb="git branch"
 alias gd="git diff"
 alias gpo="git push origin"
-alias gpom="git push origin master"
 alias grpo="git remote prune origin"
 alias ggc="git gc --aggressive --prune=now"
 
@@ -57,10 +54,19 @@ alias gl="git log --oneline --color=always | fzf --ansi --preview='git show --co
 alias gll="git log --graph --color --oneline --decorate --all"
 alias gr="gl | awk '{print \$1}' | xargs git rebase -i"
 
-alias gbf="git branch | fzf --preview='git diff --color=always master {1}'"
-alias gcf="gbf | xargs git checkout"
-
 alias gcd='cd $(git rev-parse --show-toplevel)'
+
+unalias gcm
+unalias gsu
+unalias gcf
+
+gbb()  { git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@' }
+gcm()  { git checkout "$(gbb)" }
+gmm()  { git merge "$(gbb)" }
+gsu()  { git fetch upstream && git checkout "$(gbb)" && git merge upstream/"$(gbb)" && git push origin "$(gbb)" && git pull }
+gpom() { git push origin "$(gbb)" }
+gbf()  { git branch | fzf --preview="git diff --color=always $(gbb) {1}" }
+gcf()  { gbf | xargs git checkout }
 
 
 if [ "$myshell" = "bash" ]; then
