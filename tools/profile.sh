@@ -26,12 +26,27 @@ fi
 alias :e="vim"
 alias vi="vim -u $mydir/../vim/.vimrc.min"
 
+alias rgf="rg -F"
+
 
 if [ -x "$(command -v highlight)" ]; then
     export LESSOPEN="| $(command -v highlight) %s --out-format xterm256 -l --force -s moria --no-trailing-nl"
     export LESS=" -R"
     alias less='less -m -N -g -i -J --line-numbers --underline-special'
 fi
+
+
+www() {
+    if [ -x "$(command -v lynx)" ]; then
+        lynx "$1"
+    else
+        echo "lynx is not installed"
+    fi
+}
+
+cpp() {
+    www "https://en.cppreference.com/mwiki/index.php?title=Special%3ASearch&search=$1"
+}
 
 
 
@@ -59,12 +74,23 @@ alias gcd='cd $(git rev-parse --show-toplevel)'
 unalias gcm
 unalias gsu
 unalias gcf
+unalias gbs
+unalias gbl
 
+gbn()  { git rev-parse --abbrev-ref HEAD }
 gbb()  { git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@' }
+gbs()  { echo "Unique commits in $(gbb) / $(gbn):" && git rev-list --left-right --count "$(gbb)".."$(gbn)" }
+gbl()  {
+    git rev-list --left-right --pretty=oneline "$(gbb)".."$(gbn)" |
+        awk -v l="$(gbb)" -v r="$(gbn)" '{if (substr($0,1,1)==">") d=l; else d=r; print "[",d,"] --",substr($0,2)}'
+}
+
+
 gcm()  { git checkout "$(gbb)" }
 gmm()  { git merge "$(gbb)" }
 gsu()  { git fetch upstream && git checkout "$(gbb)" && git merge upstream/"$(gbb)" && git push origin "$(gbb)" && git pull }
 gpom() { git push origin "$(gbb)" }
+
 gbf()  { git branch | fzf --preview="git diff --color=always $(gbb) {1}" }
 gcf()  { gbf | xargs git checkout }
 
