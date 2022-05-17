@@ -50,4 +50,9 @@ augroup ColorOverrides
 augroup END
 
 set background=dark
-colorscheme bubblegum-256-dark
+"colorscheme bubblegum-256-dark
+
+
+let g:nord_cursor_line_number_background = 1
+let g:nord_italic_comments = 1
+colorscheme nord

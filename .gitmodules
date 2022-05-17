@@ -104,3 +104,6 @@
 [submodule "vim/pack/2-bundle/start/wandbox-vim"]
 	path = vim/pack/2-bundle/start/wandbox-vim
 	url = https://github.com/rhysd/wandbox-vim
+[submodule "vim/pack/2-bundle/start/nord-vim"]
+	path = vim/pack/2-bundle/start/nord-vim
+	url = https://github.com/arcticicestudio/nord-vim

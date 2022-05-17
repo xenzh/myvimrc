@@ -173,7 +173,7 @@ function! AirlineInit()
 autocmd User AirlineAfterInit call AirlineInit()
 
 " match vim-airline colors to main color theme
-let g:airline_theme='bubblegum'
+let g:airline_theme='nord'
 
 
 " rename (rename current file)
