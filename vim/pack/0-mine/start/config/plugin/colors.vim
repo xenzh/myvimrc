@@ -18,8 +18,9 @@ endfunction
 
 " colorscheme and color overrides
 function! OverrideColors()
-    hi SpecialKey ctermfg=darkgray
-    hi TabLineSel ctermfg=darkgray
+    "hi Comment ctermfg=4
+    "hi SpecialKey ctermfg=darkgray
+    "hi TabLineSel ctermfg=darkgray
 
     " ALE
     hi link ALEWarning SpellLocal
@@ -32,16 +33,16 @@ function! OverrideColors()
     hi link SneakLabel WildMenu
 
     " vim-bookmarks
-    hi BookmarkSign ctermbg=237 ctermfg=79
-    hi BookmarkLine ctermbg=237 ctermfg=79
-    hi BookmarkAnnotationSign ctermbg=237 ctermfg=79
-    hi BookmarkAnnotationLine ctermbg=237 ctermfg=79
+    hi link BookmarkSign StatusLine
+    hi link BookmarkLine StatusLine
+    hi link BookmarkAnnotationSign StatusLine
+    hi link BookmarkAnnotationLine StatusLine
 
     " vim-gitgutter
-    let diff_bg = s:get_color('SignColumn', 'ctermbg')
-    exe 'hi GitGutterAdd ctermfg=' . s:get_color('DiffAdd', 'ctermbg')    . ' ctermbg=' . diff_bg
-    exe 'hi GitGutterChange ctermfg=' . s:get_color('DiffChange', 'ctermbg') . ' ctermbg=' . diff_bg
-    exe 'hi GitGutterDelete ctermfg=' . s:get_color('DiffDelete', 'ctermbg') . ' ctermbg=' . diff_bg
+    "let diff_bg = s:get_color('SignColumn', 'ctermbg')
+    "exe 'hi GitGutterAdd ctermfg=' . s:get_color('DiffAdd', 'ctermbg')    . ' ctermbg=' . diff_bg
+    "exe 'hi GitGutterChange ctermfg=' . s:get_color('DiffChange', 'ctermbg') . ' ctermbg=' . diff_bg
+    "exe 'hi GitGutterDelete ctermfg=' . s:get_color('DiffDelete', 'ctermbg') . ' ctermbg=' . diff_bg
 endfunction
 
 augroup ColorOverrides
@@ -50,9 +51,7 @@ augroup ColorOverrides
 augroup END
 
 set background=dark
-"colorscheme bubblegum-256-dark
 
 
 let g:nord_cursor_line_number_background = 1
-let g:nord_italic_comments = 1
 colorscheme nord

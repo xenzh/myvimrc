@@ -143,6 +143,13 @@ nmap [h <Plug>(GitGutterPrevHunk)
 
 
 " vim-airline, buffer tab selection remappings
+let g:airline_powerline_fonts = 1
+
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.colnr = ':'
+
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
@@ -168,7 +175,7 @@ autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
 
 function! AirlineInit()
     call airline#parts#define_function('lsp-status', 'GetLspStatusMessage')
-    let g:airline_section_x = airline#section#create(['tagbar', ' | ', 'filetype', ' [', 'lsp-status', ']'])
+    let g:airline_section_x = airline#section#create(['tagbar', " \ue0b3 ", 'filetype', " \ue0b3 ", 'lsp-status'])
   endfunction
 autocmd User AirlineAfterInit call AirlineInit()
 
@@ -279,22 +286,6 @@ cnoreabbrev rg Rg
 
 command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>,
   \ fzf#vim#with_preview('right:60%', '?'), <bang>0)
-
-" match fzf colors to main color theme
-let g:fzf_colors = {
-  \ 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment']
-  \ }
 
 
 " vim-bookmarks
