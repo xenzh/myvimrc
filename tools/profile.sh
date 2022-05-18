@@ -274,6 +274,15 @@ if [ "$myshell" = "zsh" ]; then
 fi
 
 
+# ls colors
+
+if [ -x "$(command -v gdircolors)" ]; then
+    eval 'gdircolors $mydir/external/nord-dircolors/src/dir_colors'
+elif [ -x "$(command -v dircolors)" ]; then
+    eval 'dircolors $mydir/external/nord-dircolors/src/dir_colors'
+fi
+
+
 # other functions
 
 comms() {
@@ -291,3 +300,4 @@ listcolors() {
 cing() {
     curl --connect-timeout 1 -Is "$1" > /dev/null && echo "$1: ok" || echo "$1: fail"
 }
+
