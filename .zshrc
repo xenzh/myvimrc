@@ -4,11 +4,8 @@ export ZSH=$thisdir/zsh/oh-my-zsh
 ZSH_CUSTOM=$ZSH/../custom
 
 
-ZSH_THEME="geometry/geometry"
-
 HYPHEN_INSENSITIVE="true"
 DISABLE_AUTO_TITLE="true"
-# ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
@@ -30,8 +27,12 @@ plugins=(
 )
 
 
+ZSH_THEME="geometry/geometry"
+
+
 ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
+
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=59'
 
@@ -66,17 +67,14 @@ geometry_git_custom() {
 GEOMETRY_PROMPT=(geometry_newline geometry_status geometry_path)
 GEOMETRY_RPROMPT=(geometry_exec_time geometry_git_custom geometry_docker_machine geometry_virtualenv geometry_jobs geometry_echo)
 
+
 # expand and complete all wildcards before cursor
 bindkey TAB expand-or-complete-prefix
 
 
 # User configuration
 
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='mvim'
-fi
+export EDITOR='vim'
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 autoload -U zmv
