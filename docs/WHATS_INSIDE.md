@@ -40,6 +40,9 @@ This package contains:
 * **[xmllint](http://xmlsoft.org/xmllint.html)** - xml formatting
 * **[xxd](https://linux.die.net/man/1/xxd)** - file to hex and back conversions
 
+### Visuals:
+* **[Nord theme](https://www.nordtheme.com/)** - color overrides for host terminal emulator (otherwise vim/tmux will look funny).
+
 
 ## Artifacts
 
@@ -57,6 +60,7 @@ My linux dev environment is essentially `vim` inside of `tmux` inside of `xterm`
 These settings are intended to be included in `.Xresources` or `.Xdefaults` file. They provide:
 * Color and font settings for `xterm` terminal emulator
 * Locale and keyboard settings for `vim` to function like it should
+* TODO: integrate https://github.com/arcticicestudio/nord-xresources as a submodule
 
 ### tmux
 These settings are intended to be directly used as `tmux` config file.
