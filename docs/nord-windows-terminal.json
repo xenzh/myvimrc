@@ -1,0 +1,23 @@
+{
+    "background": "#2E3440",
+    "black": "#3B4252",
+    "blue": "#81A1C1",
+    "brightBlack": "#4C566A",
+    "brightBlue": "#5E81AC",
+    "brightCyan": "#88C0D0",
+    "brightGreen": "#A3BE8C",
+    "brightPurple": "#B48EAD",
+    "brightRed": "#D08770",
+    "brightWhite": "#E5E9F0",
+    "brightYellow": "#EBCB8B",
+    "cursorColor": "#EBCB8B",
+    "cyan": "#88C0D0",
+    "foreground": "#E5E9F0",
+    "green": "#8FBCBB",
+    "name": "Nord (based on thismat/nord-windows-terminal)",
+    "purple": "#B48EAD",
+    "red": "#BF616A",
+    "selectionBackground": "#687691",
+    "white": "#D8DEE9",
+    "yellow": "#EBCB8B"
+}

@@ -277,9 +277,9 @@ fi
 # ls colors
 
 if [ -x "$(command -v gdircolors)" ]; then
-    eval 'gdircolors $mydir/external/nord-dircolors/src/dir_colors'
+    eval 'gdircolors $mydir/external/nord-dircolors/src/dir_colors' > /dev/null 2>&1
 elif [ -x "$(command -v dircolors)" ]; then
-    eval 'dircolors $mydir/external/nord-dircolors/src/dir_colors'
+    eval 'dircolors $mydir/external/nord-dircolors/src/dir_colors' > /dev/null 2>&1
 fi
 
 
