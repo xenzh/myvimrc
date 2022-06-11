@@ -71,12 +71,6 @@ alias gr="gl | awk '{print \$1}' | xargs git rebase -i"
 
 alias gcd='cd $(git rev-parse --show-toplevel)'
 
-unalias gcm
-unalias gsu
-unalias gcf
-unalias gbs
-unalias gbl
-
 gbn()  { git rev-parse --abbrev-ref HEAD }
 gbb()  { git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@' }
 gbs()  { echo "Unique commits in $(gbb) / $(gbn):" && git rev-list --left-right --count "$(gbb)".."$(gbn)" }

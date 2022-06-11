@@ -11,19 +11,27 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 
 plugins=(
-  z
-  fzf
-  git
-  dirhistory
-  docker
-  pip
-  python
-  tmux
-  vscode
-  web-search
-  zsh-interactive-cd
-  zsh-autosuggestions
-  zsh-syntax-highlighting
+  command-not-found       # Suggest package to install
+  copybuffer              # Ctrl-O to copy current command to buffer
+  copypath                # `copypath` to copy dir to buffer
+  dirhistory              # Alt-Left/Right to go up/down dir stack
+  docker                  # auto-completion and aliases
+  fancy-ctrl-z            # Ctrl-Z to hide vim and Ctrl-Z again to get back to it (instead of `fg`)
+  fd                      # auto-completion for fd
+  fzf                     # auto-competion, Ctrl-T: file in dir, Ctrl-R: command history, Alt-C: cd
+  gitfast                 # fast completion for `git` command.
+  ripgrep                 # auto-completion
+  rust                    # auto-completion for rustc, rustup, cargo
+  tmux                    # Adds tmux aliases and config
+  thefuck                 # runs `fuck` tool on double Esc
+  urltools                # Adds urlencode/urldecode commands
+  vscode                  # vsc and other commands
+  web-search              # web search with many engines
+  z                       # jump around recent dirs with `z` and `zz`.
+  zbell                   # prints bell after >15s command finishes
+  zsh-interactive-cd      # fzf powered tab completion for `cd`
+  zsh-autosuggestions     # [custom] command suggestions based on history.
+  zsh-syntax-highlighting # [custom] command highlighting
 )
 
 

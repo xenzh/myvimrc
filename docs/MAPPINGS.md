@@ -160,3 +160,15 @@ Prefix is `Ctrl + b` (default)
 * `<prefix>, -` - demote windowed pane back
 * `<prefix>, <` - move window tab to the right
 * `<prefix>, >` - move window tab to the left
+
+
+## zsh, oh-my-zsh, plugins
+
+* `Ctrl-O` - copy current command to clipboard (`copybuffer`).
+* `Alt-Left/Right` - go up/down dir stack (`dirhistory`).
+* `Alt-Up/Down` - go to parent/first child directory (`dirhistory`).
+* `Ctrl-Z` - suspend command (i.e. vim, builtin), `fg`/`Ctrl-Z` again - resume (`fancy-ctrl-z`).
+* `Ctrl-T` - find and paste file in current dir (`fzf` + omz plugin).
+* `Ctrl-R` - find and paste a command from history (`fzf` + omz plugin).
+* `Alt-C` - find and cd to a child folder (`fzf` + omz plugin).
+* `Esc, Esc` - fix last failed command (`thefuck` + omz plugin).

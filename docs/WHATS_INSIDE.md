@@ -1,4 +1,5 @@
 # What's inside
+
 This package contains:
 * vim configuration and plugins
 * tmux configuration
@@ -10,6 +11,7 @@ This package contains:
 ## Requirements and third-party tools
 
 ### Requirements
+
 * **[vim](https://www.vim.org/) >= 8.0** - this setup uses `ALE` and `vim-lsp` for linting and autocompletion, they depend on async jobs introduced in vim 8
   * **[nvim](https://neovim.io/)** - alternative, will be used instead of `vim` if available
 * **[git](https://git-scm.com/) >= 1.8.3** - well, this package is a git repo, and vim plugins are git submodules. Also used by some plugins (like `fugitive`)
@@ -18,81 +20,97 @@ This package contains:
 * **[ctags](http://ctags.sourceforge.net/)** - code index generator, vim supports `ctags`-based navigation out-of-the-box. Also used by `fzf.vim` (:Tags and :BTags searches)
 
 ### C++
+
 * **[clang++](https://clang.llvm.org/)** - C++ linting (via `ALE` plugin)
 * **[clangd](https://clang.llvm.org/extra/clangd.html)** - clang-based LSP implementation for C++ (autocompletion, code navigation via `vim-lsp`)
-  * **[cquery](https://github.com/cquery-project/cquery)** - Optional substitute for `clangd`
-* **[bear](https://github.com/rizsotto/Bear)** - non-intrusive clang compilation database generator (needed for C++ LSPs to work properly)
 
-### python:
+### python
+
 * **[python-language-server](https://github.com/palantir/python-language-server)** - LSP implementation for python (install with `pip`)
-* **[pylint](https://www.pylint.org/)** - python linting (used via `ALE` plugin, install with `pip`)
+* Optional linters: `pylint`, `black`, `flake8`, `mypy`.
 
-### Rust:
+### Rust
+
 * **[cargo, rustc](https://rustup.rs/)** - Rust toolchain, linting (via `ALE` plugin, install with `rustup`)
 * **[racer](https://github.com/racer-rust/racer)** - code completion (used by Rust RLS, install with `cargo`)
 * **[rls](https://github.com/rust-lang-nursery/rls)** - Rust Language Server, LSP implementation for Rust (install with `cargo`)
 * **[rustfmt](https://github.com/rust-lang-nursery/rustfmt)** - code formatting tool (install with `cargo`)
 
-### Others:
+### Others
+
 * **[highlight](https://andre-simon.de/docu/highlight/en/highlight.php)** - syntax highlighter used by default for `fzf` preview windows and `less`
 * **[python](https://www.python.org/)** - some tools are written in python, also used for json formatting as `jq` fallback.
 * **[jq](https://stedolan.github.io/jq/)** - json query tool, used for json formatting
 * **[xmllint](http://xmlsoft.org/xmllint.html)** - xml formatting
 * **[xxd](https://linux.die.net/man/1/xxd)** - file to hex and back conversions
+* **[thefuck](https://github.com/nvbn/thefuck)** - fix last command, enabled by omz plugin.
 
-### Visuals:
+### Visuals
+
 * **[Nord theme](https://www.nordtheme.com/)** - color overrides for host terminal emulator (otherwise vim/tmux will look funny).
 
 
 ## Artifacts
 
 `vim` uses following files:
-* `.lvimrc` - (any folder between cwd and home) - local vim config files
+
 * `tags` - (any folder between cwd and home) - ctags output file, used for code navigation
 * `.clang` - (any folder between cwd and home) - text file with C++ flags (see "C++ compile flags" feature)
 * `compile_commands.json` - (cwd) - clang compilation database (see "C++ compile flags" feature)
 
+`zsh` uses following files:
+
+* `~/.zcompdump-*` - dir history for `z` tool from omz.
 
 ## Settings
-My linux dev environment is essentially `vim` inside of `tmux` inside of `xterm` (inside of `zsh`). Settings described below are to ensure that everyone in this chain plays nicely with the others.
 
-### xterm
+I use `vim`/`nvim` in terminal for development along with `zsh`, `tmux` and a terminal emulator. See below for their respective configurations and interations.
+
+### terminal emulator
+
+* MacOS: `iTerm2`
+* Windows: `Windows Terminal` (`wt`) + WSL2 Debian.
+* Nord-theme color overrides for standard terminal colors.
+
+#### xterm (outdated, unused)
+
 These settings are intended to be included in `.Xresources` or `.Xdefaults` file. They provide:
+
 * Color and font settings for `xterm` terminal emulator
 * Locale and keyboard settings for `vim` to function like it should
 * TODO: integrate https://github.com/arcticicestudio/nord-xresources as a submodule
 
 ### tmux
+
 These settings are intended to be directly used as `tmux` config file.
+
 * General (mouse) settings, 256 color mode compatible with vim
 * Colours unified with `vim`/`vim-airline`
 * Additional keyboard mappings
+* Plugins
+* Custom statusline
 
 ### vim
-Configuration is built mainly for C++/python/Rust development and includes a bunch of niceties to make editing a bit easier in general.
 
-From development side it provides code highlighting, linting, autocompletion, quick files/tags navigation.
+Built for C++/python/Rust development, includes IDE-like features (code highlighting, linting, autocompletion, navigation), general editing improvements and custom commands.
 
-Interesting features:
-* C++ compile flags
+### C++ compile flags
 
-  Both `ALE` and `clangd` work best if provided with a set of compile flags for each file they process, `-I` in particular. There are several ways to specify them:
-  * `compile_commands.json` - `clang` compilation database file, could be generated with `cmake` or tools like `bear`. Just put it in repo root folder, make sure it has right pathing (see `ccfix.py` tool), open vim and you're all set. Note that compilation database doesn't contain entries for header files - for them `vim` will try to get flags from matching cpp, and if it's missing will fall back to the next option.
-  * `.clang` - if compilation database is missing or failed to load, `vim` tries to read `-I` flags from this file's lines and apply them to all h/cpp in this repo. Tools like `clang.vim` and `cquery` also accept files in this format, `clangd` doesn't.
-  * `g:my_cpp_linter_flags` - specify flags manually in local vimrc file _(actually this might be broken)_.
+Both `ALE` and `clangd` work best if provided with a set of compile flags for each file they process, `-I` in particular. There are several ways to specify them:
+  * `compile_commands.json` - `clang` compilation database file, could be generated with `cmake` or tools like `bear`. Just put it in repo root folder, make sure it has right pathing (see `clangdb` tool), open vim and you're all set. Note that compilation database doesn't contain entries for header files - for them `vim` will try to get flags from matching cpp, and if it's missing will fall back to the next option.
+  * `.clang` - if compilation database is missing or failed to load, `vim` tries to read `-I` flags from this file's lines and apply them to all h/cpp in this repo. Tools like `clang.vim` and `cquery` natvely accept this file, `clangd` doesn't.
 
-* Interactive `jq` shell
+### Interactive `jq` shell
 
-  There is `:Jq` command for defined for `json` filetype. It opens one split for `jq` query and another for query result.
-  I made this after getting tired of constant need to do `jq ... | head` to figure out json structure
-
+There is `:Jq` command for defined for `json` filetype. It opens one split for `jq` query and another for query result.
+I made this after getting tired of constant need to do `jq ... | head` to figure out json structure
 
 For more details check out [mappings doc](MAPPINGS.md).
 
-
-## VIM Plugins
+## vim plugins
 
 ### System
+
 * **[pathogen.vim](https://github.com/tpope/vim-pathogen)** - runtimepath (plugin) manager (by default vim8 pack manager is used, pathogen is a fallback for earlier vim versions)
 * **[fzf](https://github.com/junegunn/fzf)** and **[fzf.vim](https://github.com/junegunn/fzf.vim)** - search files, lines, history, mappings etc using integrated `fzf` command line tool
 * **[async.vim](https://github.com/prabirshrestha/async.vim)** - async job control normalization library
@@ -106,15 +124,18 @@ For more details check out [mappings doc](MAPPINGS.md).
 * **[vim-bookmarks](https://github.com/MattesGroeger/vim-bookmarks)** - visual bookmarks and annotations
 
 ### Behavior
+
 * **[vim-visual-multi](https://github.com/mg979/vim-visual-multi)** - Sublime Text-like multiple cursors
 * **[vim-sneak](https://github.com/justinmk/vim-sneak)** - jump to any location specified by two characters
 * **[Rename](https://github.com/vim-scripts/Rename)** - rename file opened in current buffer
 * **[Open file under cursor](https://github.com/amix/open_file_under_cursor.vim)** - opens file under cursor, duh
 
 ### UI
+
 * **[vim-airline](https://github.com/vim-airline/vim-airline)** and **[vim-airline-themes](https://github.com/vim-airline/vim-airline-themes)** - functional configurable statusbar written in pure vimscript; integrates with a bunch of other plugins.
 
 ### Coding, general
+
 * **[ALE](https://github.com/w0rp/ale)** - Asynchronous Linting Engine: multilanguage code linting and fixing (plus rudimentary LSP client)
 * **[vim-lsp](https://github.com/prabirshrestha/vim-lsp)** - asynchronous Language Server Protocol client
 * **[fugitive](https://github.com/tpope/vim-fugitive)** - git integration, integrated with `vim-airline` (branch/status)
@@ -125,6 +146,7 @@ For more details check out [mappings doc](MAPPINGS.md).
 * **[a.vim](https://github.com/vim-scripts/a.vim)** - quick switch between associated files (h/cpp, etc)
 
 ### Coding, language-specific
+
 * **[vim.cpp](https://github.com/octol/vim-cpp-enhanced-highlight)** - additional C++ syntax highlighting
 * **[rust.vim](https://github.com/rust-lang/rust.vim)** - Rust filetype, better syntax highlighting, formatting, `tagbar` integration
 * **[vim-json](https://github.com/elzr/vim-json)** - better json highlighting and validation
@@ -134,23 +156,39 @@ For more details check out [mappings doc](MAPPINGS.md).
 
 
 ## Tools
+
 ### [`myvimrc`](tools/myvimrc)
-Simple helper script for adding/removing/updating vim plugins
+
+Simple helper script for adding/removing/updating vim plugins (broken).
 
 ### [`profile.sh`](tools/profile.sh)
-Number of profile tweaks (this file is intended to be sourced to `.bashrc` or similar user config script)
+
+Number of profile tweaks (this file is intended to be sourced to `.bashrc` or similar user config script):
+
 * Common aliases and functions for command like `clear`/`ls`
 * `git` aliases with bash autocompletion
 * `vim` aliases and functions
 * `fzf` config
 
-### [`call`](tools/call)
-`python` tool for decorating shell commands based on json templates. Check out the script for detailed explanation.
-
 ### [`clangdb`](tools/clangdb)
+
 Simple `python` script that automates some `compile_commands.json` tasks:
+
 * generate compilation database for all `cpp` files in a folder based on `.clang` file with compilation flags.
 * normalize file paths in databases generated by `bear` tool. It makes them global and thus allows to store database files whereever without breaking the links (by default it has to reside in build folder).
 
+### [`preview`](tools/preview)
+
+Script that provides a text preview for a number of `fzf`-searchable entities for `vim`.
+
+### [`pctree.py`](tools/pctree.py)
+
+Build package dependency tree based on `pkg-config`.
+
 ### [`rgr`](tools/rgr)
+
 Replace in-place with `rg`
+
+### [`call`](tools/call)
+
+`python` tool for decorating shell commands based on json templates. Check out the script for detailed explanation.
