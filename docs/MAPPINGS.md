@@ -4,7 +4,7 @@
 ## vim, `.vimrc`
 
 Following mappings and commands are added in `.vimrc`.
-`<leader>` key is `\`.
+`<leader>` key is `<space>`.
 
 
 ### View
