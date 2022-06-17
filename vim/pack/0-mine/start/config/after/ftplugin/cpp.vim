@@ -6,6 +6,7 @@ if !exists('g:ale_linters')
 endif
 let g:ale_linters.cpp = ['cc', 'clangtidy']
 
+
 "let g:ale_c_build_dir_names = ['.']
 " this one is super broken for -isystem, see ale_linters#cpp#cc#GetCommand() and ale#c#GetCFlags()
 let g:ale_c_parse_compile_commands = 0
@@ -14,9 +15,11 @@ if !exists('g:my_lsp_catalog')
     let g:my_lsp_catalog = {}
 endif
 
+
 let g:my_cpp_linter_flags = []
 let g:my_cpp_linter_default_flags = ['-std=c++17']
 let g:my_cpp_linter_extra_flags = ['-Wno-unknown-warning-option', '-Wno-infinite-recursion', '-Wall']
+
 
 function! SetAleClangOptions()
     let g:ale_cpp_cc_options = join(g:my_cpp_linter_flags, ' ')

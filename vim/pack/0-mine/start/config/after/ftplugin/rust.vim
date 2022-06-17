@@ -1,4 +1,12 @@
+" ale
+if !exists('g:ale_linters')
+    let g:ale_linters = {}
+endif
 let g:ale_linters.rust = ['cargo', 'rustfmt']
+
+if !exists('g:ale_fixers')
+    let g:ale_fixers = {}
+endif
 let g:ale_fixers.rust = ['rustfmt']
 
 let g:ale_rust_cargo_use_check = 1
@@ -20,5 +28,8 @@ if executable('rls')
         \ 'whitelist': ['rust'],
         \ })
 
+    if !exists('g:my_lsp_catalog')
+        let g:my_lsp_catalog = {}
+    endif
     let g:my_lsp_catalog.rust = 'rls'
 endif

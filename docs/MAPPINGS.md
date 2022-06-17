@@ -49,8 +49,9 @@ Search text and files:
   * `<F2>` - :rg word\_under\_cursor
 
 Code:
-* `]c` and `[c` - jump to next/previous git merge marker
-* `]h` and `[h` - _vim-gitgutter_, jump to next/previous change
+* _vim-gitgutter_
+    * `]h` and `[h` - jump to next/previous change
+    * `]c` and `[c` - jump to next/previous git merge marker
 * _asyncomplete.vim_
   * `<F7>` - toggle completion popup and LSP client
   * `C-Space` - _insert mode_ show completion popup
@@ -58,6 +59,8 @@ Code:
   * `;;` - go to symbol definition
   * `;l` - symbol hover info
   * `;'` - find references
+* _vista.vim_
+  * ``
 * _ALE_
   * `F5` - check syntax and open location list if there are warnings/errors
   * `:C` - clean all error/warning indicators, close location list
@@ -144,8 +147,6 @@ Following mappings/commands are defined by plugins or are vim defaults. I keep t
   * NERD Commenter
     * `<leader>-c, l` - comment selected lines with line comments (not block)
     * `<leader-c, u>` - uncomment selected lines
-  * wandbox-vim
-    * `:Wandbox [--options=warning,c++1y,boost-1.55]` - compile and run current buffer with Wandbox
 
 
 ## tmux

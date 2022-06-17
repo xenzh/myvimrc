@@ -6,6 +6,8 @@ usage() {
     echo "  entity: file, sub-entity: line"
 }
 
+cat "preview $@"
+
 if [ -z "$1" ]; then
     usage "$0"
     exit 1

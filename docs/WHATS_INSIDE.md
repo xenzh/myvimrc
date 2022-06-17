@@ -12,12 +12,12 @@ This package contains:
 
 ### Requirements
 
-* **[vim](https://www.vim.org/) >= 8.0** - this setup uses `ALE` and `vim-lsp` for linting and autocompletion, they depend on async jobs introduced in vim 8
-  * **[nvim](https://neovim.io/)** - alternative, will be used instead of `vim` if available
+* **[nvim](https://neovim.io/)** - text editor/IDE.
+  * **[vim](https://www.vim.org/) >= 8.0** - fallback editor (setup uses `ALE` and `vim-lsp` for linting and autocompletion, they require vim8+ async jobs)
 * **[git](https://git-scm.com/) >= 1.8.3** - well, this package is a git repo, and vim plugins are git submodules. Also used by some plugins (like `fugitive`)
 * **[rg](https://github.com/BurntSushi/ripgrep)** - grep, even better than `ag`. Used as default `fzf` backend, in some tools and by `fzf.vim` (:Rg, :Ag and :rg)
 * **[fzf](https://github.com/junegunn/fzf)** - fuzzy finder tool, tightly integrated with the editor as an internal search engine for nearly everything
-* **[ctags](http://ctags.sourceforge.net/)** - code index generator, vim supports `ctags`-based navigation out-of-the-box. Also used by `fzf.vim` (:Tags and :BTags searches)
+* **[universal-ctags](https://github.com/universal-ctags/ctags)** - code index generator. Used by vim natively, `fzf.vim` (:Tags, :BTags) and `vista.vim`.
 
 ### C++
 
@@ -120,7 +120,6 @@ For more details check out [mappings doc](MAPPINGS.md).
   * **[asyncomplete-file.vim](https://github.com/prabirshrestha/asyncomplete-file.vim)** - source for filenames
   * **[asyncomplete-lsp](https://github.com/prabirshrestha/asyncomplete-lsp.vim)** -  source for LSP client
 
-* **[LocalVimRC](https://github.com/embear/vim-localvimrc)** - source `.lvimrc` local config files found in directories from cwd to home
 * **[vim-bookmarks](https://github.com/MattesGroeger/vim-bookmarks)** - visual bookmarks and annotations
 
 ### Behavior
@@ -138,10 +137,10 @@ For more details check out [mappings doc](MAPPINGS.md).
 
 * **[ALE](https://github.com/w0rp/ale)** - Asynchronous Linting Engine: multilanguage code linting and fixing (plus rudimentary LSP client)
 * **[vim-lsp](https://github.com/prabirshrestha/vim-lsp)** - asynchronous Language Server Protocol client
+* **[vista.vim](https://github.com/liuchengxu/vista.vim/)** - code outline viewer and searcher, integrated with `fzf`, `ctags` and `vim-lsp`.
 * **[fugitive](https://github.com/tpope/vim-fugitive)** - git integration, integrated with `vim-airline` (branch/status)
 * **[vim-gitgutter](https://github.com/airblade/vim-gitgutter)** - inline git diff signs, integrated with `vim-airline` (diff summary)
 * **[vim-gutentags](https://github.com/ludovicchabant/vim-gutentags)** - automatic management for project tag files
-* **[tagbar](https://github.com/majutsushi/tagbar)** - code outline viewer, integrated with `vim-airline` (classpath)
 * **[NERD Commenter](https://github.com/scrooloose/nerdcommenter)** - block comment/uncomment
 * **[a.vim](https://github.com/vim-scripts/a.vim)** - quick switch between associated files (h/cpp, etc)
 
@@ -152,7 +151,6 @@ For more details check out [mappings doc](MAPPINGS.md).
 * **[vim-json](https://github.com/elzr/vim-json)** - better json highlighting and validation
 * **[vim-toml](https://github.com/cespare/vim-toml)** - syntax highlighting for TOML
 * **[csv.vim](https://github.com/chrisbra/csv.vim)** - column-based csv representation
-* **[wandbox-vim](https://github.com/rhysd/wandbox-vim)** - wandbox online compiler plugin
 
 
 ## Tools

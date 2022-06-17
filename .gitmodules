@@ -16,9 +16,6 @@
 [submodule "vim/pack/2-bundle/start/nerdcommenter"]
 	path = vim/pack/2-bundle/start/nerdcommenter
 	url = http://github.com/scrooloose/nerdcommenter.git
-[submodule "vim/pack/2-bundle/start/tagbar"]
-	path = vim/pack/2-bundle/start/tagbar
-	url = http://github.com/majutsushi/tagbar.git
 [submodule "vim/pack/2-bundle/start/vim-airline"]
 	path = vim/pack/2-bundle/start/vim-airline
 	url = http://github.com/vim-airline/vim-airline.git
@@ -55,9 +52,6 @@
 [submodule "vim/pack/2-bundle/start/vim-bookmarks"]
 	path = vim/pack/2-bundle/start/vim-bookmarks
 	url = http://github.com/MattesGroeger/vim-bookmarks.git
-[submodule "vim/pack/2-bundle/start/vim-localvimrc"]
-	path = vim/pack/2-bundle/start/vim-localvimrc
-	url = http://github.com/embear/vim-localvimrc.git
 [submodule "vim/pack/2-bundle/start/fzf"]
 	path = vim/pack/2-bundle/start/fzf
 	url = http://github.com/junegunn/fzf
@@ -101,12 +95,12 @@
 	path = zsh/custom/themes/geometry
     url = http://github.com/geometry-zsh/geometry
 	branch = main
-[submodule "vim/pack/2-bundle/start/wandbox-vim"]
-	path = vim/pack/2-bundle/start/wandbox-vim
-	url = https://github.com/rhysd/wandbox-vim
 [submodule "vim/pack/2-bundle/start/nord-vim"]
 	path = vim/pack/2-bundle/start/nord-vim
 	url = https://github.com/arcticicestudio/nord-vim
 [submodule "tools/external/nord-dircolors"]
 	path = tools/external/nord-dircolors
 	url = http://github.com/arcticicestudio/nord-dircolors
+[submodule "vim/pack/2-bundle/start/vista.vim"]
+	path = vim/pack/2-bundle/start/vista.vim
+	url = http://github.com/liuchengxu/vista.vim
