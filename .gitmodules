@@ -104,3 +104,6 @@
 [submodule "vim/pack/2-bundle/start/vista.vim"]
 	path = vim/pack/2-bundle/start/vista.vim
 	url = http://github.com/liuchengxu/vista.vim
+[submodule "vim/pack/2-bundle/start/nvim-treesitter"]
+	path = vim/pack/2-bundle/start/nvim-treesitter
+	url = http://github.com/nvim-treesitter/nvim-treesitter
