@@ -19,9 +19,6 @@
 [submodule "vim/pack/2-bundle/start/vim-airline"]
 	path = vim/pack/2-bundle/start/vim-airline
 	url = http://github.com/vim-airline/vim-airline.git
-[submodule "vim/pack/2-bundle/start/vim-cpp-enhanced-highlight"]
-	path = vim/pack/2-bundle/start/vim-cpp-enhanced-highlight
-	url = http://github.com/octol/vim-cpp-enhanced-highlight.git
 [submodule "vim/pack/2-bundle/start/vim-fugitive"]
 	path = vim/pack/2-bundle/start/vim-fugitive
 	url = http://github.com/tpope/vim-fugitive.git

@@ -131,7 +131,7 @@ cnoreabbrev rn Rename
 
 " fzf.vim
 let g:fzf_buffers_jump = 1
-let g:fzf_layout = { 'down': '~55%' }
+let g:fzf_layout = { 'down': '~35%' }
 
 
 " Make sure <Esc> in fzf does not get overwritten with custom mapping
@@ -182,6 +182,7 @@ command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>,
 let g:vista_default_executive = 'vim_lsp'
 let g:vista_finder_alternative_executives = ['ctags']
 let g:vista_sidebar_width = 80
+let g:vista_fzf_preview = []
 
 let g:vista#renderer#enable_icon = 0
 let g:vista#renderer#enable_kind = 0
@@ -195,7 +196,7 @@ if has('nvim')
 lua << EOF
     require'nvim-treesitter.configs'.setup {
         ensure_installed = {"c", "cpp", "python", "rust", "lua", "vim", "toml", "yaml"},
-        sync_install = false,
+        sync_install = true,
 
         highlight = {
             enable = true,
@@ -285,8 +286,10 @@ function! AirlineInit()
 
     call airline#parts#define_function('nearest', 'GetNearestFunction')
     call airline#parts#define_accent('nearest', 'none')
+
     let g:airline_section_x = airline#section#create(['nearest', 'separator', 'filetype', 'separator', 'lsp-status'])
-  endfunction
+endfunction
+
 autocmd User AirlineAfterInit call AirlineInit()
 
 " match vim-airline colors to main color theme
