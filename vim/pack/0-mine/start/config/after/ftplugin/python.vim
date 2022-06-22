@@ -1,5 +1,12 @@
 " ale
+if !exists('g:ale_linters')
+    let g:ale_linters = {}
+endif
 let g:ale_linters.python = ['pylint', 'black', 'flake8', 'mypy']
+
+if !exists('g:ale_fixers')
+    let g:ale_fixers = {}
+endif
 let g:ale_fixers.python = ['black']
 
 let g:ale_python_pylint_options="-d C0111,C0330" " suppress missing doscstring warnings and black indentation

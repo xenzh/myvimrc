@@ -182,7 +182,7 @@ command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>,
 let g:vista_default_executive = 'vim_lsp'
 let g:vista_finder_alternative_executives = ['ctags']
 let g:vista_sidebar_width = 80
-let g:vista_fzf_preview = []
+let g:vista_fzf_preview = ['right:0%']
 
 let g:vista#renderer#enable_icon = 0
 let g:vista#renderer#enable_kind = 0
@@ -206,10 +206,10 @@ lua << EOF
         incremental_selection = {
             enable = true,
             keymaps = {
-                init_selection = "gnn",
-                node_incremental = "grn",
-                scope_incremental = "grc",
-                node_decremental = "grm",
+                init_selection = "gbb",
+                scope_incremental = "gbn",
+                node_decremental = "gbv",
+                node_incremental = "gbh",
             },
         },
     }
@@ -264,7 +264,10 @@ endfunction
 
 function! GetNearestFunction() abort
     if has('nvim')
-        return nvim_treesitter#statusline()
+        let s:symbol = nvim_treesitter#statusline()
+        if !empty(s:symbol)
+            return s:symbol
+        endif
     endif
     return get(b:, 'vista_nearest_method_or_function', '')
 endfunction
@@ -280,12 +283,12 @@ autocmd VimEnter * call InitVistaNearest()
 
 function! AirlineInit()
     call airline#parts#define_text('separator', "  \ue0b3 ")
-    call airline#parts#define_accent('separator', 'blue')
+    call airline#parts#define_accent('nearest', 'bold')
 
     call airline#parts#define_function('lsp-status', 'GetLspStatusMessage')
 
     call airline#parts#define_function('nearest', 'GetNearestFunction')
-    call airline#parts#define_accent('nearest', 'none')
+    call airline#parts#define_accent('nearest', 'cyan')
 
     let g:airline_section_x = airline#section#create(['nearest', 'separator', 'filetype', 'separator', 'lsp-status'])
 endfunction

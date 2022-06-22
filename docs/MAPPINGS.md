@@ -60,7 +60,13 @@ Code:
   * `;l` - symbol hover info
   * `;'` - find references
 * _vista.vim_
-  * ``
+  * `<F8>` - open `vim-lsp` / `ctags` powered document map.
+  * `\`  - fuzzy search (`fzf`) document symbols (`vim-lsp` or `ctags`).
+* _nvim-treesitter_
+  * `gbb` - initiate AST visual selection.
+  * `gbn` - expand selection to scope.
+  * `gbv` - decrease selection by node.
+  * `bgh` - expand selection by node.
 * _ALE_
   * `F5` - check syntax and open location list if there are warnings/errors
   * `:C` - clean all error/warning indicators, close location list

@@ -135,18 +135,19 @@ For more details check out [mappings doc](MAPPINGS.md).
 
 ### Coding, general
 
-* **[ALE](https://github.com/w0rp/ale)** - Asynchronous Linting Engine: multilanguage code linting and fixing (plus rudimentary LSP client)
-* **[vim-lsp](https://github.com/prabirshrestha/vim-lsp)** - asynchronous Language Server Protocol client
+* **[ALE](https://github.com/w0rp/ale)** - Asynchronous Linting Engine: multilanguage code linting and fixing (plus rudimentary LSP client).
+* **[vim-lsp](https://github.com/prabirshrestha/vim-lsp)** - asynchronous Language Server Protocol client.
 * **[vista.vim](https://github.com/liuchengxu/vista.vim/)** - code outline viewer and searcher, integrated with `fzf`, `ctags` and `vim-lsp`.
-* **[fugitive](https://github.com/tpope/vim-fugitive)** - git integration, integrated with `vim-airline` (branch/status)
-* **[vim-gitgutter](https://github.com/airblade/vim-gitgutter)** - inline git diff signs, integrated with `vim-airline` (diff summary)
-* **[vim-gutentags](https://github.com/ludovicchabant/vim-gutentags)** - automatic management for project tag files
-* **[NERD Commenter](https://github.com/scrooloose/nerdcommenter)** - block comment/uncomment
-* **[a.vim](https://github.com/vim-scripts/a.vim)** - quick switch between associated files (h/cpp, etc)
+* **[fugitive](https://github.com/tpope/vim-fugitive)** - git integration, integrated with `vim-airline` (branch/status).
+* **[vim-gitgutter](https://github.com/airblade/vim-gitgutter)** - inline git diff signs, integrated with `vim-airline` (diff summary).
+* **[vim-gutentags](https://github.com/ludovicchabant/vim-gutentags)** - automatic management for project tag files.
+* **[NERD Commenter](https://github.com/scrooloose/nerdcommenter)** - block comment/uncomment.
+* **[a.vim](https://github.com/vim-scripts/a.vim)** - quick switch between associated files (h/cpp, etc).
+* **[nvim-treesitter](https://github.com/nvim-treesitter)** - AST parser, syntax highlighter (`nvim` only).
+* **[nvim-treesitterr-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects)** - New text objects based on treesitter API (`nvim` only).
 
 ### Coding, language-specific
 
-* **[vim.cpp](https://github.com/octol/vim-cpp-enhanced-highlight)** - additional C++ syntax highlighting
 * **[rust.vim](https://github.com/rust-lang/rust.vim)** - Rust filetype, better syntax highlighting, formatting, `tagbar` integration
 * **[vim-json](https://github.com/elzr/vim-json)** - better json highlighting and validation
 * **[vim-toml](https://github.com/cespare/vim-toml)** - syntax highlighting for TOML
@@ -186,6 +187,10 @@ Build package dependency tree based on `pkg-config`.
 ### [`rgr`](tools/rgr)
 
 Replace in-place with `rg`
+
+### [`rf`](tools/rf)
+
+Interactive `rg` based on `fzf` with refresh-on-change
 
 ### [`call`](tools/call)
 
