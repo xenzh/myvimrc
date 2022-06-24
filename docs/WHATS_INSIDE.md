@@ -125,7 +125,7 @@ For more details check out [mappings doc](MAPPINGS.md).
 ### Behavior
 
 * **[vim-visual-multi](https://github.com/mg979/vim-visual-multi)** - Sublime Text-like multiple cursors
-* **[vim-sneak](https://github.com/justinmk/vim-sneak)** - jump to any location specified by two characters
+* **[targets.vim](https://github.com/wellle/targets.vim)** - better and extra text objects
 * **[Rename](https://github.com/vim-scripts/Rename)** - rename file opened in current buffer
 * **[Open file under cursor](https://github.com/amix/open_file_under_cursor.vim)** - opens file under cursor, duh
 

@@ -146,13 +146,20 @@ Following mappings/commands are defined by plugins or are vim defaults. I keep t
     * `<leader>-A` -- cursor at each word in current file
     * `g-Space` -- cursor at current position
     * See https://github.com/mg979/vim-visual-multi/wiki/Mappings for a full list
-  * vim-sneak
-    * `s{char}{char}` - move to next instance of `{char}{char}`
-    * `s` or `S` - go to next/previous match
-    * `{two backticks}` (vim builtin) - go back to start
   * NERD Commenter
     * `<leader>-c, l` - comment selected lines with line comments (not block)
     * `<leader-c, u>` - uncomment selected lines
+  * target.vim
+    * Additional movements
+      * `I[count][mod]` - inside pair (exclude whitespace at both ends)
+      * `A[count][mod]` - around pair (include whitespace at one side, trailing else leading)
+      * Count: number of nested pairs.
+      * Modifiers: `n` - next pair, `l` - last pair
+    * Text objects
+      * `, . ; : + - = ~ _ * # / | \ & $` - separators
+      * `a` - arguments
+      * `nb` - any block
+      * `nq` - any quote
 
 
 ## tmux

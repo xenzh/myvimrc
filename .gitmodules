@@ -76,9 +76,6 @@
 [submodule "vim/pack/2-bundle/start/vim-gitgutter"]
 	path = vim/pack/2-bundle/start/vim-gitgutter
 	url = http://github.com/airblade/vim-gitgutter
-[submodule "vim/pack/2-bundle/start/vim-sneak"]
-	path = vim/pack/2-bundle/start/vim-sneak
-	url = http://github.com/justinmk/vim-sneak
 [submodule "vim/pack/2-bundle/start/vim-visual-multi"]
 	path = vim/pack/2-bundle/start/vim-visual-multi
 	url = http://github.com/mg979/vim-visual-multi
@@ -107,3 +104,6 @@
 [submodule "vim/pack/2-bundle/start/nvim-treesitter-textobjects"]
 	path = vim/pack/2-bundle/start/nvim-treesitter-textobjects
 	url = http://github.com/nvim-treesitter/nvim-treesitter-textobjects
+[submodule "vim/pack/2-bundle/start/targets.vim"]
+	path = vim/pack/2-bundle/start/targets.vim
+	url = http://github.com/wellle/targets.vim

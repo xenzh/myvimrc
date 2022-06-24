@@ -27,11 +27,6 @@ function! OverrideColors()
     hi link ALEVirtualTextError SpellCap
     hi link ALEVirtualTextStyleError SpellRare
 
-    " sneak
-    hi link Sneak WildMenu
-    hi link SneakScope WildMenu
-    hi link SneakLabel WildMenu
-
     " vim-bookmarks
     hi link BookmarkSign StatusLine
     hi link BookmarkLine StatusLine

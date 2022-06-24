@@ -114,12 +114,6 @@ nmap ,, :ALEPrevious<CR>
 nmap .. :ALENext<CR>
 
 
-" sneak
-let g:sneak#label = 1
-let g:sneak#s_next = 1
-let g:sneak#use_ic_scs = 1 " use ignorecase/smartcase
-
-
 " git-gutter
 nmap ]h <Plug>(GitGutterNextHunk)
 nmap [h <Plug>(GitGutterPrevHunk)
@@ -191,32 +185,60 @@ nmap <F8> :Vista!!<CR>
 nmap \ :Vista finder<CR>
 
 
-" nvim-treesitter
+" nvim-treesitter, nvim-treesitter-textobject
 if has('nvim')
 lua << EOF
-    require'nvim-treesitter.configs'.setup {
-        ensure_installed = {"c", "cpp", "python", "rust", "lua", "vim", "toml", "yaml"},
-        sync_install = true,
+require'nvim-treesitter.configs'.setup {
+    ensure_installed = {"c", "cpp", "python", "rust", "lua", "vim", "toml", "yaml"},
+    sync_install = true,
 
-        highlight = {
-            enable = true,
-            -- additional_vim_regex_highlighting = false,
+    highlight = {
+        enable = true,
+        -- additional_vim_regex_highlighting = false,
+    },
+
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = "gbb",
+            scope_incremental = "gbn",
+            node_decremental = "gbv",
+            node_incremental = "gbh",
         },
+    },
 
-        incremental_selection = {
+    textobjects = {
+        select = {
             enable = true,
+            lookahead = true,
             keymaps = {
-                init_selection = "gbb",
-                scope_incremental = "gbn",
-                node_decremental = "gbv",
-                node_incremental = "gbh",
+            -- You can use the capture groups defined in textobjects.scm
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["ac"] = "@class.outer",
+                ["ic"] = "@class.inner",
+                ["ia"] = "@parameter.inner",
+                ["aa"] = "@parameter.outer",
+            },
+            swap_next = {
+                ["m."] = "@parameter.inner",
+            },
+            swap_previous = {
+                ["m,"] = "@parameter.inner",
+            },
+            goto_next_start = {
+                ["]o"] = "@parameter.inner",
+            },
+            goto_previous_start = {
+                ["[o"] = "@parameter.inner",
             },
         },
-    }
+    },
+}
 EOF
 
-    set foldmethod=expr
-    set foldexpr=nvim_treesitter#foldexpr()
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
 
 endif
 
