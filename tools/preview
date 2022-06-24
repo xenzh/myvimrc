@@ -11,20 +11,23 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-vimfzf_preview_bin="$(dirname $0)/../vim/pack/2-bundle/start/fzf.vim/bin/preview.sh"
 
 if [ -d "$1" ]; then
     # folder
     ls -ahH --group-directories-first --color "$1"
 elif [ -f "$1" ]; then
-    # file
+    # file and line
     if [ -n "$2" ]; then
-        # line number, use line highlighter from fzf.vim bundle
-        "$vimfzf_preview_bin" "$1:$2"
+        if [ -x "$(command -v bat)" ]; then
+            bat --color=always --style=plain "$1" --highlight-line "$2"
+        else
+            vimfzf_preview_bin="$(dirname $0)/../vim/pack/2-bundle/start/fzf.vim/bin/preview.sh"
+            "$vimfzf_preview_bin" "$1:$2"
+        fi
     else
         # just file
-        if [ -x "$(command -v highlight)" ]; then
-            highlight --quiet -O xterm256 -s moria "$1" || cat "$1"
+        if [ -x "$(command -v bat)" ]; then
+            bat --color=always --style=plain "$1"
         else
             cat "$1"
         fi

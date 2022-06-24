@@ -38,8 +38,8 @@ This package contains:
 
 ### Others
 
-* **[highlight](https://andre-simon.de/docu/highlight/en/highlight.php)** - syntax highlighter used by default for `fzf` preview windows and `less`
-* **[python](https://www.python.org/)** - some tools are written in python, also used for json formatting as `jq` fallback.
+* **[bat](https://github.com/sharkdp/bat)** - syntax highlighter used by default for `fzf` previews and replaces `less`
+* **[python3](https://www.python.org/)** - some tools are written in python, also used for json formatting as `jq` fallback.
 * **[jq](https://stedolan.github.io/jq/)** - json query tool, used for json formatting
 * **[xmllint](http://xmlsoft.org/xmllint.html)** - xml formatting
 * **[xxd](https://linux.die.net/man/1/xxd)** - file to hex and back conversions
@@ -166,6 +166,8 @@ Number of profile tweaks (this file is intended to be sourced to `.bashrc` or si
 
 * Common aliases and functions for command like `clear`/`ls`
 * `git` aliases with bash autocompletion
+* `docker` aliases
+* `cargo` aliases
 * `vim` aliases and functions
 * `fzf` config
 
@@ -178,7 +180,7 @@ Simple `python` script that automates some `compile_commands.json` tasks:
 
 ### [`preview`](tools/preview)
 
-Script that provides a text preview for a number of `fzf`-searchable entities for `vim`.
+Script that provides an `fzf` preview for files and folders with syntax/line highlight.
 
 ### [`pctree.py`](tools/pctree.py)
 
@@ -188,9 +190,13 @@ Build package dependency tree based on `pkg-config`.
 
 Replace in-place with `rg`
 
-### [`rf`](tools/rf)
+### [`rgf`](tools/rf)
 
-Interactive `rg` based on `fzf` with refresh-on-change
+Interactive `rg` based on `fzf` with refresh-on-change.
+
+### [`jqf`](tools/jqf)
+
+Interactive `jq` shell based on `fzf` refresh-on-change.
 
 ### [`call`](tools/call)
 

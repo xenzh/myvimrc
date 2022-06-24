@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+if ! [ -f "$1" ]; then
+    echo "'$1' is not a valid file. Usage: $0 file.json"
+    exit 1
+fi
+
+FZF_DEFAULT_COMMAND="echo $1" \
+fzf --ansi \
+  --disabled --query "." \
+  --phony \
+  --bind "change:reload:sleep 0.1; echo {q} || true" \
+  --delimiter : \
+  --preview "jq --color-output {q} $1" \
+  --preview-window 'up,90%,border-bottom,+{2}+3/3,~3'

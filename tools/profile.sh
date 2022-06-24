@@ -30,10 +30,11 @@ alias vi="vim -u $mydir/../vim/.vimrc.min"
 alias rgf="rg -F"
 
 
-if [ -x "$(command -v highlight)" ]; then
-    export LESSOPEN="| $(command -v highlight) %s --out-format xterm256 -l --force -s moria --no-trailing-nl"
-    export LESS=" -R"
-    alias less='less -m -N -g -i -J --line-numbers --underline-special'
+export BAT_THEME="Nord"
+export BAT_STYLE="full"
+
+if [ -x "$(command -v bat)" ]; then
+    alias less='bat'
 fi
 
 
