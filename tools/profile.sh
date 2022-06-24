@@ -31,7 +31,7 @@ alias rgf="rg -F"
 
 
 export BAT_THEME="Nord"
-export BAT_STYLE="full"
+export BAT_STYLE="numbers,changes"
 
 if [ -x "$(command -v bat)" ]; then
     alias less='bat'

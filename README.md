@@ -4,7 +4,7 @@ Features:
 
 * `zsh` configuration (based on `oh-my-zsh`).
 * `tmux` configuration.
-* `vim`/`nvim` configuration and plugins for C++/python/Rust development.
+* `nvim` configuration and plugins for C++/python/Rust development (almost fully `vim` compatible).
 * shell aliases and tools.
 
 Documentation:
@@ -30,23 +30,23 @@ git submodule update --init --recursive --remote
 
 ```
 ln -s ~/.dotfiles/vim/.vimrc ~/.vimrc
+cp ~/.dotfiles/vim/init.vim ~/.config/nvim
+
 ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
+
 ln -s ~/.dotfiles/.zshrc ~/.zshrc
-source ~/.dotfiles/tools/profile.sh
 ```
 
 
 ## How to add, remove and update submodules
 
 ```sh
-# add a plugin (use to http to bypass corp MITM)
-git submodule add http://<git_repo>
-
 # pull all submodules
 git submodule update --init --recursive --remote
 
+# add a submodule (use to http to bypass corp MITM)
+git submodule add http://<git_repo>
+
 # remove a submodule
-git submodule deinit -f -- "vim/bundle/$1"
-rm -rf ".git/modules/vim/bundle/$1"
-git rm -f "vim/bundle/$1"
+git rm <path-to-submodule>
 ```
