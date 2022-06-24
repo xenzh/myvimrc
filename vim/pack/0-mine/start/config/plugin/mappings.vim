@@ -63,6 +63,13 @@ vnoremap > >gv
 nnoremap gv `[v`]
 
 
+" Bubble-move (inspired by http://vimcasts.org/episodes/bubbling-text/)
+nmap <C-k> ddkP        " single lines
+nmap <C-j> ddp
+vmap <C-k> xkP`[V`]    " visual mode
+vmap <C-j> xp`[V`]
+
+
 " Search results are always centered
 nnoremap n nzz
 nnoremap N Nzz

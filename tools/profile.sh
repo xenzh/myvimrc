@@ -27,8 +27,6 @@ fi
 alias :e="vim"
 alias vi="vim -u $mydir/../vim/.vimrc.min"
 
-alias rgf="rg -F"
-
 
 export BAT_THEME="Nord"
 export BAT_STYLE="numbers,changes"

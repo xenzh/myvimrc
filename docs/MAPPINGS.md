@@ -1,125 +1,110 @@
 # Mappings and commands
 
-
 ## vim, `.vimrc`
 
-Following mappings and commands are added in `.vimrc`.
 `<leader>` key is `<space>`.
 
+### Layout
 
-### View
-
-* `F6` - toggle line numbers and space chars (useful for working with system clipboard)
-* `F8` - _tagbar_, toggle code outline view
-* `ml` - _vim-bookmarks_, show all bookmarks
-* `<leader>-b` - toggle "big file mode"
-
+| Key                   | Mode | Source                          | Description                                           |
+| --------------------- | ---- | ------------------------------- | ----------------------------------------------------- |
+| `:acl`                | cmd  | _config_                        | Close preview, quickfix, location list                |
+| `F9`                  | n    | _config_                        | Resize split: decrease width                          |
+| `F10`                 | n    | _config_                        | Resize split: increase width                          |
+| `F11`                 | n    | _config_                        | Resize split: decrease height                         |
+| `F12`                 | n    | _config_                        | Resize split: decrease height                         |
+| `F8`                  | n    | `vista.vim`, `ctags`, `vim-lsp` | Open side pane with document symbols                  |
+| `ml`                  | n    | `vim-bookmarks`                 | Show all bookmarks in quickfix                        |
+| `<leader>-1..9`       | n    | `vim-airline`                   | Go to arline tab \#                                   |
+| `:Jsp`                | vcmd | `jq`/`python`                   | Show selection as formatted json in a split           |
+| `:Jq`                 | vcmd | `jq`                            | Interactive `jq` shell with preview                   |
+|                       | n    |                                 | * `<CR>` discard query buffer, jump to result buffer  |
+|                       | n    |                                 | * `Esc` discard query and result buffers              |
+| `:ToHex` `:FromHex`   | n    | `xxd`                           | Convert buffer to hex dump and read it back to text   |
 
 ### Navigation
 
-Split resize:
-* `F9` - resize: descrease width
-* `F10` - resize: increase width
-* `F11` - resize: decrease height
-* `F12` - resize: increase height
+| Key                   | Mode | Source                          | Description                                           |
+| --------------------- | ---- | ------------------------------- | ----------------------------------------------------- |
+| `:W` `:Q` `:Wq` `:WQ` | cmd  | _config_                        | Make w and q case insensitive                         |
+| `:wd`                 | cmd  | _config_                        | Save and close current buffer (like `wq`)             |
+| `:O`                  | cmd  | _config_                        | Close all buffers but this                            |
+| `:Z`                  | cmd  | `fzf.vim`, `rg`                 | Close all buffers and open file finder                |
+| `:Gr`                 | vcmd | _config_                        | Find selection, open quickfix with results            |
+| `:Gre`                | cmd  | _config_                        | Display results of last search (`@/`) in quickfix     |
+| `:set [no]magic`      | cmd  | _builtin_                       | Enable/disable regex match when searching             |
+| `gf`                  | n    | `open file under cursor`        | Opens file under cursor                               |
+| `[p`                  | n    | `fzf.vim`, `rg`                 | Find files in current working directory               |
+| `]p`                  | n    | `fzf.vim`, `rg`                 | Find files in directory near current file             |
+| `][p`                 | n    | `fzf.vim`, `rg`                 | Find files in ~                                       |
+| `:F <dir>`            | cmd  | `fzf.vim`, `rg`                 | Find files in directory                               |
+| `:rg <regex>`         | cmd  | `fzf.vim`, `rg`                 | Grep current working directory                        |
+| `<F2>`                | n    | `fzf.vim`, `rg`                 | Grep current working directory with word under cursor |
+| `\`                   | n    | `vista.vim`, `vim-lsp`, `ctags` | Search document symbols or tags                       |
+| `;;`                  | n    | `vim-lsp`                       | Go to symbol definition                               |
+| `;l`                  | n    | `vim-lsp`                       | Show popup with hover info for a symbol               |
+| `;'`                  | n    | `vim-lsp`                       | Find symbol references                                |
+| `,,`                  | n    | `ale`                           | Go to previous ALE diagnostic                         |
+| `..`                  | n    | `ale`                           | Go to next ALE diagnostic                             |
+| `[h` `]h`             | n    | `vim-gitgutter`                 | Go to previous/next git hunk                          |
+| `[c` `]c`             | n    | _config_                        | Go to previous/next git merge conflict                |
+| `mm`                  | n    | `vim-bookmarks`                 | Toggle bookmark at current line                       |
+| `mi`                  | n    | `vim-bookmarks`                 | Add/edit/remove annotation at current line            |
+| `ml` `ma`             | n    | `vim-bookmarks`                 | Toggle list all bookmarks                             |
+| `mp` `mn`             | n    | `vim-bookmarks`                 | Go to to previous/next bookmark                       |
+| `mc` `mx`             | n    | `vim-bookmarks`                 | Clear boormarks in current buffer/in all buffers      |
 
-Switch between splits:
-* `Ctrl-j` - move down
-* `Ctrl-k` - move up
-* `Ctrl-l` - move right
-* `Ctrl-h` - move left
+### View
 
-Switch airline tabs/buffers:
-* `<leader>-<1-9>` - _vim-airline_, go to tab 1-9
-* `<leader>-+` and `<leader-->` - _vim-airline_, go to next/previous tab
+| Key                   | Mode | Source                          | Description                                           |
+| --------------------- | ---- | ------------------------------- | ----------------------------------------------------- |
+| `<F6>`                | n    | _config_                        | Toggle line numbers and space chars                   |
+| `<leader>-l` `:noh`   | n    | _config_                        | Clear search highlighting                             |
+|`:set [no]wrap`        | cmd  | _builtin_                       | Enable/disable line wrapping                          |
+| `zf`                  | v    | _builtin_                       | Create a fold                                         |
+| `zo` `zc` `za`        | n    | _builtin_                       | Open, close, toggle one fold level under the cursor   |
+| `zm` `zM`             | n    | _builtin_                       | Close next level/all folds                            |
+| `zr` `zR`             | n    | _builtin_                       | Open next level/all folds                             |
 
-Search text and files:
-* `:Gr` - find selection, open quickfix with results
-* `:Gre` - display results of last search (`@/`) in quickfix
-* `<leader>-l` - no highlight
-* `<leader>-n` - retab and remove trailing spaces
-* `gf` - _open file under cursor_, jump to file
-* _fzf.vim_, search files
-  * `[p` - in current working directory
-  * `]p` - near current file
-  * `][p` -in user home directory
-  * `:F <dir>` - in arbitrary directory
-* _fzf.vim_, search text in files
-  * `:rg`, `:Ag` - grep files in current folder with `ripgrep`
-  * `<F2>` - :rg word\_under\_cursor
+### Edit
 
-Code:
-* _vim-gitgutter_
-    * `]h` and `[h` - jump to next/previous change
-    * `]c` and `[c` - jump to next/previous git merge marker
-* _asyncomplete.vim_
-  * `<F7>` - toggle completion popup and LSP client
-  * `C-Space` - _insert mode_ show completion popup
-* _vim-lsp_
-  * `;;` - go to symbol definition
-  * `;l` - symbol hover info
-  * `;'` - find references
-* _vista.vim_
-  * `<F8>` - open `vim-lsp` / `ctags` powered document map.
-  * `\`  - fuzzy search (`fzf`) document symbols (`vim-lsp` or `ctags`).
-* _nvim-treesitter_
-  * `gbb` - initiate AST visual selection.
-  * `gbn` - expand selection to scope.
-  * `gbv` - decrease selection by node.
-  * `bgh` - expand selection by node.
-* _ALE_
-  * `F5` - check syntax and open location list if there are warnings/errors
-  * `:C` - clean all error/warning indicators, close location list
-  * `:D` - show preview window with error/warning description
-  * `:LL` - list ALE linters for current usetype
-  * `:AL <name>` - enable ALE linter for current usetype
-  * `:DL <name>` - disable ALE linter for current usetype
-  * `,,` - go to previous ALE error/warning
-  * `..` - go to next ALE error/warning
-
-
-### Editing
-
-General:
-* `<` and `>` - indent selection and reselect
-* `:W`, `:Q`, `:Wq`, `:WQ` - the same as `:wq`
-* `:O` - close all buffers but this
-* `:Z` - _fzf.vim_ close all buffers and open fzf file picker
-* `:acl` - close preview, quickfix and location list
-* `:wd` - save and delete current buffer (just like `:wq` but for buffers)
-* `:rn` - _Rename_, rename current file inplace
-
-Code:
-* `:Fmt` - _jq/python/xmllint_, format source code (only for few filetypes)
-* `:Jsp` - _jq/python_, show selection as formatted json in a split. Useful when reading logs.
-* `:Jq` - _jq_, open interactive jq shell with result preview
-
-  Mappings for query buffer in normal mode:
-  * `<CR>` - discard query buffer and jump to result buffer
-  * `<Esc>` - discard query and result buffers
-
-* `ToHex`, `FromHex` - _xxd_, convert buffer contents to hex dump and read it back
+| Key                   | Mode | Source                          | Description                                           |
+| --------------------- | ---- | ------------------------------- | ----------------------------------------------------- |
+| `C-k` `C-j`           | n, v | _config_                        | Bubble current line/selection up/down                 |
+| `<` `>`               | v    | _config_                        | Indent selection and reselect                         |
+| `gbb`                 | n    | `nvim-treesitter`               | Initiate AST visual selection.                        |
+| `gbn`                 | v    | `nvim-treesitter`               | Expand selection to scope.                            |
+| `gbv`                 | v    | `nvim-treesitter`               | Decrease selection by node.                           |
+| `bgh`                 | v    | `nvim-treesitter`               | Expand selection by node.                             |
+| `C-up` `C-down`       | n    | `vim-visual-multi`              | Add cursors downwards/upwards                         |
+| `C-n`                 | n    | `vim-visual-multi`              | Start at current word/add at the next occurrence      |
+| `<leader>-A`          | n    | `vim-visual-multi`              | Add cursor at each word in current file               |
+| `g-Space` `\\\`       | n    | `vim-visual-multi`              | Add cursor at current position                        |
+| `<leader>-c, l`       | n    | `NerdCommenter`                 | Comment selected lines with line comments (not block) |
+| `<leader>-c, u`       | n    | `NerdCommenter`                 | Uncomment selected lines                              |
+| `:Fmt`                | cmd  | _config_                        | Format source code (defined for a few filetypes)      |
+| `:rn`                 | cmd  | `Rename`                        | Rename current file inplace                           |
+| `:set noexpandtab`    | cmd  | _builtin_                       | `Tab` inserts tabs, not spaces.                       |
 
 
-## vim, plugins/defaults/snippets
+### Linting and completion
 
-Following mappings/commands are defined by plugins or are vim defaults. I keep them here as a cheat sheet.
+| Key                   | Mode | Source                          | Description                                           |
+| --------------------- | ---- | ------------------------------- | ----------------------------------------------------- |
+| `<F7>`                | n    | `asyncomplete.vim`              | Toggle completion popup and LSP client                |
+| `C-Space`             | i    | _config_                        | Force show completion popup menu                      |
+| `F5`                  | n    | `ale`                           | Check syntax and open location list with diagnostics  |
+| `:C`                  | cmd  | `ale`                           | Clear all diagnostics, close location list            |
+| `:D`                  | cmd  | `ale`                           | Show preview window with diagnostics description      |
+| `:LL`                 | cmd  | `ale`                           | List ALE linters for current filetype                 |
+| `:AL <name>`          | cmd  | `ale`                           | Enable ALE linter for current filetype                |
+| `:DL <name>`          | cmd  | `ale`                           | Disable ALE linter for current filetype               |
+
+### Text objects
+
+`<count><command><text object or motion>`
 
 * Default
-  * `noh` - disable search results highlighting.
-  * `:set noexpandtab` - `Tab` inserts tabs, not spaces. Use when editing code intended with tabs.
-  * `:set wrap` / `:set nowrap` - enable/disable line wrapping.
-  * `:set magic` / `:set nomagic` - enable/disable regex match when searching
-  * tags
-    * `Ctrl-]` - go to definition of symbol under cursor
-    * `:ta` - go to symbol definition
-    * `g]` - list symbol definitions
-    * `Ctrl-t` - go back
-  * Folding
-    * `zf` - in visual mode, create a fold
-    * `zo`, `zc`, `za` - open, close, toggle one fold level under the cursor. O/C/A - for all levels
-    * `zm`, `zM` - close next level/all folds
-    * `zr`, `zR` - open next level/all folds
   * Movement / text objects
     * commands
       * `c` - change (remove, switch to insert mode)
@@ -134,21 +119,6 @@ Following mappings/commands are defined by plugins or are vim defaults. I keep t
       * `s` - sententce (block, limited by dots)
       * `p` - paragraph (block, limited by newlines)
 * Plugins
-  * vim-bookmarks
-    * `mm` -- toggle bookmark at current line
-    * `mi` - add/edit/remove annotation at current line
-    * `ma` - _[remapped to `ml`]_ - toggle list all bookmarks
-    * `mn`, `mp` - jump to next/prev bookmark
-    * `mc`, `mx` - clear boormarks in current buffer/in all buffers
-  * vim-visual-multi
-    * `C-Up` / `C-Down` -- add cursors downwards/upwards
-    * `Ctrl-n` -- start multicursor at current word; add cursor at the next occurence of the word
-    * `<leader>-A` -- cursor at each word in current file
-    * `g-Space` -- cursor at current position
-    * See https://github.com/mg979/vim-visual-multi/wiki/Mappings for a full list
-  * NERD Commenter
-    * `<leader>-c, l` - comment selected lines with line comments (not block)
-    * `<leader-c, u>` - uncomment selected lines
   * target.vim
     * Additional movements
       * `I[count][mod]` - inside pair (exclude whitespace at both ends)
@@ -160,7 +130,6 @@ Following mappings/commands are defined by plugins or are vim defaults. I keep t
       * `a` - arguments
       * `nb` - any block
       * `nq` - any quote
-
 
 ## tmux
 
@@ -174,7 +143,6 @@ Prefix is `Ctrl + b` (default)
 * `<prefix>, -` - demote windowed pane back
 * `<prefix>, <` - move window tab to the right
 * `<prefix>, >` - move window tab to the left
-
 
 ## zsh, oh-my-zsh, plugins
 
