@@ -220,6 +220,7 @@ require'nvim-treesitter.configs'.setup {
                 ["ia"] = "@parameter.inner",
                 ["aa"] = "@parameter.outer",
             },
+            -- these do not really work (yet?)
             swap_next = {
                 ["m."] = "@parameter.inner",
             },

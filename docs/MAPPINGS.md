@@ -102,34 +102,21 @@
 
 ### Text objects
 
-`<count><command><text object or motion>`
+`<count><command><kind><text object>`
 
-* Default
-  * Movement / text objects
-    * commands
-      * `c` - change (remove, switch to insert mode)
-      * `d` - delete
-    * text object type
-      * `i` - inner (iw - inner word, excluding spaces)
-      * `a` - outer (aw including spaces)
-    * text objects
-      * `w` - word
-      * `t` - tag
-      * all types of quotes: `, ', "
-      * `s` - sententce (block, limited by dots)
-      * `p` - paragraph (block, limited by newlines)
-* Plugins
-  * target.vim
-    * Additional movements
-      * `I[count][mod]` - inside pair (exclude whitespace at both ends)
-      * `A[count][mod]` - around pair (include whitespace at one side, trailing else leading)
-      * Count: number of nested pairs.
-      * Modifiers: `n` - next pair, `l` - last pair
-    * Text objects
-      * `, . ; : + - = ~ _ * # / | \ & $` - separators
-      * `a` - arguments
-      * `nb` - any block
-      * `nq` - any quote
+| `<command>`           | `<kind>`                                                | `<text object>`                                            |
+| --------------------- | ------------------------------------------------------- | ---------------------------------------------------------- |
+| `v` select _builtin_  | `i` inside _builtin_                                    | `w` word _builtin_                                         |
+| `d` delete _builtin_  | `a` outside _builtin_                                   | `s` sentence (dots) _builtin_                              |
+| `c` change _builtin_  | `I<count><n/l>` inside w/o \S + next/last _target.vim_  | `p` paragraph (newlines) _builtin_                         |
+|                       | `A<count><n/l>` outside w/o \S + next/last _target.vim_ | quotes _builtin_                                           |
+|                       |                                                         | brackets _builtin_                                         |
+|                       |                                                         | `, . ; : + - = ~ _ * # / | \ & $` separators _targets.vim_ |
+|                       |                                                         | `a` argument _targets.vim_                                 |
+|                       |                                                         | `nb` any block _targets.vim_                               |
+|                       |                                                         | `nq` any quote _targets.vim_                               |
+|                       |                                                         | `f` function _nvim-treesitter-textobjects_                 |
+|                       |                                                         | `c` class _nvim-treesitter-textobjects_                    |
 
 ## tmux
 
