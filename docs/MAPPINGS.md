@@ -17,7 +17,7 @@
 | `ml`                  | n    | `vim-bookmarks`                 | Show all bookmarks in quickfix                        |
 | `<leader>-1..9`       | n    | `vim-airline`                   | Go to arline tab \#                                   |
 | `:Jsp`                | vcmd | `jq`/`python`                   | Show selection as formatted json in a split           |
-| `:Jq`                 | vcmd | `jq`                            | Interactive `jq` shell with preview                   |
+| `:Jq`                 | cmd  | `jq`                            | Interactive `jq` shell with preview                   |
 |                       | n    |                                 | * `<CR>` discard query buffer, jump to result buffer  |
 |                       | n    |                                 | * `Esc` discard query and result buffers              |
 | `:ToHex` `:FromHex`   | n    | `xxd`                           | Convert buffer to hex dump and read it back to text   |
@@ -93,7 +93,7 @@
 | --------------------- | ---- | ------------------------------- | ----------------------------------------------------- |
 | `<F7>`                | n    | `asyncomplete.vim`              | Toggle completion popup and LSP client                |
 | `C-Space`             | i    | _config_                        | Force show completion popup menu                      |
-| `F5`                  | n    | `ale`                           | Check syntax and open location list with diagnostics  |
+| `<F5>`                | n    | `ale`                           | Check syntax and open location list with diagnostics  |
 | `:C`                  | cmd  | `ale`                           | Clear all diagnostics, close location list            |
 | `:D`                  | cmd  | `ale`                           | Show preview window with diagnostics description      |
 | `:LL`                 | cmd  | `ale`                           | List ALE linters for current filetype                 |
@@ -111,7 +111,7 @@
 | `c` change _builtin_  | `I<count><n/l>` inside w/o \S + next/last _target.vim_  | `p` paragraph (newlines) _builtin_                         |
 |                       | `A<count><n/l>` outside w/o \S + next/last _target.vim_ | quotes _builtin_                                           |
 |                       |                                                         | brackets _builtin_                                         |
-|                       |                                                         | `, . ; : + - = ~ _ * # / | \ & $` separators _targets.vim_ |
+|                       |                                                         | `, . ; : + - = ~ _ * # / \ & $` separators _targets.vim_   |
 |                       |                                                         | `a` argument _targets.vim_                                 |
 |                       |                                                         | `nb` any block _targets.vim_                               |
 |                       |                                                         | `nq` any quote _targets.vim_                               |
