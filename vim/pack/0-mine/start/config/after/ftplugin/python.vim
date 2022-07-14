@@ -1,3 +1,5 @@
+set cc=120
+
 " ale
 if !exists('g:ale_linters')
     let g:ale_linters = {}

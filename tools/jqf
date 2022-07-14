@@ -5,11 +5,16 @@ if ! [ -f "$1" ]; then
     exit 1
 fi
 
-FZF_DEFAULT_COMMAND="echo $1" \
+initq='.'
+if ! [ -z "$2" ]; then
+    initq="$2"
+fi
+
+FZF_DEFAULT_COMMAND="echo '$initq'" \
 fzf --ansi \
-  --disabled --query "." \
+  --disabled --query "$initq" \
   --phony \
   --bind "change:reload:sleep 0.1; echo {q} || true" \
   --delimiter : \
   --preview "jq --color-output {q} $1" \
-  --preview-window 'up,90%,border-bottom,+{2}+3/3,~3'
+  --preview-window 'wrap,up,90%,border-bottom,+{2}+3/3,~3'
