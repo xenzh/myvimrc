@@ -126,6 +126,9 @@ function! GetCppFlagsFromClangFile()
         call filter(filtered, {idx, val -> val[0] == '-'})
         let flags += filtered
     endfor
+    if len(flags) > 0
+        echom printf('Loaded C++ flags from "%s"', clang_file)
+    endif
     return flags
 endfunction
 
