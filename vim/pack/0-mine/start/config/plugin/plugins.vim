@@ -160,6 +160,10 @@ command! -nargs=1 -complete=file F :Files! <args>
 " close all buffers, open file picker
 command! Z %bd | :Files!
 
+" Open vsplit, search files in working dir
+command! Fsp :vsp | :Files!
+cnoreabbrev fsp Fsp
+
 " override :Rg, :Files to display preview
 command! -bang -nargs=* Rg call fzf#vim#grep(
   \ 'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,

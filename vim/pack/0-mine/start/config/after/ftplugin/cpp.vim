@@ -17,8 +17,8 @@ endif
 
 
 let g:my_cpp_linter_flags = []
-let g:my_cpp_linter_default_flags = ['-std=c++17']
-let g:my_cpp_linter_extra_flags = ['-Wno-unknown-warning-option', '-Wno-infinite-recursion', '-Wall']
+let g:my_cpp_linter_default_flags = ['-std=c++20']
+let g:my_cpp_linter_extra_flags = ['-Wno-unknown-warning-option', '-Wno-infinite-recursion', '-Wno-unknown-pragmas', '-Wall']
 
 
 function! SetAleClangOptions()

@@ -13,6 +13,7 @@
 | `F10`                 | n    | _config_                        | Resize split: increase width                          |
 | `F11`                 | n    | _config_                        | Resize split: decrease height                         |
 | `F12`                 | n    | _config_                        | Resize split: decrease height                         |
+| `C-w` `C-r`           | n    | _builtin_                       | Rotate splits (swap contents)                         |
 | `F8`                  | n    | `vista.vim`, `ctags`, `vim-lsp` | Open side pane with document symbols                  |
 | `ml`                  | n    | `vim-bookmarks`                 | Show all bookmarks in quickfix                        |
 | `<leader>-1..9`       | n    | `vim-airline`                   | Go to arline tab \#                                   |
@@ -38,6 +39,7 @@
 | `]p`                  | n    | `fzf.vim`, `rg`                 | Find files in directory near current file             |
 | `][p`                 | n    | `fzf.vim`, `rg`                 | Find files in ~                                       |
 | `:F <dir>`            | cmd  | `fzf.vim`, `rg`                 | Find files in directory                               |
+| `:fsp`                | cmd  | `fzf.vim`, `rg`                 | Open vertical split, find files in cwd                |
 | `:rg <regex>`         | cmd  | `fzf.vim`, `rg`                 | Grep current working directory                        |
 | `<F2>`                | n    | `fzf.vim`, `rg`                 | Grep current working directory with word under cursor |
 | `\`                   | n    | `vista.vim`, `vim-lsp`, `ctags` | Search document symbols or tags                       |

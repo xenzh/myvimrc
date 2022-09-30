@@ -79,7 +79,7 @@ gbl()  {
         awk -v l="$(gbb)" -v r="$(gbn)" '{if (substr($0,1,1)==">") d=l; else d=r; print "[",d,"] --",substr($0,2)}'
 }
 
-alias gbd="git brach -d"
+alias gbd="git branch -d"
 alias gbdd="git branch -D"
 
 gcm()  { git checkout "$(gbb)" }
