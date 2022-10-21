@@ -1,8 +1,16 @@
-" load basic settings
 let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
+
+" load basic settings
 exe 'source ' . s:path . '/.vimrc.common'
-exe 'source ' . s:path . '/pack/0-mine/start/config/plugin/mappings.vim'
-exe 'source ' . s:path . '/pack/0-mine/start/config/plugin/colors.vim'
+
+
+" setup minimal set of packages or fall back to just mappings and colors.
+if has ('packages')
+    exe 'set pp=' . s:path . '/min'
+else
+    exe 'source ' . s:path . '/pack/0-mine/start/config/plugin/mappings.vim'
+    exe 'source ' . s:path . '/pack/0-mine/start/config/plugin/colors.vim'
+endif
 
 set history=50

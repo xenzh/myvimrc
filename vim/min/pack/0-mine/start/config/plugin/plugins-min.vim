@@ -1,0 +1,1 @@
+../../../../../../pack/0-mine/start/config/plugin/plugins-min.vim
