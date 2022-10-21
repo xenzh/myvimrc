@@ -45,6 +45,9 @@ command! Z %bd | :Files!
 command! Fsp :vsp | :Files!
 cnoreabbrev fsp Fsp
 
+command! -nargs=1 L :Lines! <args>
+cnoreabbrev l L
+
 " override :Rg, :Files to display preview
 command! -bang -nargs=* Rg call fzf#vim#grep(
   \ 'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
