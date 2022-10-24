@@ -254,17 +254,17 @@ unalias z 2> /dev/null
 if [ "$myshell" = "zsh" ]; then
     z() {
       if [[ -z "$*" ]]; then
-        cd "$(_z -l 2>&1 | fzf +s --tac --preview="$fzf_preview {2}" | sed 's/^[0-9,.]* *//')" || exit 1
+        cd "$(zshz -l 2>&1 | fzf +s --tac --preview="$fzf_preview {2}" | sed 's/^[0-9,.]* *//')" || exit 1
       else
         _last_z_args="$*"
-        _z "$@"
+        zshz "$@"
       fi
     }
 
     compctl -U -K _z_zsh_tab_completion z
 
     zz() {
-      cd "$(_z -l 2>&1 | sed 's/^[0-9,.]* *//' | fzf -q "$_last_z_args")" || exit 1
+      cd "$(zshz -l 2>&1 | sed 's/^[0-9,.]* *//' | fzf -q "$_last_z_args")" || exit 1
     }
 fi
 
