@@ -3,6 +3,7 @@ let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
 " load basic settings
 exe 'source ' . s:path . '/.vimrc.common'
+set nofoldenable
 
 
 " setup minimal set of packages or fall back to just mappings and colors.

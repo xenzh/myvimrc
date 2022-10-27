@@ -184,9 +184,11 @@ command! Hi :so $VIMRUNTIME/syntax/hitest.vim
 
 
 " Code formatting
-function! DoFmt()
-  echo 'Formatting is not implemented for this filetype (see .vim/ftplugin)'
-endfunction
+if !exists('*DoFmt')
+    function DoFmt()
+      echo 'Formatting is not implemented for this filetype (see .vim/ftplugin)'
+    endfunction
+endif
 
 command! Fmt :call DoFmt()
 
