@@ -16,6 +16,16 @@ Documentation:
 
 ## Installation
 
+### Automatic
+
+```
+git clone https://github.com/xenzh/myvimrc.git ~/.dotfiles
+cd ~/.dotfiles
+./install.sh
+```
+
+### Manual
+
 1. Clone this repo to `~/.dotfiles` folder and get the submodules
 
 ```
@@ -36,7 +46,6 @@ ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
 
 ln -s ~/.dotfiles/.zshrc ~/.zshrc
 ```
-
 
 ## How to add, remove and update submodules
 

@@ -76,7 +76,7 @@ def read_flags(flags_file_path):
         lines = flags_file.readlines()
         flags = lines
         #flags = list(filter(lambda l: l.startswith("-I"), lines))
-        flags.append("-std=gnu++17")
+        flags.append("-std=gnu++20")
         return [x.strip() for x in flags]
 
 
