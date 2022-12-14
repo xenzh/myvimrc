@@ -91,7 +91,7 @@
 	branch = main
 [submodule "vim/pack/2-bundle/start/nord-vim"]
 	path = vim/pack/2-bundle/start/nord-vim
-	url = https://github.com/arcticicestudio/nord-vim
+	url = http://github.com/arcticicestudio/nord-vim
 [submodule "tools/external/nord-dircolors"]
 	path = tools/external/nord-dircolors
 	url = http://github.com/arcticicestudio/nord-dircolors

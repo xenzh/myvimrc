@@ -10,6 +10,8 @@ function fail() {
 }
 
 function yes_or_no {
+    [[ ${-#*i} != ${-} ]] && return 0
+
     while true; do
         read -p "$* [y/n]: " yn
         case $yn in
@@ -20,17 +22,17 @@ function yes_or_no {
 }
 
 
-echo "1. Downloading and initializing git submodules"
+echo "-- 1. Downloading and initializing git submodules"
 
 if ! command -v git &> /dev/null; then
-    echo "git cannot be find"
+    echo "!! git cannot be found"
     exit 1
 fi
 
-yes_or_no "Download submodules" && git submodule update --init --recursive --remote || fail "Failed to initialize submodules"
+yes_or_no "?? Download submodules" && git submodule update --init --recursive --remote
 
 
-echo "2. Installing vim/nvim config"
+echo "-- 2. Installing vim/nvim config"
 
 ln -s "$DOTFILES/vim/.vimrc" ~/.vimrc
 
@@ -38,37 +40,37 @@ mkdir -p ~/.config/nvim
 cp "$DOTFILES/vim/init.vim" ~/.config/nvim
 
 
-echo "3. Installing tmux config"
+echo "-- 3. Installing tmux config"
 
 touch ~/.tmux.conf
 TMUX_SOURCEFILE="source-file $DOTFILES/tmux/.tmux.conf"
 
 if grep -Fxq "$TMUX_SOURCEFILE" ~/.tmux.conf; then
-    echo "Tmux config is already sourced"
+    echo "-- Tmux config is already sourced"
 else
     echo -e "$TMUX_SOURCEFILE\n" | cat - ~/.tmux.conf > temp && mv temp ~/.tmux.conf
 fi
 
 
-echo "4. Installing zsh config"
+echo "-- 4. Installing zsh config"
 
 touch ~/.zshrc
 ZSH_SOURCE="source $DOTFILES/.zshrc"
 
 if grep -Fxq "$ZSH_SOURCE" ~/.zshrc; then
-    echo "Zsh config is already sourced"
+    echo "-- Zsh config is already sourced"
 else
     echo -e "$ZSH_SOURCE\n" | cat - ~/.zshrc > temp && mv temp ~/.zshrc
 fi
 
 
-echo "5. Installing necessary tools"
+echo "-- 5. Installing necessary tools"
 
 function package() {
     if command -v apt-get &> /dev/null; then
-        apt-get install -q=2 $1 || echo "Package not found. Install manually: $1"
+        apt-get install -q=2 $1 || echo "-- Package not found. Install manually: $1"
     else
-        echo "No known package manager found. Install manually: $1"
+        echo -- "No known package manager found. Install manually: $1"
     fi
 }
 
@@ -76,7 +78,7 @@ function python() {
     if command -v pip3 &> /dev/null; then
         pip3 install $1
     else
-        echo "No pip3 found. Install manually: $1"
+        echo "-- No pip3 found. Install manually: $1"
     fi
 }
 
@@ -113,7 +115,7 @@ EXTRA=(
     thefuck
 )
 
-yes_or_no "Install extra packages: ${EXTRA[@]}" && install_list package ${EXTRA[@]}
+yes_or_no "?? Install extra packages: ${EXTRA[@]}" && install_list package ${EXTRA[@]}
 
 CPP=(
     clang
@@ -121,7 +123,7 @@ CPP=(
     gdb
 )
 
-yes_or_no "Install C++ packages: ${CPP[@]}" && install_list package ${CPP[@]}
+yes_or_no "?? Install C++ packages: ${CPP[@]}" && install_list package ${CPP[@]}
 
 PYTHON=(
     python-language-server
@@ -130,9 +132,9 @@ PYTHON=(
     mypy
 )
 
-yes_or_no "Install python modules: ${PYTHON[@]}" && install_list python ${PYTHON[@]}
+yes_or_no "?? Install python modules: ${PYTHON[@]}" && install_list python ${PYTHON[@]}
 
 
-echo "6. Changing login shell"
+echo "-- 6. Changing login shell"
 
-yes_or_no "Change login shell to zsh" && chsh -s "$(which zsh)"
+yes_or_no "?? Change login shell to zsh" && chsh -s "$(which zsh)"
