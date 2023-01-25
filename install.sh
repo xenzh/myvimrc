@@ -64,7 +64,12 @@ else
 fi
 
 
-echo "-- 5. Installing necessary tools"
+echo "-- 5. Installing gdb config"
+
+ln -s "$DOTFILES/.gdbinit" ~/.gdbinit
+
+
+echo "-- 6. Installing necessary tools"
 
 function package() {
     if command -v apt-get &> /dev/null; then
@@ -89,10 +94,10 @@ function install_list() {
 }
 
 if command -v apt-get &> /dev/null; then
-    apt-get update
+    apt-get update -q=2
 fi
 
-TOOLS=(
+CORE=(
     zsh
     tmux
     vim
@@ -105,7 +110,7 @@ TOOLS=(
     python3-pip
 )
 
-install_list package ${TOOLS[@]}
+yes_or_no "?? Install core packages: ${CORE[@]}" && install_list package ${CORE[@]}
 
 EXTRA=(
     bat
@@ -135,6 +140,6 @@ PYTHON=(
 yes_or_no "?? Install python modules: ${PYTHON[@]}" && install_list python ${PYTHON[@]}
 
 
-echo "-- 6. Changing login shell"
+echo "-- 7. Changing login shell"
 
 yes_or_no "?? Change login shell to zsh" && chsh -s "$(which zsh)"
