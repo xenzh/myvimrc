@@ -36,7 +36,7 @@ let g:lsp_hightlight_references_enabled = 1
 
 nmap ;; :LspDefinition<CR>
 nmap ;l :LspHover<CR>
-nmap ;' :LspDocSymbols<CR>
+nmap ;' :LspReferences<CR>
 
 let g:my_lsp_catalog = {}
 
@@ -117,6 +117,10 @@ nmap .. :ALENext<CR>
 " git-gutter
 nmap ]h <Plug>(GitGutterNextHunk)
 nmap [h <Plug>(GitGutterPrevHunk)
+
+
+" a.vim
+command! AVV :AV | wincmd R
 
 
 " vista.vim
