@@ -63,6 +63,14 @@ vnoremap > >gv
 nnoremap gv `[v`]
 
 
+" Paste without replacing "0 with selection
+vnoremap p "_dP 
+
+
+" Search and highlight but not jump to next
+nnoremap * :keepjumps normal! mi*`i<CR>
+
+
 " Bubble-move (inspired by http://vimcasts.org/episodes/bubbling-text/)
 nmap <C-k> ddkP        " single lines
 nmap <C-j> ddp
