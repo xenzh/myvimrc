@@ -26,6 +26,7 @@ fi
 
 alias :e="vim"
 alias vi="vim -u $mydir/../vim/.vimrc.min"
+alias nv="neovide --multigrid --notabs"
 
 
 export BAT_THEME="Nord"
@@ -169,7 +170,6 @@ fzf_colors="bg+:#3B4252,bg:#2E3440,spinner:#81A1C1,hl:#616E88,fg:#D8DEE9,header:
 export FZF_DEFAULT_OPTS="-m --preview='$fzf_preview_cmd' --preview-window right:60% --bind=ctrl-f:preview-page-down,ctrl-b:preview-page-up,ctrl-j:preview-down,ctrl-k:preview-up --color=$fzf_colors"
 
 
-
 #
 # fzf convenience functions
 #
@@ -295,4 +295,3 @@ listcolors() {
 cing() {
     curl --connect-timeout 1 -Is "$1" > /dev/null && echo "$1: ok" || echo "$1: fail"
 }
-

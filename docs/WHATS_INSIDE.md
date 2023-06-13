@@ -14,9 +14,10 @@ This package contains:
 
 * **[nvim](https://neovim.io/)** - text editor/IDE.
   * **[vim](https://www.vim.org/) >= 8.0** - fallback editor (setup uses `ALE` and `vim-lsp` for linting and autocompletion, they require vim8+ async jobs)
-* **[git](https://git-scm.com/) >= 1.8.3** - well, this package is a git repo, and vim plugins are git submodules. Also used by some plugins (like `fugitive`)
-* **[rg](https://github.com/BurntSushi/ripgrep)** - grep, even better than `ag`. Used as default `fzf` backend, in some tools and by `fzf.vim` (:Rg, :Ag and :rg)
-* **[fzf](https://github.com/junegunn/fzf)** - fuzzy finder tool, tightly integrated with the editor as an internal search engine for nearly everything
+  * **[neovide](https://neovide.dev/)** - GUI frontend for Neovim
+* **[git](https://git-scm.com/) >= 1.8.3** - version control, used to manage this installation. Used by some vim plugins (`fugitive`)
+* **[rg](https://github.com/BurntSushi/ripgrep)** - better grep. Used as `fzf` backend, in some tools and by `fzf.vim` (`:rg`)
+* **[fzf](https://github.com/junegunn/fzf)** - fuzzy finder tool. Used in `zsh` profile tools and by `vim` plugins.
 * **[universal-ctags](https://github.com/universal-ctags/ctags)** - code index generator. Used by vim natively, `fzf.vim` (:Tags, :BTags) and `vista.vim`.
 
 ### C++
@@ -48,6 +49,7 @@ This package contains:
 ### Visuals
 
 * **[Nord theme](https://www.nordtheme.com/)** - color overrides for host terminal emulator (otherwise vim/tmux will look funny).
+* **[Powerline fonts](https://github.com/powerline/fonts)** - patched fonts that include Powerline symbols (vim/airline dependency).
 
 
 ## Artifacts

@@ -25,7 +25,8 @@ let g:my_cpp_linter_extra_flags = [
     \'-Wno-deprecated-declarations',
     \'-Wno-deprecated-builtins',
     \'-Wall',
-    \'-D__float128=double'
+    \'-D__float128=double',
+    \'-Wdocumentation'
 \]
 
 
