@@ -43,9 +43,11 @@
 | `:rg <regex>`         | cmd  | `fzf.vim`, `rg`                 | Grep current working directory                        |
 | `<F2>`                | n    | `fzf.vim`, `rg`                 | Grep current working directory with word under cursor |
 | `\`                   | n    | `vista.vim`, `vim-lsp`, `ctags` | Search document symbols or tags                       |
-| `;;`                  | n    | `vim-lsp`                       | Go to symbol definition                               |
-| `;l`                  | n    | `vim-lsp`                       | Show popup with hover info for a symbol               |
-| `;'`                  | n    | `vim-lsp`                       | Find symbol references                                |
+| `;;` `gd`             | n    | `vim-lsp`                       | Go to symbol definition                               |
+| `;l` `K`              | n    | `vim-lsp`                       | Show popup with hover info for a symbol               |
+| `;'` `gr`             | n    | `vim-lsp`                       | Find symbol references                                |
+| `gs` `gS`             | n    | `vim-lsp`                       | Document/workspace symbol search                      |
+| `gi` `gt`             | n    | `vim-lsp`                       | Go to implementation/type definition                  |
 | `,,`                  | n    | `ale`                           | Go to previous ALE diagnostic                         |
 | `..`                  | n    | `ale`                           | Go to next ALE diagnostic                             |
 | `[h` `]h`             | n    | `vim-gitgutter`                 | Go to previous/next git hunk                          |
@@ -84,6 +86,7 @@
 | `g-Space` `\\\`       | n    | `vim-visual-multi`              | Add cursor at current position                        |
 | `<leader>-c, l`       | n    | `NerdCommenter`                 | Comment selected lines with line comments (not block) |
 | `<leader>-c, u`       | n    | `NerdCommenter`                 | Uncomment selected lines                              |
+| `<leader>rn`          | n    | `vim-lsp`                       | LSP symbol rename                                     |
 | `:Fmt`                | cmd  | _config_                        | Format source code (defined for a few filetypes)      |
 | `:rn`                 | cmd  | `Rename`                        | Rename current file inplace                           |
 | `:set noexpandtab`    | cmd  | _builtin_                       | `Tab` inserts tabs, not spaces.                       |

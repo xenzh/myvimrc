@@ -103,8 +103,8 @@ au! BufEnter * if &filetype == "" | setlocal ft=text | endif
 
 " save/load views
 augroup views
-    au! BufWinLeave * if expand('%') != '' && &buftype !~ 'nofile' && &buftype !~ 'quickfix' | mkview! | endif
-    au! BufWinEnter * if expand('%') != '' && &buftype !~ 'nofile' && &buftype !~ 'quickfix' | silent! loadview | endif
+    au! BufWinLeave * if expand('%') != '' && &buftype !~ 'nofile' && &buftype !~ 'quickfix' && &buftype !~ 'terminal' | mkview! | endif
+    au! BufWinEnter * if expand('%') != '' && &buftype !~ 'nofile' && &buftype !~ 'quickfix' && &buftype !~ 'terminal' | silent! loadview | endif
 augroup END
 
 

@@ -16,17 +16,22 @@ alias q=exit
 alias c=clear
 alias l="ls -lahH --group-directories-first --color=auto"
 alias cl="c && l"
+alias ch="c && tmux clear-history"
 alias duh="du -d 1 -h"
 alias bell="echo -e '\07'"
-alias x="xterm -uc -en en_US.UTF8 -lcc $(which luit)"
 
 if command -v nvim > /dev/null 2>&1; then
     alias vim="nvim"
+    alias vimdiff="nvim -d"
+    alias gvim="vin"
+
+    if command -v neovide > /dev/null 2>&1; then
+        vin() { neovide --multigrid --notabs "$@" }
+    fi
 fi
 
 alias :e="vim"
 alias vi="vim -u $mydir/../vim/.vimrc.min"
-alias nv="neovide --multigrid --notabs"
 
 
 export BAT_THEME="Nord"
@@ -174,31 +179,31 @@ export FZF_DEFAULT_OPTS="-m --preview='$fzf_preview_cmd' --preview-window right:
 # fzf convenience functions
 #
 
-vimf() {
-    if [ -z "$1" ]; then
+editf() {
+    if [ -z "$2" ]; then
         loc=$(fzf | awk -v ORS=' ' '{print}')
     else
         cwd=$PWD
-        cd "$1" || return
+        cd "$2" || return
         loc=$(fzf)
         if [ -n "$loc" ]; then
-            loc=$(echo "$loc" | awk -v ORS=' ' -v basepath="$1" '{print basepath "/" $0}')
+            loc=$(echo "$loc" | awk -v ORS=' ' -v basepath="$2" '{print basepath "/" $0}')
         fi
         cd "$cwd" || return
     fi
 
     if [ -n "$loc" ]; then
-        vim $(echo "$loc") # split args. don't do xargs vim, it breaks the terminal!
+        "$1" $(echo "$loc") # split args. don't do xargs vim, it breaks the terminal!
     fi
 }
 
-vimg() {
+editg() {
     cwd=$PWD
-    if [ -n "$2" ]; then
-        cd "$2" || return
+    if [ -n "$3" ]; then
+        cd "$3" || return
     fi
     matches=$(
-        rg --vimgrep "$1" |
+        rg --vimgrep "$2" |
         awk -F: -v OFS=" " '{print $1,$2,$4}' |
         fzf +m --preview="$fzf_preview {1} {2}")
 
@@ -206,12 +211,12 @@ vimg() {
     offset=$(echo "$matches" | awk '{print $2}')
 
     if [ -n "$loc" ]; then
-        if [ -n "$2" ]; then
-            loc="$2/$loc"
+        if [ -n "$3" ]; then
+            loc="$3/$loc"
             cd "$cwd" || return
         fi
 
-        vim "$loc" "+$offset"
+        "$1" "$loc" "+$offset"
     fi
 }
 
@@ -225,19 +230,30 @@ __get_oldfile_from_cmd() {
     echo "$loc"
 }
 
-vimh() {
+edith() {
     loc=$(__get_oldfile_from_cmd | grep -v 'nvim$' | fzf)
     if [ -n "$loc" ]; then
-        vim "$loc"
+        "$1" "$loc"
     fi
 }
 
-viml() {
+editl() {
     loc=$(__get_oldfile_from_cmd | grep -v 'nvim$' | head -1 | fzf -1)
     if [ -n "$loc" ]; then
-        vim "$loc"
+        "$1" "$loc"
     fi
 }
+
+vimf() { editf vim "$@" }
+vimg() { editg vim "$@" }
+vimh() { edith vim "$@" }
+viml() { editl vim "$@" }
+
+vinf() { editf vin "$@" }
+ving() { editg vin "$@" }
+vinh() { edith vin "$@" }
+vinl() { editl vin "$@" }
+
 
 cdf() {
     loc=$(find . -type d -not -path '*/\.*' | fzf)

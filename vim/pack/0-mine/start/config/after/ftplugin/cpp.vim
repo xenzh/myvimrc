@@ -118,7 +118,7 @@ function! GetCppFlagsFromClangDb()
         endwhile
 
         if len(includes) > 0
-            echom printf('Loaded C++ flags from "%s" for "%s"', clangdb_file, forfile)
+            silent echom printf('Loaded C++ flags from "%s" for "%s"', clangdb_file, forfile)
         endif
         let flags += includes
     endfor
@@ -136,7 +136,7 @@ function! GetCppFlagsFromClangFile()
         let flags += filtered
     endfor
     if len(flags) > 0
-        echom printf('Loaded C++ flags from "%s"', clang_file)
+        silent echom printf('Loaded C++ flags from "%s"', clang_file)
     endif
     return flags
 endfunction
