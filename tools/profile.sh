@@ -21,6 +21,8 @@ alias duh="du -d 1 -h"
 alias bell="echo -e '\07'"
 
 if command -v nvim > /dev/null 2>&1; then
+    edit() { nvim "$@" }
+
     alias vim="nvim"
     alias vimdiff="nvim -d"
     alias gvim="vin"
@@ -28,6 +30,8 @@ if command -v nvim > /dev/null 2>&1; then
     if command -v neovide > /dev/null 2>&1; then
         vin() { neovide --multigrid --notabs "$@" }
     fi
+else
+    edit() { vim "$@" }
 fi
 
 alias :e="vim"
@@ -244,10 +248,10 @@ editl() {
     fi
 }
 
-vimf() { editf vim "$@" }
-vimg() { editg vim "$@" }
-vimh() { edith vim "$@" }
-viml() { editl vim "$@" }
+vimf() { editf edit "$@" }
+vimg() { editg edit "$@" }
+vimh() { edith edit "$@" }
+viml() { editl edit "$@" }
 
 vinf() { editf vin "$@" }
 ving() { editg vin "$@" }
