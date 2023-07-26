@@ -6,6 +6,11 @@ if exists('*DoJqQuery')
 endif
 
 
+set tabstop=2
+set shiftwidth=2
+set foldmethod=syntax
+
+
 " formatting
 function! DoFmt()
     setf json

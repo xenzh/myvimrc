@@ -163,7 +163,7 @@ if executable('clangd')
         let Cmd = {servier_info->['clangd', '-background-index', '-all-scopes-completion', '-completion-style=detailed', '-header-insertion=never']}
     endif
 
-    au User lsp_setup call lsp#register_server({
+    call lsp#register_server({
         \ 'name': 'clangd',
         \ 'cmd': Cmd,
         \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},

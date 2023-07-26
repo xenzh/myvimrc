@@ -2,7 +2,7 @@
 if !exists('g:ale_linters')
     let g:ale_linters = {}
 endif
-let g:ale_linters.rust = ['cargo', 'rustfmt']
+let g:ale_linters.rust = ['analyzer', 'rustfmt']
 
 if !exists('g:ale_fixers')
     let g:ale_fixers = {}
@@ -21,11 +21,21 @@ endfunction
 
 
 " start RLS (via vim-lsp plugin)
-if executable('rls')
+if executable('rust-analyzer')
     au User lsp_setup call lsp#register_server({
         \ 'name': 'rls',
-        \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
+        \ 'cmd': {server_info->['rust-analyzer']},
         \ 'whitelist': ['rust'],
+        \   'initialization_options': {
+        \     'cargo': {
+        \       'buildScripts': {
+        \         'enable': v:true,
+        \       },
+        \     },
+        \     'procMacro': {
+        \       'enable': v:true,
+        \     },
+        \   },
         \ })
 
     if !exists('g:my_lsp_catalog')

@@ -15,6 +15,7 @@ myshell="$( ps -p "$$" | grep -o 'bash\|zsh' )"
 alias q=exit
 alias c=clear
 alias l="ls -lahH --group-directories-first --color=auto"
+alias lt="l -t"
 alias cl="c && l"
 alias ch="c && tmux clear-history"
 alias duh="du -d 1 -h"

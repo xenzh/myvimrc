@@ -25,3 +25,4 @@ endif
 " enable syntax highlighting and filetype plugins
 syntax on
 filetype plugin indent on
+set cc=120

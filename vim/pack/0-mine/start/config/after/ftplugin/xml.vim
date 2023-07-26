@@ -1,3 +1,6 @@
+set tabstop=2
+set shiftwidth=2
+
 " formatting
 function! DoFmt()
   if executable('xmllint')
