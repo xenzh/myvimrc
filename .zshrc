@@ -23,7 +23,6 @@ plugins=(
   ripgrep                 # auto-completion
   rust                    # auto-completion for rustc, rustup, cargo
   tmux                    # Adds tmux aliases and config
-  thefuck                 # runs `fuck` tool on double Esc
   urltools                # Adds urlencode/urldecode commands
   vscode                  # vsc and other commands
   web-search              # web search with many engines

@@ -117,7 +117,6 @@ EXTRA=(
     jq
     xmllint
     xxd
-    thefuck
 )
 
 yes_or_no "?? Install extra packages: ${EXTRA[@]}" && install_list package ${EXTRA[@]}

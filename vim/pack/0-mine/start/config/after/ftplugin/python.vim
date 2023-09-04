@@ -4,7 +4,7 @@ set cc=120
 if !exists('g:ale_linters')
     let g:ale_linters = {}
 endif
-let g:ale_linters.python = ['black', 'flake8', 'mypy']
+let g:ale_linters.python = ['black', 'ruff', 'mypy']
 
 if !exists('g:ale_fixers')
     let g:ale_fixers = {}

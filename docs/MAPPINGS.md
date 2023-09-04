@@ -145,4 +145,3 @@ Prefix is `Ctrl + b` (default)
 * `Ctrl-T` - find and paste file in current dir (`fzf` + omz plugin).
 * `Ctrl-R` - find and paste a command from history (`fzf` + omz plugin).
 * `Alt-C` - find and cd to a child folder (`fzf` + omz plugin).
-* `Esc, Esc` - fix last failed command (`thefuck` + omz plugin).

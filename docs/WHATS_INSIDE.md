@@ -28,7 +28,7 @@ This package contains:
 ### python
 
 * **[python-language-server](https://github.com/palantir/python-language-server)** - LSP implementation for python (install with `pip`)
-* Optional linters: `pylint`, `black`, `flake8`, `mypy`.
+* Optional linters: `black`, `ruff`, `mypy`.
 
 ### Rust
 
@@ -44,7 +44,6 @@ This package contains:
 * **[jq](https://stedolan.github.io/jq/)** - json query tool, used for json formatting
 * **[xmllint](http://xmlsoft.org/xmllint.html)** - xml formatting
 * **[xxd](https://linux.die.net/man/1/xxd)** - file to hex and back conversions
-* **[thefuck](https://github.com/nvbn/thefuck)** - fix last command, enabled by omz plugin.
 
 ### Visuals
 
