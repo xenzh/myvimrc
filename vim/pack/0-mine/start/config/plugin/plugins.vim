@@ -149,7 +149,7 @@ command! AVV :AV | wincmd R
 
 " vista.vim
 let g:vista_default_executive = 'vim_lsp'
-let g:vista_finder_alternative_executives = ['ctags']
+let g:vista_finder_alternative_executives = ['ale']
 let g:vista_sidebar_width = 80
 let g:vista_fzf_preview = ['right:0%']
 
@@ -161,7 +161,7 @@ nmap \ :Vista finder<CR>
 
 
 " nvim-treesitter, nvim-treesitter-textobject
-if has('nvim')
+if has('nvim') && exists('TSModuleInfo')
 lua << EOF
 require'nvim-treesitter.configs'.setup {
     ensure_installed = {"c", "cpp", "python", "rust", "lua", "vim", "toml", "yaml"},
@@ -261,34 +261,25 @@ function! GetLspStatusMessage()
 endfunction
 
 function! GetNearestFunction() abort
-    if has('nvim')
+    if has('nvim') && exists(':TSModuleInfo')
         let s:symbol = nvim_treesitter#statusline()
         if !empty(s:symbol)
             return s:symbol
         endif
     endif
-    return get(b:, 'vista_nearest_method_or_function', '')
+    return ""
 endfunction
-
-function! InitVistaNearest()
-    let default = get(g:, 'vista_default_executive', 'ctags')
-    let g:vista_default_executive = 'ctags'
-    call vista#RunForNearestMethodOrFunction()
-    let g:vista_default_executive = default
-endfunction
-
-autocmd VimEnter * call InitVistaNearest()
 
 function! AirlineInit()
     call airline#parts#define_text('separator', "  \ue0b3 ")
     call airline#parts#define_accent('nearest', 'bold')
 
-    call airline#parts#define_function('lsp-status', 'GetLspStatusMessage')
+    call airline#parts#define_function('lsp', 'GetLspStatusMessage')
 
     call airline#parts#define_function('nearest', 'GetNearestFunction')
     call airline#parts#define_accent('nearest', 'cyan')
 
-    let g:airline_section_x = airline#section#create(['nearest', 'separator', 'filetype', 'separator', 'lsp-status'])
+    let g:airline_section_x = airline#section#create(['nearest', 'separator', 'filetype', 'separator', 'lsp'])
 endfunction
 
 autocmd User AirlineAfterInit call AirlineInit()

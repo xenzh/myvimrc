@@ -18,7 +18,6 @@ This package contains:
 * **[git](https://git-scm.com/) >= 1.8.3** - version control, used to manage this installation. Used by some vim plugins (`fugitive`)
 * **[rg](https://github.com/BurntSushi/ripgrep)** - better grep. Used as `fzf` backend, in some tools and by `fzf.vim` (`:rg`)
 * **[fzf](https://github.com/junegunn/fzf)** - fuzzy finder tool. Used in `zsh` profile tools and by `vim` plugins.
-* **[universal-ctags](https://github.com/universal-ctags/ctags)** - code index generator. Used by vim natively, `fzf.vim` (:Tags, :BTags) and `vista.vim`.
 
 ### C++
 
@@ -39,6 +38,7 @@ This package contains:
 
 ### Others
 
+* **[universal-ctags](https://github.com/universal-ctags/ctags)** - code index generator. Used by vim natively, optionally by `fzf.vim` (:Tags, :BTags) and `vista.vim`.
 * **[bat](https://github.com/sharkdp/bat)** - syntax highlighter used by default for `fzf` previews and replaces `less`
 * **[python3](https://www.python.org/)** - some tools are written in python, also used for json formatting as `jq` fallback.
 * **[jq](https://stedolan.github.io/jq/)** - json query tool, used for json formatting
