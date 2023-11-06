@@ -79,9 +79,6 @@
 [submodule "vim/pack/2-bundle/start/vim-visual-multi"]
 	path = vim/pack/2-bundle/start/vim-visual-multi
 	url = http://github.com/mg979/vim-visual-multi
-[submodule "vim/pack/2-bundle/start/vim-gutentags"]
-	path = vim/pack/2-bundle/start/vim-gutentags
-	url = http://github.com/ludovicchabant/vim-gutentags
 [submodule "tmux/plugins/tpm"]
 	path = tmux/plugins/tpm
 	url = http://github.com/tmux-plugins/tpm
@@ -98,12 +95,12 @@
 [submodule "vim/pack/2-bundle/start/vista.vim"]
 	path = vim/pack/2-bundle/start/vista.vim
 	url = http://github.com/liuchengxu/vista.vim
-[submodule "vim/pack/2-bundle/start/nvim-treesitter"]
-	path = vim/pack/2-bundle/start/nvim-treesitter
-	url = http://github.com/nvim-treesitter/nvim-treesitter
-[submodule "vim/pack/2-bundle/start/nvim-treesitter-textobjects"]
-	path = vim/pack/2-bundle/start/nvim-treesitter-textobjects
-	url = http://github.com/nvim-treesitter/nvim-treesitter-textobjects
 [submodule "vim/pack/2-bundle/start/targets.vim"]
 	path = vim/pack/2-bundle/start/targets.vim
 	url = http://github.com/wellle/targets.vim
+[submodule "vim/nvim/pack/3-nvim/start/nvim-treesitter"]
+	path = vim/nvim/pack/3-nvim/start/nvim-treesitter
+	url = http://github.com/nvim-treesitter/nvim-treesitter
+[submodule "vim/nvim/pack/3-nvim/start/nvim-treesitter-textobjects"]
+	path = vim/nvim/pack/3-nvim/start/nvim-treesitter-textobjects
+	url = http://github.com/nvim-treesitter/nvim-treesitter-textobjects

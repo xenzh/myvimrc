@@ -7,7 +7,11 @@ exe 'source ' s:path . '/.vimrc.common'
 
 " setup package management (vim8 pack by default, fall back to pathogen)
 if has('packages')
-    exe 'set pp=' . s:path
+    if has('nvim')
+        exe 'set pp=' . s:path . '/nvim'
+    else
+        exe 'set pp=' . s:path
+    endif
 else
     filetype off
     let s:config_path = s:path . '/pack/0-mine/start/config/'
