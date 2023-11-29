@@ -34,7 +34,17 @@ plugins=(
 )
 
 
-ZSH_THEME="geometry/geometry"
+ZSH_THEME=""
+
+export TYPEWRITTEN_PROMPT_LAYOUT="pure"
+export TYPEWRITTEN_RELATIVE_PATH="home"
+export TYPEWRITTEN_ARROW_SYMBOL="⏤ "
+export TYPEWRITTEN_COLOR_MAPPINGS="primary:blue;accent:green"
+export TYPEWRITTEN_COLORS="arrow:magenta;git_branch:magenta"
+
+fpath+=$ZSH_CUSTOM/themes/typewritten
+autoload -U promptinit; promptinit
+prompt typewritten
 
 
 ZSH_DISABLE_COMPFIX=true
@@ -43,7 +53,10 @@ source $ZSH/oh-my-zsh.sh
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=59'
 
+
 # Geometry theme customizations
+#ZSH_THEME="geometry/geometry"
+
 # 1. Bring back custom git details separator
 GEOMETRY_GIT_SEPARATOR=' :: '
 

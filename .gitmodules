@@ -104,3 +104,6 @@
 [submodule "vim/nvim/pack/3-nvim/start/nvim-treesitter-textobjects"]
 	path = vim/nvim/pack/3-nvim/start/nvim-treesitter-textobjects
 	url = http://github.com/nvim-treesitter/nvim-treesitter-textobjects
+[submodule "zsh/custom/themes/typewritten"]
+	path = zsh/custom/themes/typewritten
+	url = http://github.com/reobin/typewritten
