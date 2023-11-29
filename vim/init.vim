@@ -4,6 +4,11 @@ source ~/.vimrc
 
 :au VimLeave * set gcr=a:ver100-blinkoff0
 
+augroup RestoreCursorShapeOnExit
+    autocmd!
+    autocmd VimLeave * set guicursor=a:hor20
+augroup END
+
 lua << EOF
 if vim.g.neovide then
     vim.o.guifont = "Roboto Mono Light for Powerline:h15"

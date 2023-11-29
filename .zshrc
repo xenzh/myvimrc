@@ -38,6 +38,7 @@ ZSH_THEME=""
 
 export TYPEWRITTEN_PROMPT_LAYOUT="pure"
 export TYPEWRITTEN_RELATIVE_PATH="home"
+export TYPEWRITTEN_CURSOR="terminal"
 export TYPEWRITTEN_ARROW_SYMBOL="⏤ "
 export TYPEWRITTEN_COLOR_MAPPINGS="primary:blue;accent:green"
 export TYPEWRITTEN_COLORS="arrow:magenta;git_branch:magenta"
