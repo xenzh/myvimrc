@@ -55,40 +55,6 @@ source $ZSH/oh-my-zsh.sh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=59'
 
 
-# Geometry theme customizations
-#ZSH_THEME="geometry/geometry"
-
-# 1. Bring back custom git details separator
-GEOMETRY_GIT_SEPARATOR=' :: '
-
-geometry_git_custom() {
-  (( $+commands[git] )) || return
-
-  local git_dir; git_dir=$(git rev-parse --git-dir 2>&1) || return
-  pushd -q "$git_dir"/..
-
-  $(command git rev-parse --is-bare-repository 2>/dev/null) \
-    && ansi ${GEOMETRY_GIT_COLOR_BARE:=blue} ${GEOMETRY_GIT_SYMBOL_BARE:="⬢"} \
-    && return
-
-  local git_info && git_info=(
-    $(geometry_git_rebase)
-    $(geometry_git_remote)
-    $(geometry_git_conflicts)
-    $(geometry_git_time)
-    $(geometry_git_stashes)
-    $(geometry_git_status)
-  )
-
-  echo -n $(geometry_git_branch) ${(ej.${GEOMETRY_GIT_SEPARATOR:- }.)git_info}
-  popd -q 2>/dev/null
-}
-
-# 2. Customize promts to include git separator fix, and some plugins
-GEOMETRY_PROMPT=(geometry_newline geometry_status geometry_path)
-GEOMETRY_RPROMPT=(geometry_exec_time geometry_git_custom geometry_docker_machine geometry_virtualenv geometry_jobs geometry_echo)
-
-
 # expand and complete all wildcards before cursor
 bindkey TAB expand-or-complete-prefix
 
