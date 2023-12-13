@@ -299,6 +299,13 @@ elif [ -x "$(command -v dircolors)" ]; then
 fi
 
 
+# external tools
+
+interactively() {
+    "$mydir/external/interactively/bin/interactively" "$@"
+}
+
+
 # other functions
 
 comms() {

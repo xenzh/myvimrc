@@ -183,6 +183,10 @@ Simple `python` script that automates some `compile_commands.json` tasks:
 
 Script that provides an `fzf` preview for files and folders with syntax/line highlight.
 
+### [`interactively`](https://github.com/bigH/interactively)
+
+Run/edit a command interactively, preview results in real time. I.e. `interactively 'rg {} file.log'`.
+
 ### [`pctree.py`](tools/pctree.py)
 
 Build package dependency tree based on `pkg-config`.

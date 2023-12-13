@@ -82,10 +82,6 @@
 [submodule "tmux/plugins/tpm"]
 	path = tmux/plugins/tpm
 	url = http://github.com/tmux-plugins/tpm
-[submodule "zsh/custom/themes/geometry"]
-	path = zsh/custom/themes/geometry
-    url = http://github.com/geometry-zsh/geometry
-	branch = main
 [submodule "vim/pack/2-bundle/start/nord-vim"]
 	path = vim/pack/2-bundle/start/nord-vim
 	url = http://github.com/arcticicestudio/nord-vim
@@ -107,3 +103,6 @@
 [submodule "zsh/custom/themes/typewritten"]
 	path = zsh/custom/themes/typewritten
 	url = http://github.com/reobin/typewritten
+[submodule "tools/external/interactively"]
+	path = tools/external/interactively
+	url = http://github.com/bigH/interactively
