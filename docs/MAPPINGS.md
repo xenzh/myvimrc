@@ -126,15 +126,17 @@
 ## tmux
 
 Full `tmux` mappings reference: https://tmuxcheatsheet.com/
-Prefix is `Ctrl + b` (default)
+Prefix is `C-b` (default)
 
-* `<prefix>, r` - reload `tmux` config
+* `<prefix>, I` - reload `tmux` config
 * `<prefix>, m` - enable mouse mode
 * `<prefix>, M` - disable mouse mode
 * `<prefix>, +` - promote pane to window
 * `<prefix>, -` - demote windowed pane back
 * `<prefix>, <` - move window tab to the right
 * `<prefix>, >` - move window tab to the left
+* `<prefix>, <prefix>, ...` - send controls to the nested session
+* `<F12>` - toggle prefix and hotkeys (for routing them to nested sessions without double prefix)
 
 ## zsh, oh-my-zsh, plugins
 
