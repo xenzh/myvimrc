@@ -5,7 +5,7 @@ let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 exe 'source ' s:path . '/.vimrc.common'
 
 
-" setup package management (vim8 pack by default, fall back to pathogen)
+" setup package management (vim 8 pack by default, fall back to pathogen)
 if has('packages')
     if has('nvim')
         exe 'set pp=' . s:path . '/nvim'
@@ -30,3 +30,7 @@ endif
 syntax on
 filetype plugin indent on
 set cc=120
+
+" enable spellcheck
+set spell spelllang=en_gb
+exe 'set spellfile=' . s:path . '/spell/en.utf-8.add'

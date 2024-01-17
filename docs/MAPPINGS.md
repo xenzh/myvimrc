@@ -16,7 +16,7 @@
 | `C-w` `C-r`           | n    | _builtin_                       | Rotate splits (swap contents)                         |
 | `F8`                  | n    | `vista.vim`, `ctags`, `vim-lsp` | Open side pane with document symbols                  |
 | `ml`                  | n    | `vim-bookmarks`                 | Show all bookmarks in quickfix                        |
-| `<leader>-1..9`       | n    | `vim-airline`                   | Go to arline tab \#                                   |
+| `<leader>-1..9`       | n    | `vim-airline`                   | Go to airline tab \#                                   |
 | `:Jsp`                | vcmd | `jq`/`python`                   | Show selection as formatted json in a split           |
 | `:Jq`                 | cmd  | `jq`                            | Interactive `jq` shell with preview                   |
 |                       | n    |                                 | * `<CR>` discard query buffer, jump to result buffer  |
@@ -56,7 +56,7 @@
 | `mi`                  | n    | `vim-bookmarks`                 | Add/edit/remove annotation at current line            |
 | `ml` `ma`             | n    | `vim-bookmarks`                 | Toggle list all bookmarks                             |
 | `mp` `mn`             | n    | `vim-bookmarks`                 | Go to to previous/next bookmark                       |
-| `mc` `mx`             | n    | `vim-bookmarks`                 | Clear boormarks in current buffer/in all buffers      |
+| `mc` `mx`             | n    | `vim-bookmarks`                 | Clear bookmarks in current buffer/in all buffers      |
 
 ### View
 
@@ -96,6 +96,9 @@
 
 | Key                   | Mode | Source                          | Description                                           |
 | --------------------- | ---- | ------------------------------- | ----------------------------------------------------- |
+| `]s` `[s`             | n    | _builtin_                       | Next/previous spellcheck issue                        |
+| `zg` `zug`            | n    | _builtin_                       | Add/remove a word to the spellfile                    |
+| `z=`                  | n    | _builtin_                       | Spellcheck suggestions                                |
 | `<F7>`                | n    | `asyncomplete.vim`              | Toggle completion popup and LSP client                |
 | `C-Space`             | i    | _config_                        | Force show completion popup menu                      |
 | `<F5>`                | n    | `ale`                           | Check syntax and open location list with diagnostics  |
