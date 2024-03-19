@@ -31,6 +31,6 @@ syntax on
 filetype plugin indent on
 set cc=120
 
-" enable spellcheck
-set spell spelllang=en_gb
+" configure spellcheck
+set spelllang=en_gb
 exe 'set spellfile=' . s:path . '/spell/en.utf-8.add'

@@ -99,6 +99,7 @@
 | `]s` `[s`             | n    | _builtin_                       | Next/previous spellcheck issue                        |
 | `zg` `zug`            | n    | _builtin_                       | Add/remove a word to the spellfile                    |
 | `z=`                  | n    | _builtin_                       | Spellcheck suggestions                                |
+| `<leader>-s`          | n    | _config_                        | Toggle spell checking                                 |
 | `<F7>`                | n    | `asyncomplete.vim`              | Toggle completion popup and LSP client                |
 | `C-Space`             | i    | _config_                        | Force show completion popup menu                      |
 | `<F5>`                | n    | `ale`                           | Check syntax and open location list with diagnostics  |

@@ -87,6 +87,10 @@ nnoremap N Nzz
 nnoremap <leader>l :noh<CR>
 
 
+" Toggle spellcheck
+nnoremap <leader>s :set spell!<CR>
+
+
 " retab and remove trailing spaces
 nnoremap <leader>n :retab \| :%s/\s\+$//g<CR>
 

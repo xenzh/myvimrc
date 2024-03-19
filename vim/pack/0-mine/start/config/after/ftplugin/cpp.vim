@@ -1,4 +1,5 @@
 set cc=120
+set spell
 
 " ale
 if !exists('g:ale_linters')
