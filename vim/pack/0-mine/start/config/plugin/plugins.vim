@@ -219,6 +219,14 @@ set foldexpr=nvim_treesitter#foldexpr()
 endif
 
 
+" oil.nvim
+if has('nvim')
+lua << EOF
+require("oil").setup()
+EOF
+endif
+
+
 " vim-airline, buffer tab selection remappings
 let g:airline_powerline_fonts = 1
 
