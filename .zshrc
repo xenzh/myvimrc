@@ -17,10 +17,8 @@ plugins=(
   dirhistory              # Alt-Left/Right to go up/down dir stack
   docker                  # auto-completion and aliases
   fancy-ctrl-z            # Ctrl-Z to hide vim and Ctrl-Z again to get back to it (instead of `fg`)
-  fd                      # auto-completion for fd
   fzf                     # auto-competion, Ctrl-T: file in dir, Ctrl-R: command history, Alt-C: cd
   gitfast                 # fast completion for `git` command.
-  ripgrep                 # auto-completion
   rust                    # auto-completion for rustc, rustup, cargo
   tmux                    # Adds tmux aliases and config
   urltools                # Adds urlencode/urldecode commands

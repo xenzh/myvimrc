@@ -108,4 +108,4 @@
 	url = http://github.com/bigH/interactively
 [submodule "vim/nvim/pack/3-nvim/start/oil.nvim"]
 	path = vim/nvim/pack/3-nvim/start/oil.nvim
-	url = https://github.com/stevearc/oil.nvim
+	url = http://github.com/stevearc/oil.nvim

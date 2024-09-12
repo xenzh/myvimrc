@@ -158,9 +158,9 @@ alias dalp="docker run --rm -it alpine:latest ash"
 
 alias cb="cargo build"
 alias cba="cargo build --all"
-alias ct="cargo test"
-alias cr="cargo run"
-alias cbr="cargo build --all && cargo run"
+alias cv="cargo test"
+alias cx="cargo run"
+alias xcv="cargo build --all && cargo run"
 
 
 #
