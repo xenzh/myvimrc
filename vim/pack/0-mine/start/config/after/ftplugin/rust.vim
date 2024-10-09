@@ -2,14 +2,14 @@
 if !exists('g:ale_linters')
     let g:ale_linters = {}
 endif
-let g:ale_linters.rust = ['analyzer', 'rustfmt']
+let g:ale_linters.rust = ['analyzer', 'rustfmt', 'cargo']
 
 if !exists('g:ale_fixers')
     let g:ale_fixers = {}
 endif
 let g:ale_fixers.rust = ['rustfmt']
 
-let g:ale_rust_cargo_use_check = 1
+let g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
 let g:ale_rust_cargo_check_tests = 1
 let g:ale_rust_cargo_check_all_targets = 1
 
