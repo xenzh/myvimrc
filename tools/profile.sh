@@ -320,6 +320,21 @@ listcolors() {
     done
 }
 
+italic() {
+    echo `tput sitm`italics`tput ritm`
+}
+
+install_italic_for_tmux() {
+cat <<EOF|tic -x -
+tmux|tmux terminal multiplexer,
+  ritm=\E[23m, rmso=\E[27m, sitm=\E[3m, smso=\E[7m, Ms@,
+  use=xterm+tmux, use=screen,
+
+tmux-256color|tmux with 256 colors,
+  use=xterm+256setaf, use=tmux,
+EOF
+}
+
 cing() {
     curl --connect-timeout 1 -Is "$1" > /dev/null && echo "$1: ok" || echo "$1: fail"
 }
