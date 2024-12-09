@@ -16,11 +16,18 @@ function! s:get_color(group, which)
     return color_match[1]
 endfunction
 
+" enable italics
+let &t_ZH="\e[3m"
+let &t_ZR="\e[23m"
+
 " colorscheme and color overrides
 function! OverrideColors()
     "hi Comment ctermfg=4
     "hi SpecialKey ctermfg=darkgray
     "hi TabLineSel ctermfg=darkgray
+
+    "various italics
+    hi markdownItalic cterm=italic gui=italic
 
     " ALE
     hi link ALEWarning SpellLocal
@@ -50,3 +57,9 @@ set background=dark
 
 let g:nord_cursor_line_number_background = 1
 colorscheme nord
+
+" Highlight group under cursor
+function! SynGroup()
+    let l:s = synID(line('.'), col('.'), 1)
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun

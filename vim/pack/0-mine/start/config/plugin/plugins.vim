@@ -132,7 +132,10 @@ command! -nargs=1 AL call AleAddLinter(&filetype, <f-args>)
 command! -nargs=1 DL call AleRemoveLinter(&filetype, <f-args>)
 
 command! C :ALEReset | :lcl | :pcl
-command! D :ALEDetail
+command! D :ALEDetai
+
+nnoremap <leader>c :C<CR>
+nnoremap <leader>d :D<CR>
 
 nmap ,, :ALEPrevious<CR>
 nmap .. :ALENext<CR>

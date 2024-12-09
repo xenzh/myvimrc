@@ -103,8 +103,8 @@
 | `<F7>`                | n    | `asyncomplete.vim`              | Toggle completion popup and LSP client                |
 | `C-Space`             | i    | _config_                        | Force show completion popup menu                      |
 | `<F5>`                | n    | `ale`                           | Check syntax and open location list with diagnostics  |
-| `:C`                  | cmd  | `ale`                           | Clear all diagnostics, close location list            |
-| `:D`                  | cmd  | `ale`                           | Show preview window with diagnostics description      |
+| `:C`, `<leader>-c`    | cmd  | `ale`                           | Clear all diagnostics, close location list            |
+| `:D`, `<leader>-d`    | cmd  | `ale`                           | Show preview window with diagnostics description      |
 | `:LL`                 | cmd  | `ale`                           | List ALE linters for current filetype                 |
 | `:AL <name>`          | cmd  | `ale`                           | Enable ALE linter for current filetype                |
 | `:DL <name>`          | cmd  | `ale`                           | Disable ALE linter for current filetype               |
