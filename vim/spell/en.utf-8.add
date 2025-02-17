@@ -201,3 +201,6 @@ mutex
 TargetSerivceOverride
 blackbox
 composable
+Exceptionizer
+KindDetails
+ErrorTemplate

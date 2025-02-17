@@ -1,0 +1,5 @@
+# Ignore everything in this directory
+# It is for the local plugins that won't be included to the remote set.
+*
+# Except this file
+!.gitignore
