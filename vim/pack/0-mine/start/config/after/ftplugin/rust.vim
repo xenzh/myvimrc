@@ -4,6 +4,12 @@ if !exists('g:ale_linters')
 endif
 let g:ale_linters.rust = ['analyzer', 'rustfmt', 'cargo']
 
+let g:ale_rust_analyzer_config = {
+\  'cargo': {
+\    'features': 'all',
+\  }
+\}
+
 if !exists('g:ale_fixers')
     let g:ale_fixers = {}
 endif
@@ -31,6 +37,7 @@ if executable('rust-analyzer')
         \       'buildScripts': {
         \         'enable': v:true,
         \       },
+        \       'features': 'all'
         \     },
         \     'procMacro': {
         \       'enable': v:true,

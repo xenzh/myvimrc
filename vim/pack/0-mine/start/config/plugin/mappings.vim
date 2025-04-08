@@ -101,8 +101,8 @@ nnoremap <silent> [c ?\v^(\<\|\=\|\>){7}([^=].+)\?$<CR>
 match WildMenu '\v^(\<|\=|\>){7}([^=].+)?$'
 
 
-" no filetype is text filetype
-au! BufEnter * if &filetype == "" | setlocal ft=text | endif
+" no filetype is markdown
+au! BufEnter * if &filetype == "" | setlocal ft=markdown | endif
 
 
 " save/load views

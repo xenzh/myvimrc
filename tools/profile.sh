@@ -73,6 +73,7 @@ alias gcb="git checkout -b"
 alias gb="git branch"
 alias gd="git diff"
 alias gpo="git push origin"
+alias gpu="git push upstream"
 alias grpo="git remote prune origin"
 alias ggc="git gc --aggressive --prune=now"
 
