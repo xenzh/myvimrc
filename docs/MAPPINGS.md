@@ -21,7 +21,6 @@
 | `:Jq`                 | cmd  | `jq`                            | Interactive `jq` shell with preview                   |
 |                       | n    |                                 | * `<CR>` discard query buffer, jump to result buffer  |
 |                       | n    |                                 | * `Esc` discard query and result buffers              |
-| `:ToHex` `:FromHex`   | n    | `xxd`                           | Convert buffer to hex dump and read it back to text   |
 
 ### Navigation
 
@@ -90,6 +89,8 @@
 | `:Fmt`                | cmd  | _config_                        | Format source code (defined for a few filetypes)      |
 | `:rn`                 | cmd  | `Rename`                        | Rename current file inplace                           |
 | `:set noexpandtab`    | cmd  | _builtin_                       | `Tab` inserts tabs, not spaces.                       |
+| `:ToHex` `:FromHex`   | n    | `xxd`                           | Convert buffer to hex dump and read it back to text   |
+| `:NoAnsiColors    `   | n    | _config_                        | Remove ANSI color codes from the buffer               |
 
 
 ### Linting and completion

@@ -191,6 +191,11 @@ cnoreabbrev Acl AllClose
 command! ToHex :%!xxd
 command! FromHex %s#^[^:]*: \(\%(\x\+ \)\+\) .*#\1# | %!xxd -r -p
 
+
+" Remove ANSI color codes
+command! NoAnsiColors :%s/\%x1b\[[0-9;]*m//g
+
+
 " list all highlight groups
 command! Hi :so $VIMRUNTIME/syntax/hitest.vim
 
