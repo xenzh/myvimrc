@@ -22,13 +22,13 @@ endfunction
 
 
 " start python language server (via vim-lsp)
-if executable('pyls')
+if executable('pylsp')
     au User lsp_setup call lsp#register_server({
-        \ 'name': 'pyls',
-        \ 'cmd': {server_info->['pyls']},
-        \ 'whitelist': ['python'],
+        \ 'name': 'pylsp',
+        \ 'cmd': {server_info->['pylsp']},
+        \ 'allowlist': ['python'],
         \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:false}}}},
         \ })
 
-    let g:my_lsp_catalog = { 'python': 'pyls' }
+    let g:my_lsp_catalog = { 'python': 'pylsp' }
 endif

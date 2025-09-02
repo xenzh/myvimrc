@@ -1,6 +1,7 @@
 # What's inside
 
 This package contains:
+
 * vim configuration and plugins
 * tmux configuration
 * xterm configuration
@@ -13,7 +14,7 @@ This package contains:
 ### Requirements
 
 * **[nvim](https://neovim.io/)** - text editor/IDE.
-  * **[vim](https://www.vim.org/) >= 8.0** - fallback editor (setup uses `ALE` and `vim-lsp` for linting and autocompletion, they require vim8+ async jobs)
+  * **[vim](https://www.vim.org/) >= 8.0** - fallback editor (`ALE` and `vim-lsp` require vim8+ async jobs).
   * **[neovide](https://neovide.dev/)** - GUI frontend for Neovim
 * **[git](https://git-scm.com/) >= 1.8.3** - version control, used to manage this installation. Used by some vim plugins (`fugitive`)
 * **[rg](https://github.com/BurntSushi/ripgrep)** - better grep. Used as `fzf` backend, in some tools and by `fzf.vim` (`:rg`)
@@ -21,20 +22,21 @@ This package contains:
 
 ### C++
 
-* **[clang++](https://clang.llvm.org/)** - C++ linting (via `ALE` plugin)
-* **[clangd](https://clang.llvm.org/extra/clangd.html)** - clang-based LSP implementation for C++ (autocompletion, code navigation via `vim-lsp`)
+* **[clang++](https://clang.llvm.org/)** - C++ linting (via `ALE` plugin).
+* **[clangd](https://clang.llvm.org/extra/clangd.html)** - clang-based LSP (autocompletion, code navigation via `vim-lsp`)
+* Optional linters: `clang-tidy`.
 
 ### python
 
-* **[python-language-server](https://github.com/palantir/python-language-server)** - LSP implementation for python (install with `pip`)
+* **[python-lsp-server](https://github.com/python-lsp/python-lsp-server)** - LSP server (install with `pip`)
 * Optional linters: `black`, `ruff`, `mypy`.
 
 ### Rust
 
 * **[cargo, rustc](https://rustup.rs/)** - Rust toolchain, linting (via `ALE` plugin, install with `rustup`)
-* **[racer](https://github.com/racer-rust/racer)** - code completion (used by Rust RLS, install with `cargo`)
-* **[rls](https://github.com/rust-lang-nursery/rls)** - Rust Language Server, LSP implementation for Rust (install with `cargo`)
-* **[rustfmt](https://github.com/rust-lang-nursery/rustfmt)** - code formatting tool (install with `cargo`)
+* **[rust-analyzer](https://rust-analyzer.github.io)** - LSP server (`rustup component add rust-analyzer`).
+* **[clippy](https://doc.rust-lang.org/clippy/)** - linter (`rustup component add clippy`).
+* **[rustfmt](https://github.com/rust-lang-nursery/rustfmt)** - code formatter (an `ALE` fixer, install with `cargo`).
 
 ### Others
 
@@ -55,7 +57,7 @@ This package contains:
 
 `vim` uses following files:
 
-* `tags` - (any folder between cwd and home) - ctags output file, used for code navigation
+* `tags` - (outdated; any folder between cwd and home) - ctags output file, used for code navigation
 * `.clang` - (any folder between cwd and home) - text file with C++ flags (see "C++ compile flags" feature)
 * `compile_commands.json` - (cwd) - clang compilation database (see "C++ compile flags" feature)
 
@@ -65,21 +67,15 @@ This package contains:
 
 ## Settings
 
-I use `vim`/`nvim` in terminal for development along with `zsh`, `tmux` and a terminal emulator. See below for their respective configurations and interations.
+* Editors: `nvim`/`vim` in terminal or `Neovide` GUI.
+* Workspace: `tmux` terminal multiplexer / sessions.
+* Shell : `zsh` config based on `oh-my-zsh`.
 
-### terminal emulator
+### Terminal emulator
 
 * MacOS: `iTerm2`
-* Windows: `Windows Terminal` (`wt`) + WSL2 Debian.
+* Windows: WSL2 Debian + [`Tabby`](https://tabby.sh/).
 * Nord-theme color overrides for standard terminal colors.
-
-#### xterm (outdated, unused)
-
-These settings are intended to be included in `.Xresources` or `.Xdefaults` file. They provide:
-
-* Color and font settings for `xterm` terminal emulator
-* Locale and keyboard settings for `vim` to function like it should
-* TODO: integrate https://github.com/arcticicestudio/nord-xresources as a submodule
 
 ### tmux
 
