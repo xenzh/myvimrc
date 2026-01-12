@@ -18,7 +18,7 @@ endif
 
 
 let g:my_cpp_linter_flags = []
-let g:my_cpp_linter_default_flags = ['-std=c++20']
+let g:my_cpp_linter_default_flags = ['-std=c++23']
 let g:my_cpp_linter_extra_flags = [
     \'-Wno-unknown-warning-option',
     \'-Wno-infinite-recursion',
@@ -26,7 +26,7 @@ let g:my_cpp_linter_extra_flags = [
     \'-Wno-deprecated-declarations',
     \'-Wno-deprecated-builtins',
     \'-Wall',
-    \'-Wdocumentation'
+    \'-Wdocumentation',
     \'-D__float128=double',
     \'-Drsize_t=size_t',
 \]

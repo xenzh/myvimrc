@@ -64,7 +64,7 @@ def get_repo_source_files(repo_dir):
             dirs[:] = [d for d in dirs if d != ".git" and d != "refroot"]
             toplevel = False
 
-        local = filter(lambda v: v.endswith(".cpp"), files)
+        local = filter(lambda v: v.endswith((".cpp", ".h")), files)
         abspaths = map(lambda v: path.join(path.abspath(repo_dir), path.join(root, v)), local)
         index = index + list(abspaths)
 

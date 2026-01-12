@@ -38,6 +38,9 @@ fi
 alias :e="vim"
 alias vi="vim -u $mydir/../vim/.vimrc.min"
 
+calc() {
+    python3 -c "from math import *; print($*)"
+}
 
 export BAT_THEME="Nord"
 export BAT_STYLE="numbers,changes"
