@@ -2,7 +2,8 @@
 if !exists('g:ale_linters')
     let g:ale_linters = {}
 endif
-let g:ale_linters.rust = ['analyzer', 'rustfmt', 'cargo']
+"let g:ale_linters.rust = ['analyzer', 'rustfmt', 'cargo']
+let g:ale_linters.rust = ['rustfmt', 'cargo']
 
 let g:ale_rust_analyzer_config = {
 \  'cargo': {
@@ -28,26 +29,26 @@ endfunction
 
 
 " start RLS (via vim-lsp plugin)
-if executable('rust-analyzer')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'rls',
-        \ 'cmd': {server_info->['rust-analyzer']},
-        \ 'whitelist': ['rust'],
-        \   'initialization_options': {
-        \     'cargo': {
-        \       'buildScripts': {
-        \         'enable': v:true,
-        \       },
-        \       'features': 'all'
-        \     },
-        \     'procMacro': {
-        \       'enable': v:true,
-        \     },
-        \   },
-        \ })
+"if executable('rust-analyzer')
+"    au User lsp_setup call lsp#register_server({
+"        \ 'name': 'rls',
+"        \ 'cmd': {server_info->['rust-analyzer']},
+"        \ 'whitelist': ['rust'],
+"        \   'initialization_options': {
+"        \     'cargo': {
+"        \       'buildScripts': {
+"        \         'enable': v:true,
+"        \       },
+"        \       'features': 'all'
+"        \     },
+"        \     'procMacro': {
+"        \       'enable': v:true,
+"        \     },
+"        \   },
+"        \ })
 
-    if !exists('g:my_lsp_catalog')
-        let g:my_lsp_catalog = {}
-    endif
-    let g:my_lsp_catalog.rust = 'rls'
-endif
+"    if !exists('g:my_lsp_catalog')
+"        let g:my_lsp_catalog = {}
+"    endif
+"    let g:my_lsp_catalog.rust = 'rls'
+"endif

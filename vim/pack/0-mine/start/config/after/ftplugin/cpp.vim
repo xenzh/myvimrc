@@ -157,22 +157,22 @@ call LoadCppFlags()
 
 
 " start clangd (via vim-lsp plugin)
-if executable('clangd')
-    let clangd_version = matchlist(system('clangd -version'), '^clangd version \(\d\+\)')
+"if executable('clangd')
+"    let clangd_version = matchlist(system('clangd -version'), '^clangd version \(\d\+\)')
 
-    let Cmd = {server_info->['clangd']}
-    if len(clangd_version) > 1 && clangd_version[1] >= 10
-        let Cmd = {servier_info->['clangd', '-background-index', '-all-scopes-completion', '-completion-style=detailed', '-header-insertion=never']}
-    endif
+"    let Cmd = {server_info->['clangd']}
+"    if len(clangd_version) > 1 && clangd_version[1] >= 10
+"        let Cmd = {servier_info->['clangd', '-background-index', '-all-scopes-completion', '-completion-style=detailed', '-header-insertion=never']}
+"    endif
 
-    let g:lsp_log_file = ''
+"    let g:lsp_log_file = ''
 
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'clangd',
-        \ 'cmd': Cmd,
-        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
-        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-        \ })
+"    au User lsp_setup call lsp#register_server({
+"        \ 'name': 'clangd',
+"        \ 'cmd': Cmd,
+"        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
+"        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+"        \ })
 
-    let g:my_lsp_catalog.cpp = 'clangd'
-endif
+"    let g:my_lsp_catalog.cpp = 'clangd'
+"endif

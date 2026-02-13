@@ -1,84 +1,84 @@
 " asyncomplete.vim
-let g:asyncomplete_auto_popup = 1
-let g:asyncomplete_remove_duplicates = 1
-let g:asyncomplete_auto_completeopt = 0
-let g:asyncomplete_min_chars = 1
+"let g:asyncomplete_auto_popup = 1
+"let g:asyncomplete_remove_duplicates = 1
+"let g:asyncomplete_auto_completeopt = 0
+"let g:asyncomplete_min_chars = 1
 
-" force show completion popup
-imap <C-Space> <Plug>(asyncomplete_force_refresh)
+"" force show completion popup
+"imap <C-Space> <Plug>(asyncomplete_force_refresh)
 
-" Better accept completion item mappings, close preview after completion
-inoremap <expr> <CR> pumvisible() ? asyncomplete#close_popup() : "\<CR>"
-autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+"" Better accept completion item mappings, close preview after completion
+"inoremap <expr> <CR> pumvisible() ? asyncomplete#close_popup() : "\<CR>"
+"autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
 
-" completion source: asyncomplete-buffer.vim
-call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
-    \ 'name': 'buffer',
-    \ 'whitelist': ['*'],
-    \ 'priority': 0,
-    \ 'completor': function('asyncomplete#sources#buffer#completor'),
-    \ }))
+"" completion source: asyncomplete-buffer.vim
+"call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+"    \ 'name': 'buffer',
+"    \ 'whitelist': ['*'],
+"    \ 'priority': 0,
+"    \ 'completor': function('asyncomplete#sources#buffer#completor'),
+"    \ }))
 
-" completion source: asyncomplete-file.vim
-au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-    \ 'name': 'file',
-    \ 'whitelist': ['*'],
-    \ 'priority': 10,
-    \ 'completor': function('asyncomplete#sources#file#completor')
-    \ }))
+"" completion source: asyncomplete-file.vim
+"au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+"    \ 'name': 'file',
+"    \ 'whitelist': ['*'],
+"    \ 'priority': 10,
+"    \ 'completor': function('asyncomplete#sources#file#completor')
+"    \ }))
 
 
 " vim-lsp
-let g:lsp_auto_enable = 1
-let g:lsp_diagnostics_enabled = 0
-let g:lsp_hightlight_references_enabled = 1
-let g:lsp_document_highlight_enabled = 1
-let g:lcp_preview_float = 1
-let g:lcp_inlay_hints_enabled = 1
+"let g:lsp_auto_enable = 1
+"let g:lsp_diagnostics_enabled = 0
+"let g:lsp_hightlight_references_enabled = 1
+"let g:lsp_document_highlight_enabled = 1
+"let g:lcp_preview_float = 1
+"let g:lcp_inlay_hints_enabled = 1
 
-nmap ;; :LspDefinition<CR>
-nmap ;l :LspHover<CR>
-nmap ;' :LspReferences<CR>
+"nmap ;; :LspDefinition<CR>
+"nmap ;l :LspHover<CR>
+"nmap ;' :LspReferences<CR>
 
-function! s:on_lsp_buffer_enabled() abort
-    setlocal signcolumn=yes
-    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+"function! s:on_lsp_buffer_enabled() abort
+"    setlocal signcolumn=yes
+"    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
 
-    nmap <buffer> gd <plug>(lsp-definition)
-    nmap <buffer> gs <plug>(lsp-document-symbol-search)
-    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
-    nmap <buffer> gr <plug>(lsp-references)
-    nmap <buffer> gi <plug>(lsp-implementation)
-    nmap <buffer> gt <plug>(lsp-type-definition)
-    nmap <buffer> <leader>rn <plug>(lsp-rename)
-    nmap <buffer> K <plug>(lsp-hover)
-    nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
-    nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
-endfunction
+"    nmap <buffer> gd <plug>(lsp-definition)
+"    nmap <buffer> gs <plug>(lsp-document-symbol-search)
+"    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+"    nmap <buffer> gr <plug>(lsp-references)
+"    nmap <buffer> gi <plug>(lsp-implementation)
+"    nmap <buffer> gt <plug>(lsp-type-definition)
+"    nmap <buffer> <leader>rn <plug>(lsp-rename)
+"    nmap <buffer> K <plug>(lsp-hover)
+"    nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
+"    nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
+"endfunction
 
-augroup lsp_install
-    au!
-    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-augroup END
+"augroup lsp_install
+"    au!
+"    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+"augroup END
 
-let g:my_lsp_catalog = {}
+"let g:my_lsp_catalog = {}
 
-command! LspDisable if has_key(g:my_lsp_catalog, &ft) | call lsp#stop_server(g:my_lsp_catalog[&ft]) | endif
+"command! LspDisable if has_key(g:my_lsp_catalog, &ft) | call lsp#stop_server(g:my_lsp_catalog[&ft]) | endif
 
-function! ToggleCompletion()
-    if g:asyncomplete_auto_popup == 1
-        let g:asyncomplete_auto_popup = 0
-        call lsp#disable()
-        echo 'Autocompletion and LSP are disabled (but <C-Space> still works)'
-    else
-        let g:asyncomplete_auto_popup = 1
-        call lsp#enable()
-        echo 'Autocompletion and LSP are enabled'
-    endif
-endfunction
+"function! ToggleCompletion()
+"    if g:asyncomplete_auto_popup == 1
+"        let g:asyncomplete_auto_popup = 0
+"        call lsp#disable()
+"        echo 'Autocompletion and LSP are disabled (but <C-Space> still works)'
+"    else
+"        let g:asyncomplete_auto_popup = 1
+"        call lsp#enable()
+"        echo 'Autocompletion and LSP are enabled'
+"    endif
+"endfunction
 
-nmap <F7> :call ToggleCompletion()<CR>
+"nmap <F7> :call ToggleCompletion()<CR>
 
 
 " ale
@@ -151,7 +151,7 @@ command! AVV :AV | wincmd R
 
 
 " vista.vim
-let g:vista_default_executive = 'vim_lsp'
+let g:vista_default_executive = 'nvim_lsp'
 let g:vista_finder_alternative_executives = ['ale']
 let g:vista_sidebar_width = 80
 let g:vista_fzf_preview = ['right:0%']
@@ -261,15 +261,24 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 " https://github.com/vim-airline/vim-airline/issues/399
 autocmd BufDelete * call airline#extensions#tabline#buflist#invalidate()
 
+"function! GetLspStatusMessage()
+"    if has_key(g:my_lsp_catalog, &ft)
+"        let server = g:my_lsp_catalog[&ft]
+"        let status = lsp#get_server_status(server)
+"        return status == "unknown" ? "no lsp" :  server . ": " . status
+"    else
+"        return "no lsp"
+"    endif
+"endfunction
+
 function! GetLspStatusMessage()
-    if has_key(g:my_lsp_catalog, &ft)
-        let server = g:my_lsp_catalog[&ft]
-        let status = lsp#get_server_status(server)
-        return status == "unknown" ? "no lsp" :  server . ": " . status
-    else
-        return "no lsp"
-    endif
-endfunction
+      if !has('nvim') || !luaeval('#vim.lsp.get_clients({bufnr = 0}) > 0')
+          return 'no lsp'
+      endif
+      let names = luaeval('vim.tbl_map(function(c) return c.name end, vim.lsp.get_clients({bufnr = 0}))')
+      return join(names, ', ') .. ': running'
+  endfunction
+
 
 function! GetNearestFunction() abort
     if has('nvim') && exists(':TSModuleInfo')
@@ -300,6 +309,6 @@ let g:airline_theme='nord'
 
 
 " vim-lsp and asyncomplete.vim debugging (uncomment to enable logging)
-let g:lsp_log_verbose = 1
+"let g:lsp_log_verbose = 1
 "let g:lsp_log_file = expand('~/lsp-vim.log')
 "let g:asyncomplete_log_file = expand('~/lsp-asyncomplete.log')

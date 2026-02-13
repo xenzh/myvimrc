@@ -31,15 +31,6 @@
 [submodule "vim/pack/2-bundle/start/vim-toml"]
 	path = vim/pack/2-bundle/start/vim-toml
 	url = http://github.com/cespare/vim-toml
-[submodule "vim/pack/2-bundle/start/asyncomplete-lsp.vim"]
-	path = vim/pack/2-bundle/start/asyncomplete-lsp.vim
-	url = http://github.com/prabirshrestha/asyncomplete-lsp.vim
-[submodule "vim/pack/2-bundle/start/asyncomplete.vim"]
-	path = vim/pack/2-bundle/start/asyncomplete.vim
-	url = http://github.com/prabirshrestha/asyncomplete.vim
-[submodule "vim/pack/2-bundle/start/async.vim"]
-	path = vim/pack/2-bundle/start/async.vim
-	url = http://github.com/prabirshrestha/async.vim
 [submodule "vim/pack/2-bundle/start/rust.vim"]
 	path = vim/pack/2-bundle/start/rust.vim
 	url = http://github.com/rust-lang/rust.vim
@@ -58,21 +49,12 @@
 [submodule "vim/pack/2-bundle/start/ale"]
 	path = vim/pack/2-bundle/start/ale
 	url = http://github.com/w0rp/ale
-[submodule "vim/pack/2-bundle/start/vim-lsp"]
-	path = vim/pack/2-bundle/start/vim-lsp
-	url = http://github.com/prabirshrestha/vim-lsp
 [submodule "vim/pack/2-bundle/start/Rename"]
 	path = vim/pack/2-bundle/start/Rename
 	url = http://github.com/vim-scripts/Rename
 [submodule "vim/pack/2-bundle/start/open_file_under_cursor.vim"]
 	path = vim/pack/2-bundle/start/open_file_under_cursor.vim
 	url = http://github.com/amix/open_file_under_cursor.vim
-[submodule "vim/pack/2-bundle/start/asyncomplete-buffer.vim"]
-	path = vim/pack/2-bundle/start/asyncomplete-buffer.vim
-	url = http://github.com/prabirshrestha/asyncomplete-buffer.vim
-[submodule "vim/pack/2-bundle/start/asyncomplete-file.vim"]
-	path = vim/pack/2-bundle/start/asyncomplete-file.vim
-	url = http://github.com/prabirshrestha/asyncomplete-file.vim
 [submodule "vim/pack/2-bundle/start/vim-gitgutter"]
 	path = vim/pack/2-bundle/start/vim-gitgutter
 	url = http://github.com/airblade/vim-gitgutter
@@ -109,3 +91,21 @@
 [submodule "vim/nvim/pack/3-nvim/start/oil.nvim"]
 	path = vim/nvim/pack/3-nvim/start/oil.nvim
 	url = http://github.com/stevearc/oil.nvim
+[submodule "vim/nvim/pack/3-nvim/start/nvim-cmp"]
+	path = vim/nvim/pack/3-nvim/start/nvim-cmp
+	url = http://github.com/hrsh7th/nvim-cmp
+[submodule "vim/nvim/pack/3-nvim/start/cmp-path"]
+	path = vim/nvim/pack/3-nvim/start/cmp-path
+	url = http://github.com/hrsh7th/cmp-path
+[submodule "vim/nvim/pack/3-nvim/start/cmp-calc"]
+	path = vim/nvim/pack/3-nvim/start/cmp-calc
+	url = http://github.com/hrsh7th/cmp-calc
+[submodule "vim/nvim/pack/3-nvim/start/cmp-buffer"]
+	path = vim/nvim/pack/3-nvim/start/cmp-buffer
+	url = http://github.com/hrsh7th/cmp-buffer
+[submodule "vim/nvim/pack/3-nvim/start/cmp-nvim-lsp-signature-help"]
+	path = vim/nvim/pack/3-nvim/start/cmp-nvim-lsp-signature-help
+	url = http://github.com/hrsh7th/cmp-nvim-lsp-signature-help
+[submodule "vim/nvim/pack/3-nvim/start/lspkind.nvim"]
+	path = vim/nvim/pack/3-nvim/start/lspkind.nvim
+	url = http://github.com/onsails/lspkind.nvim
