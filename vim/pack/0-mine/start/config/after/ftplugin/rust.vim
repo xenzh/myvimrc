@@ -2,29 +2,12 @@
 if !exists('g:ale_linters')
     let g:ale_linters = {}
 endif
-"let g:ale_linters.rust = ['analyzer', 'rustfmt', 'cargo']
-let g:ale_linters.rust = ['rustfmt', 'cargo']
+" Diagnostics handled by rust-analyzer (clippy configured in lsp.lua)
+let g:ale_linters.rust = []
 
-let g:ale_rust_analyzer_config = {
-\  'cargo': {
-\    'features': 'all',
-\  }
-\}
-
-if !exists('g:ale_fixers')
-    let g:ale_fixers = {}
-endif
-let g:ale_fixers.rust = ['rustfmt']
-
-let g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
-let g:ale_rust_cargo_check_tests = 1
-let g:ale_rust_cargo_check_all_targets = 1
-let g:ale_rust_rustfmt_options = '--edition 2024'
-
-
-" formatting
+" formatting via LSP (rust-analyzer -> rustfmt)
 function! DoFmt()
-    execute ':ALEFix rustfmt'
+    lua vim.lsp.buf.format({ async = true })
 endfunction
 
 

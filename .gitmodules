@@ -106,6 +106,6 @@
 [submodule "vim/nvim/pack/3-nvim/start/cmp-nvim-lsp-signature-help"]
 	path = vim/nvim/pack/3-nvim/start/cmp-nvim-lsp-signature-help
 	url = http://github.com/hrsh7th/cmp-nvim-lsp-signature-help
-[submodule "vim/nvim/pack/3-nvim/start/lspkind.nvim"]
-	path = vim/nvim/pack/3-nvim/start/lspkind.nvim
-	url = http://github.com/onsails/lspkind.nvim
+[submodule "vim/nvim/pack/3-nvim/start/cmp-nvim-lsp"]
+	path = vim/nvim/pack/3-nvim/start/cmp-nvim-lsp
+	url = http://github.com/hrsh7th/cmp-nvim-lsp

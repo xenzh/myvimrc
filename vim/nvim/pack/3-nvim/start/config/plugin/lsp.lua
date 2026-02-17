@@ -1,7 +1,14 @@
------------------------------------------------------------
--- nvim native LSP configuration
------------------------------------------------------------
+-- All LSP, servers and completion configurations, exclusive for neovim.
 
+-- Hover / signature / diagnostic float borders (Neovim 0.11+)
+local hover_opts = { border = "single" }
+local _hover = vim.lsp.buf.hover
+vim.lsp.buf.hover = function() _hover(hover_opts) end
+local _sig = vim.lsp.buf.signature_help
+vim.lsp.buf.signature_help = function() _sig(hover_opts) end
+
+
+-- LSP configuration
 local function on_attach(client, bufnr)
     local opts = { buffer = bufnr }
 
@@ -38,20 +45,15 @@ local function on_attach(client, bufnr)
         })
     end
 
-    -- Native completion (Neovim >= 0.11)
-    -- triggerCharacters come from the server; this hooks into omnifunc/popup
-    if vim.lsp.completion then
-        vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
-    end
-
     -- Inlay hints (Neovim >= 0.10)
-    if client.server_capabilities.inlayHintProvider then
-        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-    end
+    --if client.server_capabilities.inlayHintProvider then
+    --    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+    --end
+    vim.lsp.inlay_hint.enable(false)
 
     vim.opt_local.signcolumn = 'yes'
 
-    -- Suppress LSP diagnostics entirely, ALE handles it
+    -- Suppress LSP diagnostics entirely, rely on ALE
     --vim.diagnostic.config({
     --    virtual_text = false,
     --    signs = false,
@@ -66,47 +68,71 @@ local function on_attach(client, bufnr)
         underline = true,
         update_in_insert = false,
         severity_sort = true,
+        float = { border = "rounded" },
     })
 
     -- Navigate diagnostics
     vim.keymap.set('n', ',,', vim.diagnostic.goto_prev)
     vim.keymap.set('n', '..', vim.diagnostic.goto_next)
-    vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float)
+    vim.keymap.set('n', '<leader>d', function()
+        vim.diagnostic.open_float({ scope = 'line', source = true })
+    end)
 
-    -- Completion
-    -- TODO: move out? replace with nvim-cmp?
-
+    -- Completion via nvim-cmp
     local cmp = require('cmp')
     cmp.setup({
-      sources = cmp.config.sources({
-          { name = 'nvim_lsp' },  -- priority 1
-          { name = 'nvim_lsp_signature_help' },
-          { name = 'path' },
-          { name = 'calc' },
-      }, {
-          { name = 'buffer' },    -- fallback
-      }),
-      mapping = cmp.mapping.preset.insert({
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<CR>'] = cmp.mapping.confirm({ select = false }),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-      }),
+        sources = cmp.config.sources({
+            {
+                name = 'nvim_lsp',
+                entry_filter = function(entry, ctx)
+                    -- no LSP completions in comments
+                    local context = require('cmp.config.context')
+                    if context.in_treesitter_capture('comment')
+                        or context.in_syntax_group('Comment') then
+                        return false
+                    end
+
+                    -- remove snippets
+                    return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] ~= 'Snippet'
+                end
+            },
+            { name = 'nvim_lsp_signature_help' },
+            { name = 'path' },
+            { name = 'calc' },
+        }, {
+            { name = 'buffer' }, -- fallback source, buffer words.
+        }),
+        mapping = cmp.mapping.preset.insert({
+            ['<C-Space>'] = cmp.mapping.complete(),
+            ['<CR>'] = cmp.mapping.confirm({ select = false }),
+            ['<C-f>'] = cmp.mapping.scroll_docs(4),
+            ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+        }),
+        formatting = {
+            -- add a menu column that identifiers the completion source.
+            fields = { "abbr", "kind", "menu" },
+            format = function(entry, vim_item)
+                vim_item.menu = ({
+                    nvim_lsp = '[LSP]',
+                    buffer   = '[Buf]',
+                    path     = '[Path]',
+                    calc     = '[Calc]',
+                    nvim_lsp_signature_help = '[Sig]',
+                })[entry.source.name]
+                return vim_item
+            end,
+        },
+        window = {
+            -- add borders to documentation float windows (to avoid blending with bg).
+            documentation = {
+                border = 'single',
+                winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
+            },
+        },
+        experimental = {
+            ghost_text = true -- ghost text for the selected completion entry.
+        }
     })
-
-
-    --vim.opt.completeopt = { 'menuone', 'noinsert', 'popup' }
-
-    ---- Accept completion with <CR>
-    --vim.keymap.set('i', '<CR>', function()
-    --    if vim.fn.pumvisible() == 1 then
-    --        return '<C-y>'  -- accept selected item
-    --    end
-    --    return '<CR>'
-    --end, { expr = true })
-
-    ---- Force-trigger completion (replaces your <C-Space> asyncomplete mapping)
-    --vim.keymap.set('i', '<C-Space>', vim.lsp.completion.trigger)
 
     -- Toggle LSP
     vim.keymap.set('n', '<F7>', function()
@@ -123,7 +149,6 @@ local function on_attach(client, bufnr)
           print('LSP restarting...')
       end
   end)
-
 
 end
 
@@ -142,6 +167,7 @@ vim.api.nvim_create_autocmd('FileType', {
               '--all-scopes-completion',
               '--completion-style=detailed',
               '--header-insertion=never',
+              '--clang-tidy',
           },
           root_dir = vim.fs.root(ev.buf, {
               'compile_commands.json',
@@ -199,6 +225,9 @@ vim.api.nvim_create_autocmd('FileType', {
                   cargo = {
                       buildScripts = { enable = true },
                       features = 'all',
+                  },
+                  check = {
+                      command = 'clippy',
                   },
                   procMacro = { enable = true },
               },

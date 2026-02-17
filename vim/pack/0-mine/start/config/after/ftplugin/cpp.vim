@@ -5,7 +5,7 @@ set cc=120
 if !exists('g:ale_linters')
     let g:ale_linters = {}
 endif
-let g:ale_linters.cpp = ['cc', 'clangtidy']
+let g:ale_linters.cpp = []  " clang-tidy runs via clangd --clang-tidy
 
 
 "let g:ale_c_build_dir_names = ['.']

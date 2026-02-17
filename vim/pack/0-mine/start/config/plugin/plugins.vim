@@ -167,7 +167,7 @@ nmap \ :Vista finder<CR>
 if has('nvim') && exists('TSModuleInfo')
 lua << EOF
 require'nvim-treesitter.configs'.setup {
-    ensure_installed = {"c", "cpp", "python", "rust", "lua", "vim", "toml", "yaml"},
+    ensure_installed = {"c", "cpp", "python", "rust", "lua", "vim", "markdown", "markdown_inline", "toml", "yaml"},
     sync_install = true,
 
     highlight = {
