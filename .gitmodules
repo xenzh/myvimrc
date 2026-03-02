@@ -109,3 +109,6 @@
 [submodule "vim/nvim/pack/3-nvim/start/cmp-nvim-lsp"]
 	path = vim/nvim/pack/3-nvim/start/cmp-nvim-lsp
 	url = http://github.com/hrsh7th/cmp-nvim-lsp
+[submodule "vim/nvim/pack/3-nvim/start/fzf-lua"]
+	path = vim/nvim/pack/3-nvim/start/fzf-lua
+	url = http://github.com/ibhagwan/fzf-lua

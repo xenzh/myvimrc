@@ -150,14 +150,6 @@ cnoreabbrev bdd Bdd
 :tmap <Esc> <C-\><C-n>
 :tmap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 
-" Persist terminal buffer (for airline-tabline visibility)
-if has("nvim")
-    set hidden
-    "augroup terminalairline
-    "    au! TermOpen * set hidden
-    "    au! TermClose * set nohidden
-    "augroup END
-endif
 
 
 " find selecton/repeat search, open quickfix with results (and close it on <CR>)

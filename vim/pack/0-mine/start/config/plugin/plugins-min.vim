@@ -2,62 +2,95 @@
 cnoreabbrev rn Rename
 
 
-" fzf.vim
-let g:fzf_buffers_jump = 1
-let g:fzf_layout = { 'down': '~35%' }
+" fzf-lua (neovim) / fzf.vim (vim) mappings
+if has('nvim') && luaeval("pcall(require, 'fzf-lua')")
 
+    " files in working dir
+    nmap [p <cmd>FzfLua files<CR>
+    " files in directory of current file
+    nmap ]p <cmd>lua require('fzf-lua').files({ cwd = vim.fn.expand('%:p:h') })<CR>
+    " files in home dir
+    nmap ][p <cmd>lua require('fzf-lua').files({ cwd = '~' })<CR>
+    " opened buffers
+    nmap ][ <cmd>FzfLua buffers<CR>
 
-" Make sure <Esc> in fzf does not get overwritten with custom mapping
-function! s:FzfEscMap()
-    let g:my_tesc_mapping = maparg('<Esc>', 't')
-    tmap <Esc> <C-d>
-endfunction
+    " Fzf-search word under cursor
+    nmap <F2> <cmd>FzfLua grep_cword<CR>
+    " Fullscreen short :Files command
+    command! -nargs=1 -complete=file F lua require('fzf-lua').files({ cwd = <q-args> })
+    " close all buffers, open file picker
+    command! Z %bd | FzfLua files
 
-function! s:FzfEscUnmap()
-    if exists('g:my_tesc_mapping')
-        exe 'tmap <Esc> ' . g:my_tesc_mapping
-    endif
-endfunction
+    " Open vsplit, search files in working dir
+    command! Fsp :vsp | FzfLua files
+    cnoreabbrev fsp Fsp
 
-augroup FzfEscPushPop
-    au! FileType fzf
-    au FileType fzf call s:FzfEscMap()
-        \| au BufLeave <buffer> call s:FzfEscUnmap()
-augroup END
+    command! -nargs=1 L lua require('fzf-lua').lines({ search = <q-args> })
+    cnoreabbrev l L
 
-" files in working dir
-nmap [p :Files!<CR>
-" files in directory of current file
-nmap ]p :exe('Files! ' . expand('%:p:h'))<CR>
-" files in home dir
-nmap ][p :Files! ~<CR>
-" opened buffers
-nmap ][ :Buffers!<CR>
+    command! -bang -nargs=* Rg lua require('fzf-lua').grep({ search = <q-args> })
+    cnoreabbrev Ag Rg
+    cnoreabbrev rg Rg
 
-" Fzf-search word under cursor
-nmap <F2> "zyiw:exe ":Rg ".@z.""<CR>
-" Fullscreen short :Files command
-command! -nargs=1 -complete=file F :Files! <args>
-" close all buffers, open file picker
-command! Z %bd | :Files!
+else
 
-" Open vsplit, search files in working dir
-command! Fsp :vsp | :Files!
-cnoreabbrev fsp Fsp
+    " fzf.vim fallback
+    let g:fzf_buffers_jump = 1
+    let g:fzf_layout = { 'down': '~35%' }
 
-command! -nargs=1 L :Lines! <args>
-cnoreabbrev l L
+    " Make sure <Esc> in fzf does not get overwritten with custom mapping
+    function! s:FzfEscMap()
+        let g:my_tesc_mapping = maparg('<Esc>', 't')
+        tmap <Esc> <C-d>
+    endfunction
 
-" override :Rg, :Files to display preview
-command! -bang -nargs=* Rg call fzf#vim#grep(
-  \ 'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-  \ fzf#vim#with_preview('right:60%', '?'), <bang>1)
+    function! s:FzfEscUnmap()
+        if exists('g:my_tesc_mapping')
+            exe 'tmap <Esc> ' . g:my_tesc_mapping
+        endif
+    endfunction
 
-cnoreabbrev Ag Rg
-cnoreabbrev rg Rg
+    augroup FzfEscPushPop
+        au! FileType fzf
+        au FileType fzf call s:FzfEscMap()
+            \| au BufLeave <buffer> call s:FzfEscUnmap()
+    augroup END
 
-command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>,
-  \ fzf#vim#with_preview('right:60%', '?'), <bang>0)
+    " files in working dir
+    nmap [p :Files!<CR>
+    " files in directory of current file
+    nmap ]p :exe('Files! ' . expand('%:p:h'))<CR>
+    " files in home dir
+    nmap ][p :Files! ~<CR>
+    " opened buffers
+    nmap ][ :Buffers!<CR>
+
+    " Fzf-search word under cursor
+    nmap <F2> "zyiw:exe ":Rg ".@z.""<CR>
+    " Fullscreen short :Files command
+    command! -nargs=1 -complete=file F :Files! <args>
+    " close all buffers, open file picker
+    command! Z %bd | :Files!
+
+    " Open vsplit, search files in working dir
+    command! Fsp :vsp | :Files!
+    cnoreabbrev fsp Fsp
+
+    command! -nargs=1 L :Lines! <args>
+    cnoreabbrev l L
+
+    " override :Rg, :Files to display preview
+    command! -bang -nargs=* Rg call fzf#vim#grep(
+      \ 'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+      \ fzf#vim#with_preview('right:60%', '?'), <bang>1)
+
+    cnoreabbrev Ag Rg
+    cnoreabbrev rg Rg
+
+    command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>,
+      \ fzf#vim#with_preview('right:60%', '?'), <bang>0)
+
+endif
 
 
 " vim-bookmarks

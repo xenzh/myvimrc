@@ -130,7 +130,7 @@ local function on_attach(client, bufnr)
             },
         },
         experimental = {
-            ghost_text = true -- ghost text for the selected completion entry.
+            ghost_text = false -- ghost text for the selected completion entry.
         }
     })
 

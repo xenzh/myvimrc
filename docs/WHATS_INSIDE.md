@@ -14,7 +14,7 @@ This package contains:
 ### Requirements
 
 * **[nvim](https://neovim.io/)** - text editor/IDE.
-  * **[vim](https://www.vim.org/) >= 8.0** - fallback editor (`ALE` and `vim-lsp` require vim8+ async jobs).
+  * **[vim](https://www.vim.org/)** - fallback editor (no `LSP`, limited linting).
   * **[neovide](https://neovide.dev/)** - GUI frontend for Neovim
 * **[git](https://git-scm.com/) >= 1.8.3** - version control, used to manage this installation. Used by some vim plugins (`fugitive`)
 * **[rg](https://github.com/BurntSushi/ripgrep)** - better grep. Used as `fzf` backend, in some tools and by `fzf.vim` (`:rg`)
@@ -57,9 +57,7 @@ This package contains:
 
 `vim` uses following files:
 
-* `tags` - (outdated; any folder between cwd and home) - ctags output file, used for code navigation
-* `.clang` - (any folder between cwd and home) - text file with C++ flags (see "C++ compile flags" feature)
-* `compile_commands.json` - (cwd) - clang compilation database (see "C++ compile flags" feature)
+* `compile_commands.json` - (cwd) - clang compilation database (used natively by `clangd` and `ALE` plugin).
 
 `zsh` uses following files:
 
@@ -91,12 +89,6 @@ These settings are intended to be directly used as `tmux` config file.
 
 Built for C++/python/Rust development, includes IDE-like features (code highlighting, linting, autocompletion, navigation), general editing improvements and custom commands.
 
-### C++ compile flags
-
-Both `ALE` and `clangd` work best if provided with a set of compile flags for each file they process, `-I` in particular. There are several ways to specify them:
-  * `compile_commands.json` - `clang` compilation database file, could be generated with `cmake` or tools like `bear`. Just put it in repo root folder, make sure it has right pathing (see `clangdb` tool), open vim and you're all set. Note that compilation database doesn't contain entries for header files - for them `vim` will try to get flags from matching cpp, and if it's missing will fall back to the next option.
-  * `.clang` - if compilation database is missing or failed to load, `vim` tries to read `-I` flags from this file's lines and apply them to all h/cpp in this repo. Tools like `clang.vim` and `cquery` natvely accept this file, `clangd` doesn't.
-
 ### Interactive `jq` shell
 
 There is `:Jq` command for defined for `json` filetype. It opens one split for `jq` query and another for query result.
@@ -109,14 +101,8 @@ For more details check out [mappings doc](MAPPINGS.md).
 ### System
 
 * **[pathogen.vim](https://github.com/tpope/vim-pathogen)** - runtimepath (plugin) manager (by default vim8 pack manager is used, pathogen is a fallback for earlier vim versions)
-* **[fzf](https://github.com/junegunn/fzf)** and **[fzf.vim](https://github.com/junegunn/fzf.vim)** - search files, lines, history, mappings etc using integrated `fzf` command line tool
-* **[async.vim](https://github.com/prabirshrestha/async.vim)** - async job control normalization library
-* **[asyncomplete.vim](https://github.com/prabirshrestha/asyncomplete.vim)** - asynchronous autocompletion engine
-  * **[asyncomplete-buffer.vim](https://github.com/prabirshrestha/asyncomplete-buffer.vim)** - source for buffed-based word completion
-  * **[asyncomplete-tags.vim](https://github.com/prabirshrestha/asyncomplete-tags.vim)** - source for loaded tags
-  * **[asyncomplete-file.vim](https://github.com/prabirshrestha/asyncomplete-file.vim)** - source for filenames
-  * **[asyncomplete-lsp](https://github.com/prabirshrestha/asyncomplete-lsp.vim)** -  source for LSP client
-
+* **[fzf-lua](https://github.com/ibhagwan/fzf-lua)** - - search files, lines, history, mappings etc using integrated `fzf` command line tool.
+    * **[fzf.vim](https://github.com/junegunn/fzf.vim)** - a fallback for `vim`.
 * **[vim-bookmarks](https://github.com/MattesGroeger/vim-bookmarks)** - visual bookmarks and annotations
 
 ### Behavior
@@ -132,8 +118,9 @@ For more details check out [mappings doc](MAPPINGS.md).
 
 ### Coding, general
 
-* **[ALE](https://github.com/w0rp/ale)** - Asynchronous Linting Engine: multilanguage code linting and fixing (plus rudimentary LSP client).
-* **[vim-lsp](https://github.com/prabirshrestha/vim-lsp)** - asynchronous Language Server Protocol client.
+* **[nvim-cmp](https://github.com/hrsh7th/nvim-cmp) -- code completion (only in `neovim`).
+    * completion sources, i.e. LSP, LSP-signature, path, calc, buffer.
+* **[ALE](https://github.com/w0rp/ale)** - linting and fixing, `vim` / LSP fallback.
 * **[vista.vim](https://github.com/liuchengxu/vista.vim/)** - code outline viewer and searcher, integrated with `fzf`, `ctags` and `vim-lsp`.
 * **[fugitive](https://github.com/tpope/vim-fugitive)** - git integration, integrated with `vim-airline` (branch/status).
 * **[vim-gitgutter](https://github.com/airblade/vim-gitgutter)** - inline git diff signs, integrated with `vim-airline` (diff summary).

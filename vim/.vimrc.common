@@ -34,7 +34,6 @@ set autoindent
 set smarttab
 set tabstop=4
 set expandtab
-set autoindent
 set shiftwidth=4
 set ruler
 set number
@@ -45,7 +44,6 @@ set vb t_vb=""
 
 
 " search
-set showmatch
 set hlsearch
 set incsearch
 set ignorecase

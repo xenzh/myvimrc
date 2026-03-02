@@ -16,7 +16,7 @@
 | `C-w` `C-r`           | n    | _builtin_                       | Rotate splits (swap contents)                         |
 | `F8`                  | n    | `vista.vim`, `ctags`, `vim-lsp` | Open side pane with document symbols                  |
 | `ml`                  | n    | `vim-bookmarks`                 | Show all bookmarks in quickfix                        |
-| `<leader>-1..9`       | n    | `vim-airline`                   | Go to airline tab \#                                   |
+| `<leader>-1..9`       | n    | `vim-airline`                   | Go to airline tab \#                                  |
 | `:Jsp`                | vcmd | `jq`/`python`                   | Show selection as formatted json in a split           |
 | `:Jq`                 | cmd  | `jq`                            | Interactive `jq` shell with preview                   |
 |                       | n    |                                 | * `<CR>` discard query buffer, jump to result buffer  |
@@ -41,14 +41,13 @@
 | `:fsp`                | cmd  | `fzf.vim`, `rg`                 | Open vertical split, find files in cwd                |
 | `:rg <regex>`         | cmd  | `fzf.vim`, `rg`                 | Grep current working directory                        |
 | `<F2>`                | n    | `fzf.vim`, `rg`                 | Grep current working directory with word under cursor |
-| `\`                   | n    | `vista.vim`, `vim-lsp`, `ctags` | Search document symbols or tags                       |
-| `;;` `gd`             | n    | `vim-lsp`                       | Go to symbol definition                               |
-| `;l` `K`              | n    | `vim-lsp`                       | Show popup with hover info for a symbol               |
-| `;'` `gr`             | n    | `vim-lsp`                       | Find symbol references                                |
-| `gs` `gS`             | n    | `vim-lsp`                       | Document/workspace symbol search                      |
-| `gi` `gt`             | n    | `vim-lsp`                       | Go to implementation/type definition                  |
-| `,,`                  | n    | `ale`                           | Go to previous ALE diagnostic                         |
-| `..`                  | n    | `ale`                           | Go to next ALE diagnostic                             |
+| `\`                   | n    | `vista.vim`, _nvim-lsp_         | Search document symbols                               |
+| `;;` `gd`             | n    | _nvim-lsp_                      | Go to symbol definition                               |
+| `;l` `K`              | n    | _nvim-lsp_                      | Show popup with hover info for a symbol               |
+| `;'` `gr`             | n    | _nvim-lsp_                      | Find symbol references                                |
+| `gi` `gt`             | n    | _nvim-lsp_                      | Go to implementation/type definition                  |
+| `,,`                  | n    | _nvim-lsp_                      | Go to previous LSP diagnostic                         |
+| `..`                  | n    | _nvim-lsp_                      | Go to next LSP diagnostic                             |
 | `[h` `]h`             | n    | `vim-gitgutter`                 | Go to previous/next git hunk                          |
 | `[c` `]c`             | n    | _config_                        | Go to previous/next git merge conflict                |
 | `mm`                  | n    | `vim-bookmarks`                 | Toggle bookmark at current line                       |
@@ -85,7 +84,9 @@
 | `g-Space` `\\\`       | n    | `vim-visual-multi`              | Add cursor at current position                        |
 | `<leader>-c, l`       | n    | `NerdCommenter`                 | Comment selected lines with line comments (not block) |
 | `<leader>-c, u`       | n    | `NerdCommenter`                 | Uncomment selected lines                              |
-| `<leader>rn`          | n    | `vim-lsp`                       | LSP symbol rename                                     |
+| `<leader>rn`          | n    | _nvim-lsp_                      | LSP symbol rename                                     |
+| `<leader>ca`          | n    | _nvim-lsp_                      | LSP code actions                                      |
+| `<leader>f`           | cmd  | _nvim-lsp_                      | Format source code (via LSP)                          |
 | `:Fmt`                | cmd  | _config_                        | Format source code (defined for a few filetypes)      |
 | `:rn`                 | cmd  | `Rename`                        | Rename current file inplace                           |
 | `:set noexpandtab`    | cmd  | _builtin_                       | `Tab` inserts tabs, not spaces.                       |
@@ -101,11 +102,8 @@
 | `zg` `zug`            | n    | _builtin_                       | Add/remove a word to the spellfile                    |
 | `z=`                  | n    | _builtin_                       | Spellcheck suggestions                                |
 | `<leader>-s`          | n    | _config_                        | Toggle spell checking                                 |
-| `<F7>`                | n    | `asyncomplete.vim`              | Toggle completion popup and LSP client                |
+| `<F7>`                | n    | _config_                        | Toggle completion popup and LSP client                |
 | `C-Space`             | i    | _config_                        | Force show completion popup menu                      |
-| `<F5>`                | n    | `ale`                           | Check syntax and open location list with diagnostics  |
-| `:C`, `<leader>-c`    | cmd  | `ale`                           | Clear all diagnostics, close location list            |
-| `:D`, `<leader>-d`    | cmd  | `ale`                           | Show preview window with diagnostics description      |
 | `:LL`                 | cmd  | `ale`                           | List ALE linters for current filetype                 |
 | `:AL <name>`          | cmd  | `ale`                           | Enable ALE linter for current filetype                |
 | `:DL <name>`          | cmd  | `ale`                           | Disable ALE linter for current filetype               |
