@@ -80,62 +80,56 @@ nmap <F8> :Vista!!<CR>
 nmap \ :Vista finder<CR>
 
 
-" nvim-treesitter, nvim-treesitter-textobject
-if has('nvim') && exists('TSModuleInfo')
+" nvim-treesitter, nvim-treesitter-textobjects, nvim-treesitter-context
+if has('nvim')
 lua << EOF
-require'nvim-treesitter.configs'.setup {
-    ensure_installed = {"c", "cpp", "python", "rust", "lua", "vim", "markdown", "markdown_inline", "toml", "yaml"},
-    sync_install = true,
 
-    highlight = {
-        enable = true,
-        -- additional_vim_regex_highlighting = false,
-    },
+-- nvim-treesitter
+require('nvim-treesitter').setup {}
+require('nvim-treesitter').install({ "c", "cpp", "python", "rust", "lua", "vim", "markdown", "markdown_inline", "toml", "yaml" })
 
-    incremental_selection = {
-        enable = true,
-        keymaps = {
-            init_selection = "gbb",
-            scope_incremental = "gbn",
-            node_decremental = "gbv",
-            node_incremental = "gbh",
-        },
-    },
+-- treesitter highlighting
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = { 'c', 'cpp', 'python', 'rust', 'lua', 'vim', 'markdown', 'toml', 'yaml' },
+    callback = function()
+        vim.treesitter.start()
+        vim.wo[0][0].foldmethod = 'expr'
+        vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    end,
+})
 
-    textobjects = {
-        select = {
-            enable = true,
-            lookahead = true,
-            keymaps = {
-            -- You can use the capture groups defined in textobjects.scm
-                ["af"] = "@function.outer",
-                ["if"] = "@function.inner",
-                ["ac"] = "@class.outer",
-                ["ic"] = "@class.inner",
-                ["ia"] = "@parameter.inner",
-                ["aa"] = "@parameter.outer",
-            },
-            -- these do not really work (yet?)
-            swap_next = {
-                ["m."] = "@parameter.inner",
-            },
-            swap_previous = {
-                ["m,"] = "@parameter.inner",
-            },
-            goto_next_start = {
-                ["]o"] = "@parameter.inner",
-            },
-            goto_previous_start = {
-                ["[o"] = "@parameter.inner",
-            },
-        },
+-- nvim-treesitter-textobjects
+require("nvim-treesitter-textobjects").setup {
+    select = {
+        lookahead = true,
     },
 }
+
+-- textobject select keymaps
+local select_textobject = require("nvim-treesitter-textobjects.select").select_textobject
+vim.keymap.set({ "x", "o" }, "af", function() select_textobject("@function.outer", "textobjects") end)
+vim.keymap.set({ "x", "o" }, "if", function() select_textobject("@function.inner", "textobjects") end)
+vim.keymap.set({ "x", "o" }, "ac", function() select_textobject("@class.outer", "textobjects") end)
+vim.keymap.set({ "x", "o" }, "ic", function() select_textobject("@class.inner", "textobjects") end)
+vim.keymap.set({ "x", "o" }, "aa", function() select_textobject("@parameter.outer", "textobjects") end)
+vim.keymap.set({ "x", "o" }, "ia", function() select_textobject("@parameter.inner", "textobjects") end)
+
+-- textobject swap keymaps
+local swap = require("nvim-treesitter-textobjects.swap")
+vim.keymap.set("n", "m.", function() swap.swap_next("@parameter.inner") end)
+vim.keymap.set("n", "m,", function() swap.swap_previous("@parameter.inner") end)
+
+-- textobject move keymaps
+local move = require("nvim-treesitter-textobjects.move")
+vim.keymap.set({ "n", "x", "o" }, "]o", function() move.goto_next_start("@parameter.inner", "textobjects") end)
+vim.keymap.set({ "n", "x", "o" }, "[o", function() move.goto_previous_start("@parameter.inner", "textobjects") end)
+
+-- treesitter-context
+require('treesitter-context').setup {
+    separator = '-',
+}
+
 EOF
-
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-
 endif
 
 
@@ -186,26 +180,12 @@ function! GetLspStatusMessage()
   endfunction
 
 
-function! GetNearestFunction() abort
-    if has('nvim') && exists(':TSModuleInfo')
-        let s:symbol = nvim_treesitter#statusline()
-        if !empty(s:symbol)
-            return s:symbol
-        endif
-    endif
-    return ""
-endfunction
-
 function! AirlineInit()
     call airline#parts#define_text('separator', "  \ue0b3 ")
-    call airline#parts#define_accent('nearest', 'bold')
 
     call airline#parts#define_function('lsp', 'GetLspStatusMessage')
 
-    call airline#parts#define_function('nearest', 'GetNearestFunction')
-    call airline#parts#define_accent('nearest', 'cyan')
-
-    let g:airline_section_x = airline#section#create(['nearest', 'separator', 'filetype', 'separator', 'lsp'])
+    let g:airline_section_x = airline#section#create(['filetype', 'separator', 'lsp'])
 endfunction
 
 autocmd User AirlineAfterInit call AirlineInit()

@@ -16,8 +16,9 @@ This package contains:
 * **[nvim](https://neovim.io/)** - text editor/IDE.
   * **[vim](https://www.vim.org/)** - fallback editor (no `LSP`, limited linting).
   * **[neovide](https://neovide.dev/)** - GUI frontend for Neovim
-* **[git](https://git-scm.com/) >= 1.8.3** - version control, used to manage this installation. Used by some vim plugins (`fugitive`)
-* **[rg](https://github.com/BurntSushi/ripgrep)** - better grep. Used as `fzf` backend, in some tools and by `fzf.vim` (`:rg`)
+* **[tree-sitter-cli](https://tree-sitter.github.io/tree-sitter/cli/index.html)** - required by `nvim-treesitter` for code syntax.
+* **[git](https://git-scm.com/) >= 1.8.3** - version control, used to manage this installation. Used by some vim plugins (`fugitive`).
+* **[rg](https://github.com/BurntSushi/ripgrep)** - better grep. Used as `fzf` backend, in some tools and by `fzf.vim` (`:rg`).
 * **[fzf](https://github.com/junegunn/fzf)** - fuzzy finder tool. Used in `zsh` profile tools and by `vim` plugins.
 
 ### C++
@@ -40,7 +41,6 @@ This package contains:
 
 ### Others
 
-* **[universal-ctags](https://github.com/universal-ctags/ctags)** - code index generator. Used by vim natively, optionally by `fzf.vim` (:Tags, :BTags) and `vista.vim`.
 * **[bat](https://github.com/sharkdp/bat)** - syntax highlighter used by default for `fzf` previews and replaces `less`
 * **[python3](https://www.python.org/)** - some tools are written in python, also used for json formatting as `jq` fallback.
 * **[jq](https://stedolan.github.io/jq/)** - json query tool, used for json formatting
@@ -128,7 +128,8 @@ For more details check out [mappings doc](MAPPINGS.md).
 * **[NERD Commenter](https://github.com/scrooloose/nerdcommenter)** - block comment/uncomment.
 * **[a.vim](https://github.com/vim-scripts/a.vim)** - quick switch between associated files (h/cpp, etc).
 * **[nvim-treesitter](https://github.com/nvim-treesitter)** - AST parser, syntax highlighter (`nvim` only).
-* **[nvim-treesitterr-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects)** - New text objects based on treesitter API (`nvim` only).
+* **[nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects)** - New text objects based on treesitter API (`nvim` only).
+* **[nvim-treesitter-context](https://github.com/nvim-treesitter/nvim-treesitter-textobjects)** - Show line context (class/function/heading) at the top (`nvim` only).
 
 ### Coding, language-specific
 

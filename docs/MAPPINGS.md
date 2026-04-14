@@ -14,15 +14,14 @@
 | `F11`                 | n    | _config_                        | Resize split: decrease height                         |
 | `F12`                 | n    | _config_                        | Resize split: decrease height                         |
 | `C-w` `C-r`           | n    | _builtin_                       | Rotate splits (swap contents)                         |
-| `F8`                  | n    | `vista.vim`, `ctags`, `vim-lsp` | Open side pane with document symbols                  |
-| `ml`                  | n    | `vim-bookmarks`                 | Show all bookmarks in quickfix                        |
+| `F8`                  | n    | `vista.vim`, `nvim_lsp`         | Open side pane with document symbols                  |
 | `<leader>-1..9`       | n    | `vim-airline`                   | Go to airline tab \#                                  |
 | `:Jsp`                | vcmd | `jq`/`python`                   | Show selection as formatted json in a split           |
 | `:Jq`                 | cmd  | `jq`                            | Interactive `jq` shell with preview                   |
 |                       | n    |                                 | * `<CR>` discard query buffer, jump to result buffer  |
 |                       | n    |                                 | * `Esc` discard query and result buffers              |
 
-### Navigation
+### Buffers & files
 
 | Key                   | Mode | Source                          | Description                                           |
 | --------------------- | ---- | ------------------------------- | ----------------------------------------------------- |
@@ -30,10 +29,13 @@
 | `:wd`                 | cmd  | _config_                        | Save and close current buffer (like `wq`)             |
 | `:O`                  | cmd  | _config_                        | Close all buffers but this                            |
 | `:Z`                  | cmd  | `fzf.vim`, `rg`                 | Close all buffers and open file finder                |
-| `:Gr`                 | vcmd | _config_                        | Find selection, open quickfix with results            |
-| `:Gre`                | cmd  | _config_                        | Display results of last search (`@/`) in quickfix     |
-| `:set [no]magic`      | cmd  | _builtin_                       | Enable/disable regex match when searching             |
-| `gf`                  | n    | `open file under cursor`        | Opens file under cursor                               |
+| `-`                   | n    | `oil.nvim`                      | Open file explorer                                    |
+| `gf`                  | n    | _builtin_                       | Opens file under cursor                               |
+
+### Search & find
+
+| Key                   | Mode | Source                          | Description                                           |
+| --------------------- | ---- | ------------------------------- | ----------------------------------------------------- |
 | `[p`                  | n    | `fzf.vim`, `rg`                 | Find files in current working directory               |
 | `]p`                  | n    | `fzf.vim`, `rg`                 | Find files in directory near current file             |
 | `][p`                 | n    | `fzf.vim`, `rg`                 | Find files in ~                                       |
@@ -41,6 +43,14 @@
 | `:fsp`                | cmd  | `fzf.vim`, `rg`                 | Open vertical split, find files in cwd                |
 | `:rg <regex>`         | cmd  | `fzf.vim`, `rg`                 | Grep current working directory                        |
 | `<F2>`                | n    | `fzf.vim`, `rg`                 | Grep current working directory with word under cursor |
+| `:Gr`                 | vcmd | _config_                        | Find selection, open quickfix with results            |
+| `:Gre`                | cmd  | _config_                        | Display results of last search (`@/`) in quickfix     |
+| `:set [no]magic`      | cmd  | _builtin_                       | Enable/disable regex match when searching             |
+
+### Code navigation
+
+| Key                   | Mode | Source                          | Description                                           |
+| --------------------- | ---- | ------------------------------- | ----------------------------------------------------- |
 | `\`                   | n    | `vista.vim`, _nvim-lsp_         | Search document symbols                               |
 | `;;` `gd`             | n    | _nvim-lsp_                      | Go to symbol definition                               |
 | `;l` `K`              | n    | _nvim-lsp_                      | Show popup with hover info for a symbol               |
@@ -50,10 +60,16 @@
 | `..`                  | n    | _nvim-lsp_                      | Go to next LSP diagnostic                             |
 | `[h` `]h`             | n    | `vim-gitgutter`                 | Go to previous/next git hunk                          |
 | `[c` `]c`             | n    | _config_                        | Go to previous/next git merge conflict                |
+| `[o` `]o`             | n    | `nvim-treesitter-textobjects`   | Go to previous/next function argument                 |
+
+### Bookmarks
+
+| Key                   | Mode | Source                          | Description                                           |
+| --------------------- | ---- | ------------------------------- | ----------------------------------------------------- |
 | `mm`                  | n    | `vim-bookmarks`                 | Toggle bookmark at current line                       |
 | `mi`                  | n    | `vim-bookmarks`                 | Add/edit/remove annotation at current line            |
 | `ml` `ma`             | n    | `vim-bookmarks`                 | Toggle list all bookmarks                             |
-| `mp` `mn`             | n    | `vim-bookmarks`                 | Go to to previous/next bookmark                       |
+| `mp` `mn`             | n    | `vim-bookmarks`                 | Go to previous/next bookmark                          |
 | `mc` `mx`             | n    | `vim-bookmarks`                 | Clear bookmarks in current buffer/in all buffers      |
 
 ### View
@@ -67,6 +83,10 @@
 | `zo` `zc` `za`        | n    | _builtin_                       | Open, close, toggle one fold level under the cursor   |
 | `zm` `zM`             | n    | _builtin_                       | Close next level/all folds                            |
 | `zr` `zR`             | n    | _builtin_                       | Open next level/all folds                             |
+| `<leader>-s`          | n    | _config_                        | Toggle spell checking                                 |
+| `]s` `[s`             | n    | _builtin_                       | Next/previous spellcheck issue                        |
+| `zg` `zug`            | n    | _builtin_                       | Add/remove a word to the spellfile                    |
+| `z=`                  | n    | _builtin_                       | Spellcheck suggestions                                |
 
 ### Edit
 
@@ -74,10 +94,8 @@
 | --------------------- | ---- | ------------------------------- | ----------------------------------------------------- |
 | `C-k` `C-j`           | n, v | _config_                        | Bubble current line/selection up/down                 |
 | `<` `>`               | v    | _config_                        | Indent selection and reselect                         |
-| `gbb`                 | n    | `nvim-treesitter`               | Initiate AST visual selection.                        |
-| `gbn`                 | v    | `nvim-treesitter`               | Expand selection to scope.                            |
-| `gbv`                 | v    | `nvim-treesitter`               | Decrease selection by node.                           |
-| `bgh`                 | v    | `nvim-treesitter`               | Expand selection by node.                             |
+| `m.`                  | n    | `nvim-treesitter-textobjects`   | Swap function argument with the next one              |
+| `m,`                  | n    | `nvim-treesitter-textobjects`   | Swap function argument with the previous one          |
 | `C-up` `C-down`       | n    | `vim-visual-multi`              | Add cursors downwards/upwards                         |
 | `C-n`                 | n    | `vim-visual-multi`              | Start at current word/add at the next occurrence      |
 | `<leader>-A`          | n    | `vim-visual-multi`              | Add cursor at each word in current file               |
@@ -94,16 +112,12 @@
 | `:NoAnsiColors    `   | n    | _config_                        | Remove ANSI color codes from the buffer               |
 
 
-### Linting and completion
+### LSP & completion
 
 | Key                   | Mode | Source                          | Description                                           |
 | --------------------- | ---- | ------------------------------- | ----------------------------------------------------- |
-| `]s` `[s`             | n    | _builtin_                       | Next/previous spellcheck issue                        |
-| `zg` `zug`            | n    | _builtin_                       | Add/remove a word to the spellfile                    |
-| `z=`                  | n    | _builtin_                       | Spellcheck suggestions                                |
-| `<leader>-s`          | n    | _config_                        | Toggle spell checking                                 |
-| `<F7>`                | n    | _config_                        | Toggle completion popup and LSP client                |
-| `C-Space`             | i    | _config_                        | Force show completion popup menu                      |
+| `<F7>`                | n    | _nvim-lsp_                      | Toggle LSP client for current buffer                  |
+| `C-Space`             | i    | `nvim-cmp`                      | Force show completion popup menu                      |
 | `:LL`                 | cmd  | `ale`                           | List ALE linters for current filetype                 |
 | `:AL <name>`          | cmd  | `ale`                           | Enable ALE linter for current filetype                |
 | `:DL <name>`          | cmd  | `ale`                           | Disable ALE linter for current filetype               |
@@ -120,7 +134,7 @@
 |                       | `A<count><n/l>` outside w/o \S + next/last _target.vim_ | quotes _builtin_                                           |
 |                       |                                                         | brackets _builtin_                                         |
 |                       |                                                         | `, . ; : + - = ~ _ * # / \ & $` separators _targets.vim_   |
-|                       |                                                         | `a` argument _targets.vim_                                 |
+|                       |                                                         | `a` argument _targets.vim_ / _treesitter-textobjects_      |
 |                       |                                                         | `nb` any block _targets.vim_                               |
 |                       |                                                         | `nq` any quote _targets.vim_                               |
 |                       |                                                         | `f` function _nvim-treesitter-textobjects_                 |
