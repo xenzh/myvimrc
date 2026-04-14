@@ -38,14 +38,23 @@ function! OverrideColors()
     hi NormalFloat guifg=#D8DEE9 guibg=#2E3440
     hi FloatBorder guifg=#616E88 guibg=#2E3440
 
-    " Markdown in hover windows (Nord maps these all to Normal fg)
-    hi link @markup.heading Title
-    hi link @markup.heading.1 Title
-    hi link @markup.heading.2 Title
+    " Markdown headings (Nord maps Title to normal fg, so override directly)
+    hi @markup.heading gui=bold guifg=#81A1C1 cterm=bold ctermfg=4
+    hi @markup.heading.1 gui=bold guifg=#81A1C1 cterm=bold ctermfg=4
+    hi @markup.heading.2 gui=bold guifg=#81A1C1 cterm=bold ctermfg=4
+    hi @markup.heading.3 gui=bold guifg=#81A1C1 cterm=bold ctermfg=4
+    hi @markup.heading.4 gui=bold guifg=#81A1C1 cterm=bold ctermfg=4
+    hi @markup.heading.5 gui=bold guifg=#81A1C1 cterm=bold ctermfg=4
+    hi @markup.heading.6 gui=bold guifg=#81A1C1 cterm=bold ctermfg=4
     hi link @markup.raw String
     hi @markup.raw.block guifg=NONE ctermfg=NONE
     hi link @markup.link.url Underlined
     hi link @markup.link.label Special
+    hi @markup.quote gui=italic guifg=#8FBCBB cterm=italic ctermfg=6
+    hi @punctuation.special.markdown guifg=#8FBCBB ctermfg=6
+    hi @markup.list guifg=#81A1C1 ctermfg=4
+    hi @markup.list.checked guifg=#A3BE8C ctermfg=2
+    hi @markup.list.unchecked guifg=#616E88 ctermfg=8
 
     " nvim-cmp completion menu
     hi CmpItemAbbrMatch      gui=bold guifg=#88C0D0

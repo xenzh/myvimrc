@@ -24,12 +24,18 @@ $env.config.show_banner = false
 
 alias q = exit
 alias c = clear
-alias l = ls
+alias l = ls -a
 
 def cl [] {
-    clear
-    ls
+    c
+    l
 }
+
+def --env mkcd [dir: string] {
+    mkdir $dir
+    cd $dir
+  }
+
 
 def is_installed [ app: string ] {
   ((which $app | length) > 0)
