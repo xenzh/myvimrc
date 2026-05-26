@@ -1,0 +1,123 @@
+# Style rules NOT enforced by clang-tidy (review only):
+#
+# Naming:
+#   - type aliases: not enforced (mixed PascalCase for concrete aliases, snake_case for trait/meta aliases)
+#
+# Conventions:
+#   - #pragma once, not include guards
+#   - /// doxygen doc comments with @param, @return, @tparam
+#   - macro helpers: _ prefix, #undef immediately after use
+#   - inline keyword only when required for ODR
+#   - no redundant const on constexpr variables
+#   - explicit lambda captures (no [&] or [=])
+#   - include group ordering: local project -> external libs -> std -> Bloomberg
+---
+Checks: >
+  -*,
+  readability-braces-around-statements,
+  readability-else-after-return,
+  readability-redundant-smartptr-get,
+  readability-redundant-string-cstr,
+  readability-simplify-boolean-expr,
+  readability-container-size-empty,
+  readability-make-member-function-const,
+  readability-qualified-auto,
+  readability-magic-numbers,
+  readability-identifier-naming,
+  modernize-use-override,
+  modernize-use-nullptr,
+  modernize-use-equals-default,
+  modernize-use-equals-delete,
+  modernize-use-using,
+  bugprone-use-after-move,
+  bugprone-forwarding-reference-overload,
+  bugprone-argument-comment,
+  bugprone-branch-clone,
+  bugprone-dangling-handle,
+  bugprone-too-small-loop-variable,
+  bugprone-unused-return-value,
+  bugprone-move-forwarding-reference,
+  bugprone-exception-escape,
+  bugprone-lambda-function-name,
+  modernize-use-emplace,
+  modernize-return-braced-init-list,
+  modernize-use-nodiscard,
+  readability-static-accessed-through-instance,
+  readability-const-return-type,
+  readability-avoid-const-params-in-decls,
+  performance-unnecessary-copy-initialization,
+  performance-for-range-copy,
+  performance-move-const-arg,
+  performance-unnecessary-value-param,
+  performance-noexcept-move-constructor,
+  performance-noexcept-swap,
+  performance-trivially-destructible
+
+ExtraArgs:
+  - '-Wdocumentation'
+
+CheckOptions:
+  # Magic numbers
+  - key: readability-magic-numbers.IgnoredIntegerValues
+    value: '0;1;2;-1;-2'
+  - key: readability-magic-numbers.IgnoredFloatingPointValues
+    value: '0.0;1.0'
+
+  # Naming — classes, structs, concepts, enums
+  - key: readability-identifier-naming.ClassCase
+    value: CamelCase
+  - key: readability-identifier-naming.StructCase
+    value: CamelCase
+  - key: readability-identifier-naming.ConceptCase
+    value: CamelCase
+  - key: readability-identifier-naming.EnumCase
+    value: CamelCase
+  - key: readability-identifier-naming.EnumConstantCase
+    value: UPPER_CASE
+  - key: readability-identifier-naming.ScopedEnumConstantCase
+    value: UPPER_CASE
+
+  # Naming — functions, methods
+  - key: readability-identifier-naming.FunctionCase
+    value: camelBack
+  - key: readability-identifier-naming.MethodCase
+    value: camelBack
+
+  # Naming — variables, parameters
+  - key: readability-identifier-naming.LocalVariableCase
+    value: camelBack
+  - key: readability-identifier-naming.ParameterCase
+    value: camelBack
+  - key: readability-identifier-naming.MemberCase
+    value: camelBack
+  - key: readability-identifier-naming.MemberPrefix
+    value: 'd_'
+  - key: readability-identifier-naming.PrivateMemberCase
+    value: camelBack
+  - key: readability-identifier-naming.PrivateMemberPrefix
+    value: 'd_'
+
+  # Naming — constants
+  - key: readability-identifier-naming.StaticConstantCase
+    value: UPPER_CASE
+  - key: readability-identifier-naming.ConstexprVariableCase
+    value: camelBack
+  - key: readability-identifier-naming.GlobalConstantCase
+    value: camelBack
+
+  # Naming — templates
+  - key: readability-identifier-naming.TemplateParameterCase
+    value: CamelCase
+
+  # Argument comments — match the /*name*/ style used at call sites
+  - key: bugprone-argument-comment.StrictMode
+    value: '0'
+  - key: bugprone-argument-comment.CommentBoolLiterals
+    value: '1'
+  - key: bugprone-argument-comment.CommentIntegerLiterals
+    value: '0'
+  - key: bugprone-argument-comment.CommentStringLiterals
+    value: '0'
+  - key: bugprone-argument-comment.CommentNullPtrs
+    value: '0'
+...

@@ -14,7 +14,7 @@ myshell="$( ps -p "$$" | grep -o 'bash\|zsh' )"
 
 alias q=exit
 alias c=clear
-alias l="ls -lahH --group-directories-first --color=auto"
+alias l="ls -lAhH --group-directories-first --color=auto"
 alias lt="l -t"
 alias cl="c && l"
 alias ch="c && tmux clear-history"
@@ -142,6 +142,7 @@ alias drm="docker container ls -a | awk '!/NAMES/ {print \$NF}' | fzf --preview=
 alias dv="docker volume ls"
 alias dvd="docker volume rm"
 alias dvp="docker system df -v | grep \"VOLUME NAME\" -A 999 | awk '\$3 == \"0B\" {print \$1}' | xargs docker volume rm"
+alias dbp="docker builder prune -f"
 
 dvc() {
     docker volume create --name "$2"
@@ -151,7 +152,7 @@ dvc() {
 alias dr="docker run"
 alias db="docker build"
 alias ds="docker stats"
-alias dss="dvp > /dev/null 2>&1 ; docker system df -v"
+alias dss="dvp > /dev/null 2>&1 ; dbp > /dev/null 2>&1 ; docker system df -v"
 
 alias dalp="docker run --rm -it alpine:latest ash"
 

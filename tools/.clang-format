@@ -1,0 +1,149 @@
+# Style rules NOT enforced by clang-format (review only):
+#
+# Formatting:
+#   - requires expression brace on its own line (Allman) — clang-format keeps it on the same line
+#   - requires clause on the same line as template<...> — clang-format splits them
+#   - inheritance base class template args indented by 4, not aligned to <
+#   - space before lambda argument parens: [capture] (args) — clang-format removes the space
+#   - tabular template specializations on one line — use // clang-format off
+#   - X-macro tables with column-aligned entries — use // clang-format off
+#
+# Semantics:
+#   - {} for member initializer lists, not ()
+#   - two blank lines after namespace opening brace
+#
+# Line length:
+#   ColumnLimit is set to 0 so that clang-format does not reflow expressions —
+#   this preserves hand-formatted multi-line ternaries, && chains, method chains,
+#   and argument lists. The target line length is 120 characters; enforce via CI
+#   (e.g. grep -rn '.\{121\}') — clang-tidy has no line-length check.
+#
+#   With ColumnLimit: 0, clang-format preserves your line breaks only when the
+#   break comes after an opening delimiter ((, <). If the first token stays on
+#   the same line as the delimiter, clang-format may collapse the expression.
+#
+#   Preserved (break after open):     Collapsed (first arg on same line):
+#
+#     func(                             func(a,
+#         a,                                b,
+#         b,                                c);
+#         c);                           // -> func(a, b, c);
+#
+#     template<                         template<A,
+#         A,                                B>
+#         B>                            // -> template<A, B>
+#
+#     cond                              cond ?
+#         ? val1                            val1 :
+#         : val2;                           val2;
+#     // preserved                      // -> cond ? val1 : val2;
+---
+Language: Cpp
+Standard: c++20
+BasedOnStyle: LLVM
+
+# Indentation
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+IndentCaseLabels: true
+NamespaceIndentation: None
+IndentPPDirectives: None
+IndentRequiresClause: false
+AccessModifierOffset: -4
+IndentAccessModifiers: false
+
+# Line length — see header comment for rationale
+ColumnLimit: 0
+
+# Braces — Allman everywhere except namespace (stays on same line)
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterCaseLabel: true
+  AfterClass: true
+  AfterControlStatement: Always
+  AfterEnum: true
+  AfterExternBlock: true
+  AfterFunction: true
+  AfterNamespace: false
+  AfterStruct: true
+  AfterUnion: true
+  BeforeCatch: true
+  BeforeElse: true
+  BeforeLambdaBody: false
+  BeforeWhile: false
+  IndentBraces: false
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+
+# Short forms
+AllowShortFunctionsOnASingleLine: InlineOnly
+AllowShortBlocksOnASingleLine: Never
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortLambdasOnASingleLine: Inline
+
+# Arguments and parameters
+BinPackArguments: false
+BinPackParameters: false
+AllowAllArgumentsOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: true
+
+# Constructor initializers
+BreakConstructorInitializers: BeforeComma
+PackConstructorInitializers: Never
+
+# Type qualifiers and pointers
+QualifierAlignment: Left
+PointerAlignment: Right
+ReferenceAlignment: Right
+
+# Spacing
+SpaceAfterTemplateKeyword: false
+SpaceBeforeParens: Custom
+SpaceBeforeParensOptions:
+  AfterControlStatements: true
+  AfterForeachMacros: true
+  AfterFunctionDefinitionName: false
+  AfterFunctionDeclarationName: false
+  AfterIfMacros: true
+  AfterOverloadedOperator: false
+  AfterRequiresInClause: true
+  AfterRequiresInExpression: true
+  BeforeNonEmptyParentheses: false
+SpaceBeforeRangeBasedForLoopColon: true
+SpaceBeforeCpp11BracedList: true
+SpaceInEmptyBlock: false
+SpacesInAngles: Never
+SpacesInParentheses: false
+Cpp11BracedListStyle: true
+
+# Templates and requires
+BreakTemplateDeclarations: Yes
+PenaltyBreakTemplateDeclaration: 10000
+RequiresClausePosition: WithPreceding
+RequiresExpressionIndentation: OuterScope
+
+# Lambda
+LambdaBodyIndentation: Signature
+
+# Alignment
+AlignConsecutiveAssignments: None
+AlignConsecutiveDeclarations: None
+AlignOperands: DontAlign
+AlignTrailingComments: true
+AlignAfterOpenBracket: BlockIndent
+
+# Blank lines — kept at 2 to preserve section separators after namespace open
+MaxEmptyLinesToKeep: 2
+SeparateDefinitionBlocks: Leave
+
+# Includes
+SortIncludes: CaseSensitive
+IncludeBlocks: Preserve
+
+# Namespaces
+FixNamespaceComments: true
+...
