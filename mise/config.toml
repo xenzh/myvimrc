@@ -1,0 +1,18 @@
+# Declarative tool manifest for mise (https://mise.jdx.dev) shared by zsh and nushell.
+# Install: ln -s ~/.dotfiles/mise/config.toml ~/.config/mise/config.toml
+
+[tools]
+zoxide = "latest"
+fzf = "latest"
+carapace = "latest"
+starship = "latest"
+ripgrep = "latest"
+bat = "latest"
+tmux = "latest"
+neovim = "latest"
+jq = "latest"
+tree-sitter = "latest"
+black = "latest"
+ruff = "latest"
+"pipx:mypy" = "latest"
+"pipx:python-lsp-server" = "latest"

@@ -1,7 +1,12 @@
 thisdir="$( cd "$(dirname ${(%):-%N})" > /dev/null && pwd)"
 
-export ZSH=$thisdir/zsh/oh-my-zsh
-ZSH_CUSTOM=$ZSH/../custom
+# mise-managed tools (mise/config.toml), shared with nushell's nu/mise.nu.
+# Shims, not `eval "$(mise activate zsh)"`: we install once, use everywhere.
+# Has to be on top so that everything below uses mise binaries.
+export PATH="$HOME/.local/share/mise/shims:$PATH"
+
+export ZSH=$thisdir/oh-my-zsh
+ZSH_CUSTOM=$thisdir/custom
 
 
 HYPHEN_INSENSITIVE="true"
@@ -22,7 +27,6 @@ plugins=(
   rust                    # auto-completion for rustc, rustup, cargo
   tmux                    # Adds tmux aliases and config
   urltools                # Adds urlencode/urldecode commands
-  vscode                  # vsc and other commands
   web-search              # web search with many engines
   z                       # jump around recent dirs with `z` and `zz`.
   zbell                   # prints bell after >15s command finishes
@@ -65,4 +69,4 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 autoload -U zmv
 alias mmv='noglob zmv -W'
 
-source $thisdir/tools/profile.sh
+source $thisdir/../tools/profile.sh

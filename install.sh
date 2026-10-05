@@ -37,7 +37,7 @@ echo "-- 2. Installing vim/nvim config"
 ln -s "$DOTFILES/vim/.vimrc" ~/.vimrc
 
 mkdir -p ~/.config/nvim
-cp "$DOTFILES/vim/init.vim" ~/.config/nvim
+ln -s "$DOTFILES/vim/init.vim" ~/.config/nvim/init.vim
 
 
 echo "-- 3. Installing tmux config"
@@ -69,7 +69,21 @@ echo "-- 5. Installing gdb config"
 ln -s "$DOTFILES/.gdbinit" ~/.gdbinit
 
 
-echo "-- 6. Installing necessary tools"
+echo "-- 6. Installing mise and mise-managed tools"
+
+if ! command -v mise &> /dev/null; then
+    yes_or_no "?? Install mise" && curl https://mise.run | sh
+fi
+
+MISE="$(command -v mise || echo "$HOME/.local/bin/mise")"
+if [ -x "$MISE" ]; then
+    mkdir -p ~/.config/mise
+    ln -sf "$DOTFILES/mise/config.toml" ~/.config/mise/config.toml
+    yes_or_no "?? Install mise-managed tools (mise/config.toml)" && "$MISE" install
+fi
+
+
+echo "-- 7. Installing remaining OS packages"
 
 function package() {
     if command -v apt-get &> /dev/null; then
@@ -99,11 +113,7 @@ fi
 
 CORE=(
     zsh
-    tmux
     vim
-    nvim
-    ripgrep
-    fzf
     universal-ctags
     python3
     python3-venv
@@ -113,8 +123,6 @@ CORE=(
 yes_or_no "?? Install core packages: ${CORE[@]}" && install_list package ${CORE[@]}
 
 EXTRA=(
-    bat
-    jq
     xmllint
     xxd
 )
@@ -130,15 +138,12 @@ CPP=(
 yes_or_no "?? Install C++ packages: ${CPP[@]}" && install_list package ${CPP[@]}
 
 PYTHON=(
-    python-language-server
-    black
     flake8
-    mypy
 )
 
 yes_or_no "?? Install python modules: ${PYTHON[@]}" && install_list python ${PYTHON[@]}
 
 
-echo "-- 7. Changing login shell"
+echo "-- 8. Changing login shell"
 
 yes_or_no "?? Change login shell to zsh" && chsh -s "$(which zsh)"

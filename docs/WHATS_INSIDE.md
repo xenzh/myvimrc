@@ -2,56 +2,60 @@
 
 This package contains:
 
-* vim configuration and plugins
-* tmux configuration
-* xterm configuration
-* zsh configuration, oh-my-zsh and plugins
-* profile tweaks and tools
-
+- `zsh` (`oh-my-zsh`) and `nushell` configuration, aliases, plugins.
+- `mise` for managing third-party tools.
+- `tmux` setup + `tpm` plugins.
+- `neovim`/`vim` configuration and plugins (native `pack` + `git` submodules).
+- A coherent visual theme.
+- Random small tools.
 
 ## Requirements and third-party tools
 
+Most of these are installed and managed with [mise](https://mise.jdx.dev) from `mise/config.toml` (shared by `zsh` and `nushell`).
+
 ### Requirements
 
-* **[nvim](https://neovim.io/)** - text editor/IDE.
-  * **[vim](https://www.vim.org/)** - fallback editor (no `LSP`, limited linting).
-  * **[neovide](https://neovide.dev/)** - GUI frontend for Neovim
-* **[tree-sitter-cli](https://tree-sitter.github.io/tree-sitter/cli/index.html)** - required by `nvim-treesitter` for code syntax.
-* **[git](https://git-scm.com/) >= 1.8.3** - version control, used to manage this installation. Used by some vim plugins (`fugitive`).
-* **[rg](https://github.com/BurntSushi/ripgrep)** - better grep. Used as `fzf` backend, in some tools and by `fzf.vim` (`:rg`).
-* **[fzf](https://github.com/junegunn/fzf)** - fuzzy finder tool. Used in `zsh` profile tools and by `vim` plugins.
+* **[git](https://git-scm.com/) >= 1.8.3** - version control, used to manage this installation. Used by some vim plugins (`fugitive`). *(OS package)*
+* **[rg](https://github.com/BurntSushi/ripgrep)** - better grep. Used as `fzf` backend, in some tools and by `fzf.vim` (`:rg`). *(mise)*
+* **[fzf](https://github.com/junegunn/fzf)** - fuzzy finder tool. Used in `zsh` profile tools and by `vim` plugins. *(mise)*
+* **[nvim](https://neovim.io/)** - text editor/IDE. *(mise)*
+  * **[vim](https://www.vim.org/)** - fallback editor (no `LSP`, limited linting). *(OS package)*
+  * **[neovide](https://neovide.dev/)** - GUI frontend for Neovim *(OS package - mise has no prebuilt binary)*
+* **[tree-sitter-cli](https://tree-sitter.github.io/tree-sitter/cli/index.html)** - required by `nvim-treesitter` for code syntax. *(mise)*
 
 ### C++
 
-* **[clang++](https://clang.llvm.org/)** - C++ linting (via `ALE` plugin).
-* **[clangd](https://clang.llvm.org/extra/clangd.html)** - clang-based LSP (autocompletion, code navigation via `vim-lsp`)
+* **[clang++](https://clang.llvm.org/)** - C++ linting (via `ALE` plugin). *(OS package)*
+* **[clangd](https://clang.llvm.org/extra/clangd.html)** - clang-based LSP (autocompletion, code navigation via `vim-lsp`) *(OS package)*
 * Optional linters: `clang-tidy`.
 
 ### python
 
-* **[python-lsp-server](https://github.com/python-lsp/python-lsp-server)** - LSP server (install with `pip`)
-* Optional linters: `black`, `ruff`, `mypy`.
+* **[python-lsp-server](https://github.com/python-lsp/python-lsp-server)** - LSP server, provides `pylsp`. *(mise, via `pipx:python-lsp-server`)*
+* Optional linters: `black`, `ruff` *(mise)*, `mypy` *(mise, via `pipx:mypy`)*.
 
 ### Rust
 
-* **[cargo, rustc](https://rustup.rs/)** - Rust toolchain, linting (via `ALE` plugin, install with `rustup`)
-* **[rust-analyzer](https://rust-analyzer.github.io)** - LSP server (`rustup component add rust-analyzer`).
-* **[clippy](https://doc.rust-lang.org/clippy/)** - linter (`rustup component add clippy`).
-* **[rustfmt](https://github.com/rust-lang-nursery/rustfmt)** - code formatter (an `ALE` fixer, install with `cargo`).
+* **[rustup](https://rustup.rs/)** - Rust installation manager.
+    * **[cargo, rustc](https://rustup.rs/)** - Rust toolchain, linting (via `ALE` plugin, install with `rustup`).
+    * **[clippy](https://doc.rust-lang.org/clippy/)** - linter (`rustup component add clippy`).
+    * **[rustfmt](https://github.com/rust-lang-nursery/rustfmt)** - code formatter (an `ALE` fixer, `rustup component add rustfmt`).
+    * **[rust-analyzer](https://rust-analyzer.github.io)** - LSP server (`rustup component add rust-analyzer`).
 
 ### Others
 
-* **[bat](https://github.com/sharkdp/bat)** - syntax highlighter used by default for `fzf` previews and replaces `less`
-* **[python3](https://www.python.org/)** - some tools are written in python, also used for json formatting as `jq` fallback.
-* **[jq](https://stedolan.github.io/jq/)** - json query tool, used for json formatting
-* **[xmllint](http://xmlsoft.org/xmllint.html)** - xml formatting
-* **[xxd](https://linux.die.net/man/1/xxd)** - file to hex and back conversions
+* **[bat](https://github.com/sharkdp/bat)** - syntax highlighter used by default for `fzf` previews and replaces `less`. *(mise)*
+* **[python3](https://www.python.org/)** - some tools are written in python, also used for json formatting as `jq` fallback. *(OS package)*
+* **[jq](https://stedolan.github.io/jq/)** - json query tool, used for json formatting. *(mise)*
+* **[xmllint](http://xmlsoft.org/xmllint.html)** - xml formatting. *(OS package)*
+* **[xxd](https://linux.die.net/man/1/xxd)** - file to hex and back conversions. *(ships with vim/OS)*
+* **[zoxide](https://github.com/ajeetdsouza/zoxide)**, **[carapace](https://carapace.sh)**, **[starship](https://starship.rs)** - `z`/completions/prompt for both `zsh` and `nushell`. *(mise)*
+* **[tmux](https://github.com/tmux/tmux)** - terminal multiplexer. *(mise)*
 
 ### Visuals
 
 * **[Nord theme](https://www.nordtheme.com/)** - color overrides for host terminal emulator (otherwise vim/tmux will look funny).
-* **[Powerline fonts](https://github.com/powerline/fonts)** - patched fonts that include Powerline symbols (vim/airline dependency).
-
+* **[Nerd fonts](https://www.nerdfonts.com/#home)** - patched fonts that include Powerline symbols (vim/airline dependency).
 
 ## Artifacts
 
@@ -67,7 +71,7 @@ This package contains:
 
 * Editors: `nvim`/`vim` in terminal or `Neovide` GUI.
 * Workspace: `tmux` terminal multiplexer / sessions.
-* Shell : `zsh` config based on `oh-my-zsh`.
+* Shell : `zsh` config based on `oh-my-zsh`; `nushell`.
 
 ### Terminal emulator
 
@@ -141,13 +145,13 @@ For more details check out [mappings doc](MAPPINGS.md).
 
 ## Tools
 
-### [`myvimrc`](tools/myvimrc)
+### [`install.sh`](install.sh)
 
-Simple helper script for adding/removing/updating vim plugins (broken).
+Simple helper script for sourcing/linking the configs to users's `$HOME`.
 
 ### [`profile.sh`](tools/profile.sh)
 
-Number of profile tweaks (this file is intended to be sourced to `.bashrc` or similar user config script):
+Profile aliases and tweaks (intended to be sourced to `.bashrc`, `.zshrc` or similar init scripts):
 
 * Common aliases and functions for command like `clear`/`ls`
 * `git` aliases with bash autocompletion
@@ -161,7 +165,7 @@ Number of profile tweaks (this file is intended to be sourced to `.bashrc` or si
 Simple `python` script that automates some `compile_commands.json` tasks:
 
 * generate compilation database for all `cpp` files in a folder based on `.clang` file with compilation flags.
-* normalize file paths in databases generated by `bear` tool. It makes them global and thus allows to store database files whereever without breaking the links (by default it has to reside in build folder).
+* normalize file paths in databases generated by `bear` tool by making them absolute.
 
 ### [`preview`](tools/preview)
 
@@ -170,10 +174,6 @@ Script that provides an `fzf` preview for files and folders with syntax/line hig
 ### [`interactively`](https://github.com/bigH/interactively)
 
 Run/edit a command interactively, preview results in real time. I.e. `interactively 'rg {} file.log'`.
-
-### [`pctree.py`](tools/pctree.py)
-
-Build package dependency tree based on `pkg-config`.
 
 ### [`rgr`](tools/rgr)
 
@@ -186,7 +186,3 @@ Interactive `rg` based on `fzf` with refresh-on-change.
 ### [`jqf`](tools/jqf)
 
 Interactive `jq` shell based on `fzf` refresh-on-change.
-
-### [`call`](tools/call)
-
-`python` tool for decorating shell commands based on json templates. Check out the script for detailed explanation.

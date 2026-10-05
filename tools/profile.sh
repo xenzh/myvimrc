@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mydir=$(dirname "$0")
-export MYVIMRC_ROOT_PATH="$mydir/.."
+export MYVIMRC_ROOT_PATH="$mydir"
 export RIPGREP_CONFIG_PATH="$MYVIMRC_ROOT_PATH/.ripgrep"
 export PATH="$PATH:$mydir"
 
@@ -20,17 +20,13 @@ alias cl="c && l"
 alias ch="c && tmux clear-history"
 alias duh="du -d 1 -h"
 alias bell="echo -e '\07'"
+alias renv="env | rg"
 
 if command -v nvim > /dev/null 2>&1; then
     edit() { nvim "$@" }
 
     alias vim="nvim"
     alias vimdiff="nvim -d"
-    alias gvim="vin"
-
-    if command -v neovide > /dev/null 2>&1; then
-        vin() { neovide --multigrid --notabs "$@" }
-    fi
 else
     edit() { vim "$@" }
 fi
@@ -48,20 +44,6 @@ export BAT_STYLE="numbers,changes"
 if [ -x "$(command -v bat)" ]; then
     alias less='bat'
 fi
-
-
-www() {
-    if [ -x "$(command -v lynx)" ]; then
-        lynx "$1"
-    else
-        echo "lynx is not installed"
-    fi
-}
-
-cpp() {
-    www "https://en.cppreference.com/mwiki/index.php?title=Special%3ASearch&search=$1"
-}
-
 
 
 #
@@ -118,6 +100,7 @@ if [ "$myshell" = "bash" ]; then
     fi
 fi
 
+
 #
 # C++ config and aliases
 #
@@ -142,7 +125,7 @@ alias drm="docker container ls -a | awk '!/NAMES/ {print \$NF}' | fzf --preview=
 alias dv="docker volume ls"
 alias dvd="docker volume rm"
 alias dvp="docker system df -v | grep \"VOLUME NAME\" -A 999 | awk '\$3 == \"0B\" {print \$1}' | xargs docker volume rm"
-alias dbp="docker builder prune -f"
+alias dbp="docker builder prune -f -all"
 
 dvc() {
     docker volume create --name "$2"
@@ -163,8 +146,9 @@ alias dalp="docker run --rm -it alpine:latest ash"
 
 alias cb="cargo build"
 alias ccb="c && cb"
-alias cba="cargo build --all"
-alias cv="cargo test"
+alias cf="cargo fmt"
+alias cv="cargo clippy --workspace --all-targets --all-features -- -D warnings"
+alias ct="cargo test"
 alias cx="cargo run"
 alias xcv="cargo build --all && cargo run"
 

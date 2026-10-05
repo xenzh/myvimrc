@@ -11,10 +11,11 @@ augroup END
 
 lua << EOF
 if vim.g.neovide then
-    vim.o.guifont = "Roboto Mono Light for Powerline:h15"
+    -- https://www.nerdfonts.com/font-downloads
+    vim.o.guifont = "AnonymicePro Nerd Font:h17"
+
     vim.g.transparency = 0.9
     vim.g.neovide_remember_window_size = true
-
     vim.g.neovide_cursor_trail_size = 0.3
     vim.g.neovide_cursor_animate_command_line = false
 

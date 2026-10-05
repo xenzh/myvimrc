@@ -1,0 +1,35 @@
+# Emulates the zsh `typewritten` theme.
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$character"""
+
+right_format = """$cmd_duration"""
+
+add_newline = false
+
+[directory]
+style = "blue"
+truncation_length = 3
+truncate_to_repo = true
+home_symbol = "~"
+
+[git_branch]
+style = "purple"
+symbol = ""
+format = "[($symbol$branch )]($style)"
+
+[git_status]
+style = "purple"
+format = "([$all_status$ahead_behind]($style) )"
+
+[character]
+success_symbol = "[⏤ ](purple)"
+error_symbol = "[⏤ ](red)"
+vimcmd_symbol = "[⏤ ](green)"
+
+[cmd_duration]
+min_time = 2000
+format = "[$duration](dimmed) "

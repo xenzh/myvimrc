@@ -22,28 +22,14 @@
 
 $env.config.show_banner = false
 
-alias q = exit
-alias c = clear
-alias l = ls -a
-
-def cl [] {
-    c
-    l
-}
+# Absolute paths: nu resolves `source` against ~/.config/nushell/config.nu 's (symlink) dir.
+source ~/.dotfiles/nu/mise.nu  # first: all following commands should use mise-managed binaries
+source ~/.dotfiles/nu/aliases.nu
+source ~/.dotfiles/nu/fzf.nu
+source ~/.dotfiles/nu/plugins.nu
+source ~/.dotfiles/nu/starship.nu
 
 def --env mkcd [dir: string] {
     mkdir $dir
     cd $dir
-  }
-
-
-def is_installed [ app: string ] {
-  ((which $app | length) > 0)
 }
-
-let has_nvim = is_installed nvim
-if $has_nvim {
-    alias vim = nvim £ # conditional alises do not work it seems
-}
-
-alias vi = vim -u ~/.dotfiles/../vim/.vimrc.min
