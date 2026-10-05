@@ -59,8 +59,8 @@ nmap .. :ALENext<CR>
 
 
 " git-gutter
-nmap ]h <Plug>(GitGutterNextHunk)
-nmap [h <Plug>(GitGutterPrevHunk)
+nmap ]' <Plug>(GitGutterNextHunk)
+nmap [; <Plug>(GitGutterPrevHunk)
 
 
 " a.vim
