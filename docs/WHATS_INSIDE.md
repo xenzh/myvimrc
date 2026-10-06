@@ -145,9 +145,12 @@ For more details check out [mappings doc](MAPPINGS.md).
 
 ## Tools
 
-### [`install.sh`](install.sh)
+### [`dotfiles`](dotfiles)
 
-Simple helper script for sourcing/linking the configs to users's `$HOME`.
+Helper script for managing the installation:
+
+* `./dotfiles install` - sources/links the configs into user's `$HOME`, sets up submodules, `mise` and OS packages.
+* `./dotfiles update` - updates `mise`-managed tools and pulls the latest git submodules.
 
 ### [`profile.sh`](tools/profile.sh)
 

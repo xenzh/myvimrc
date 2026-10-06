@@ -5,6 +5,7 @@ export-env {
     $env.RIPGREP_CONFIG_PATH = ($env.DOTFILES_ROOT | path join ".ripgrep")
     $env.BAT_THEME = "Nord"
     $env.BAT_STYLE = "numbers,changes"
+    $env.config.ls.clickable_links = false  # removes underline from ls file names
 }
 
 #
@@ -13,9 +14,9 @@ export-env {
 
 alias q = exit
 alias c = clear
-alias l = ls -la
+alias l = ls -a
 alias lt = ls -la | sort-by modified
-def cl [] { clear; ls -la }
+def cl [] { clear; ls -a }
 def ch [] { clear; tmux clear-history }
 alias duh = du -a -d 1
 alias bell = print "\u{07}"

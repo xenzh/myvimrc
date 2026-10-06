@@ -1,8 +1,8 @@
 #!/bin/bash
 
 mydir=$(dirname "$0")
-export MYVIMRC_ROOT_PATH="$mydir"
-export RIPGREP_CONFIG_PATH="$MYVIMRC_ROOT_PATH/.ripgrep"
+export MYVIMRC_ROOT_PATH="$mydir/.."
+export RIPGREP_CONFIG_PATH="$mydir/.ripgrep"
 export PATH="$PATH:$mydir"
 
 myshell="$( ps -p "$$" | grep -o 'bash\|zsh' )"

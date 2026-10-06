@@ -19,10 +19,16 @@ Documentation:
 
 ### Automatic
 
-```
+```sh
 git clone https://github.com/xenzh/myvimrc.git ~/.dotfiles
 cd ~/.dotfiles
-./install.sh
+./dotfiles install
+```
+
+Afterwards, keep mise-managed tools and submodules up to date with:
+
+```sh
+./dotfiles update
 ```
 
 ### Manual
@@ -32,7 +38,7 @@ cd ~/.dotfiles
 ```sh
 git clone https://github.com/xenzh/myvimrc.git ~/.dotfiles
 cd ~/.dotfiles
-git submodule update --init --recursive --remote
+git submodule update --init --remote --recursive
 ```
 
 2. Install [nord theme](https://www.nordtheme.com/) port for the terminal emulator.
@@ -42,19 +48,17 @@ git submodule update --init --recursive --remote
 ```sh
 ln -s ~/.dotfiles/vim/.vimrc ~/.vimrc
 cp ~/.dotfiles/vim/init.vim ~/.config/nvim
-
-ln -s ~/.dotfiles/tmux/.tmux.conf ~/.tmux.conf
-
-ln -s ~/.dotfiles/zsh/.zshrc ~/.zshrc
-
+echo "source-file ~/.dotfiles/tmux/.tmux.conf" >> ~/.tmux.conf
+echo "source ~/.dotfiles/zsh/.zshrc" >> ~/.zshrc
 mkdir -p ~/.config/nushell
 ln -s ~/.dotfiles/nu/config.nu ~/.config/nushell/config.nu
+ln -s ~/.dotfiles/tools/.gdbinit ~/.gdbinit
 ```
 
 4. Install [mise](https://mise.jdx.dev) and the tools it manages (see `mise/config.toml` for what's covered and what isn't)
 
-```
-curl https://mise.run | sh
+```sh
+curl -fsSL https://mise.run | sh
 
 mkdir -p ~/.config/mise
 ln -s ~/.dotfiles/mise/config.toml ~/.config/mise/config.toml
@@ -65,7 +69,7 @@ mise install
 
 ```sh
 # pull all submodules
-git submodule update --init --recursive --remote
+git submodule update --init --remote --recursive
 
 # add a submodule (use to http to bypass corp MITM)
 git submodule add http://<git_repo>
