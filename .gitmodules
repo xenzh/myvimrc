@@ -31,9 +31,6 @@
 [submodule "vim/pack/2-bundle/start/vim-toml"]
 	path = vim/pack/2-bundle/start/vim-toml
 	url = http://github.com/cespare/vim-toml
-[submodule "vim/pack/2-bundle/start/rust.vim"]
-	path = vim/pack/2-bundle/start/rust.vim
-	url = http://github.com/rust-lang/rust.vim
 [submodule "vim/pack/2-bundle/start/vim-airline-themes"]
 	path = vim/pack/2-bundle/start/vim-airline-themes
 	url = http://github.com/vim-airline/vim-airline-themes
