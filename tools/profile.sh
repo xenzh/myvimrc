@@ -23,12 +23,12 @@ alias bell="echo -e '\07'"
 alias renv="env | rg"
 
 if command -v nvim > /dev/null 2>&1; then
-    edit() { nvim "$@" }
+    edit() { nvim "$@"; }
 
     alias vim="nvim"
     alias vimdiff="nvim -d"
 else
-    edit() { vim "$@" }
+    edit() { vim "$@"; }
 fi
 
 alias :e="vim"
@@ -57,6 +57,7 @@ alias gc="git checkout"
 alias gcb="git checkout -b"
 alias gb="git branch"
 alias gd="git diff"
+alias gdd="git dd"   # difftastic: see [alias] in git/config
 alias gpo="git push origin"
 alias gpu="git push upstream"
 alias grpo="git remote prune origin"
@@ -68,9 +69,9 @@ alias gr="gl | awk '{print \$1}' | xargs git rebase -i"
 
 alias gcd='cd $(git rev-parse --show-toplevel)'
 
-gbn()  { git rev-parse --abbrev-ref HEAD }
-gbb()  { git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@' }
-gbs()  { echo "Unique commits in $(gbb) / $(gbn):" && git rev-list --left-right --count "$(gbb)".."$(gbn)" }
+gbn()  { git rev-parse --abbrev-ref HEAD; }
+gbb()  { git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'; }
+gbs()  { echo "Unique commits in $(gbb) / $(gbn):" && git rev-list --left-right --count "$(gbb)".."$(gbn)"; }
 gbl()  {
     git rev-list --left-right --pretty=oneline "$(gbb)".."$(gbn)" |
         awk -v l="$(gbb)" -v r="$(gbn)" '{if (substr($0,1,1)==">") d=l; else d=r; print "[",d,"] --",substr($0,2)}'
@@ -79,13 +80,13 @@ gbl()  {
 alias gbd="git branch -d"
 alias gbdd="git branch -D"
 
-gcm()  { git checkout "$(gbb)" }
-gmm()  { git merge "$(gbb)" }
-gsu()  { git fetch upstream && git checkout "$(gbb)" && git merge upstream/"$(gbb)" && git push origin "$(gbb)" && git pull }
-gpom() { git push origin "$(gbb)" }
+gcm()  { git checkout "$(gbb)"; }
+gmm()  { git merge "$(gbb)"; }
+gsu()  { git fetch upstream && git checkout "$(gbb)" && git merge upstream/"$(gbb)" && git push origin "$(gbb)" && git pull; }
+gpom() { git push origin "$(gbb)"; }
 
-gbf()  { git branch | fzf --preview="git diff --color=always $(gbb) {1}" }
-gcf()  { gbf | xargs git checkout }
+gbf()  { git branch | fzf --preview="git diff --color=always $(gbb) {1}"; }
+gcf()  { gbf | xargs git checkout; }
 
 
 if [ "$myshell" = "bash" ]; then
@@ -166,6 +167,12 @@ else
     export FZF_DEFAULT_COMMAND="find * -type f | grep -v '.git\|\.d$\|\.o$'"
 fi
 
+if [ -x "$(command -v fd)" ]; then
+    export FZF_ALT_C_COMMAND="fd --type d --hidden --exclude .git"
+else
+    export FZF_ALT_C_COMMAND="find * -type d -not -path '*/.git/*'"
+fi
+
 fzf_colors="bg+:#3B4252,bg:#2E3440,spinner:#81A1C1,hl:#616E88,fg:#D8DEE9,header:#616E88,info:#81A1C1,pointer:#81A1C1,marker:#81A1C1,fg+:#D8DEE9,prompt:#81A1C1,hl+:#81A1C1"
 export FZF_DEFAULT_OPTS="-m --preview='$fzf_preview_cmd' --preview-window right:60% --bind=ctrl-f:preview-page-down,ctrl-b:preview-page-up,ctrl-j:preview-down,ctrl-k:preview-up --color=$fzf_colors"
 
@@ -239,15 +246,15 @@ editl() {
     fi
 }
 
-vimf() { editf edit "$@" }
-vimg() { editg edit "$@" }
-vimh() { edith edit "$@" }
-viml() { editl edit "$@" }
+vimf() { editf edit "$@"; }
+vimg() { editg edit "$@"; }
+vimh() { edith edit "$@"; }
+viml() { editl edit "$@"; }
 
-vinf() { editf vin "$@" }
-ving() { editg vin "$@" }
-vinh() { edith vin "$@" }
-vinl() { editl vin "$@" }
+vinf() { editf vin "$@"; }
+ving() { editg vin "$@"; }
+vinh() { edith vin "$@"; }
+vinl() { editl vin "$@"; }
 
 
 cdf() {
@@ -315,7 +322,7 @@ italic() {
 }
 
 install_italic_for_tmux() {
-cat <<EOF|tic -x -
+cat <<EOF | tic -x -
 tmux|tmux terminal multiplexer,
   ritm=\E[23m, rmso=\E[27m, sitm=\E[3m, smso=\E[7m, Ms@,
   use=xterm+tmux, use=screen,

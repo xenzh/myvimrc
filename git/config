@@ -1,0 +1,72 @@
+# Shared git config, add to the top of ~/.gitconfig:
+#
+# [include]
+#     path = /path/to/.dotfiles/git/config
+#
+# `git config --list --show-origin --show-scope` shows who set what.
+
+[init]
+	defaultBranch = main
+
+[user]
+	email = anton.ksenzhuk@gmail.com
+
+[core]
+	editor = nvim
+	pager = delta
+
+[interactive]
+	# `add -p` etc. need the patch left intact, so colour only.
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true          # n/N to jump between files
+	line-numbers = true
+	hyperlinks = true
+	syntax-theme = Nord      # matches $BAT_THEME in tools/profile.sh
+
+[column]
+	ui = auto
+
+[branch]
+	sort = -committerdate
+
+[tag]
+	sort = -version:refname
+
+[diff]
+	# histogram handles moved/reordered blocks better: C++
+	algorithm = histogram
+	colorMoved = plain
+	# a/ b/ prefixes become i/ w/ c/ o/ -- index/worktree/commit/object.
+	mnemonicPrefix = true
+	renames = true
+
+[merge]
+	conflictStyle = zdiff3
+
+[rerere]
+	# Remember how a conflict was resolved and replay it next time.
+	enabled = true
+	autoupdate = true
+
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
+
+[fetch]
+	prune = true
+	pruneTags = true
+
+[push]
+	autoSetupRemote = true
+	followTags = true
+
+[alias]
+	# difftastic diffs the *syntax trees* rather than lines, so a reindent or
+	# a moved block shows as no change. Complements delta above: delta renders
+	# the diff git computed, difft computes a different one. Shell wrappers
+	# `gdd` live in tools/profile.sh and nu/aliases.nu.
+	# Worktree only -- `show`/`log` additionally need --ext-diff.
+	dd = -c diff.external=difft diff

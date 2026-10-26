@@ -1,4 +1,5 @@
 .netrwhist
 tags*
 tmux/plugins/*
+zsh/custom/completions/*
 *.add.spl

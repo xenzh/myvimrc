@@ -1,8 +1,9 @@
 #!/bin/bash
 #
 # Usage:
-#   ./dotfiles install   - symlink configs, install submodules, mise, OS packages
-#   ./dotfiles update    - update mise-managed tools and git submodules
+#   ./dotfiles install     - symlink configs, install submodules, mise, OS packages
+#   ./dotfiles update      - update mise-managed tools, completions and git submodules
+#   ./dotfiles completions - regenerate zsh completions for mise-managed tools
 
 
 DOTFILES="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
@@ -36,6 +37,36 @@ function link() {
         return
     fi
     ln -s "$target" "$dest"
+}
+
+function gen_completion() {
+    local dest="$DOTFILES/zsh/custom/completions/$1"; shift
+
+    if ! command -v "$1" &> /dev/null; then
+        echo "-- $1 not installed, skipping"
+        return
+    fi
+
+    if "$@" > "$dest.tmp" 2>/dev/null && [ -s "$dest.tmp" ]; then
+        mv "$dest.tmp" "$dest"
+    else
+        rm -f "$dest.tmp"
+        echo "!! Could not generate completions for $1"
+    fi
+}
+
+function cmd_completions() {
+    mkdir -p "$DOTFILES/zsh/custom/completions"
+
+    gen_completion _rg    rg --generate complete-zsh
+    gen_completion _fd    fd --gen-completions zsh
+    gen_completion _uv    uv generate-shell-completion zsh
+    gen_completion _bat   bat --completion zsh
+    gen_completion _mise  mise completion zsh
+    gen_completion _delta delta --generate-completion zsh
+
+    # compinit caches the scan; force a rebuild so the new files are picked up.
+    rm -f ~/.zcompdump*
 }
 
 
@@ -93,7 +124,21 @@ echo "-- 6. Installing gdb config"
 link "$DOTFILES/tools/.gdbinit" ~/.gdbinit
 
 
-echo "-- 7. Installing mise and mise-managed tools"
+echo "-- 7. Installing git config"
+
+touch ~/.gitconfig
+GIT_INCLUDE="	path = $DOTFILES/git/config"
+
+if grep -Fxq "$GIT_INCLUDE" ~/.gitconfig; then
+    echo "-- Git config is already included"
+else
+    # Prepended, not appended: git applies later values last, so settings
+    # already in ~/.gitconfig keep overriding ours.
+    printf '[include]\n%s\n\n' "$GIT_INCLUDE" | cat - ~/.gitconfig > temp && mv temp ~/.gitconfig
+fi
+
+
+echo "-- 8. Installing mise and mise-managed tools"
 
 if ! command -v mise &> /dev/null; then
     yes_or_no "?? Install mise" && curl -fsSL https://mise.run | sh
@@ -109,7 +154,12 @@ else
 fi
 
 
-echo "-- 8. Installing remaining OS packages"
+echo "-- 9. Generating shell completions"
+
+cmd_completions
+
+
+echo "-- 10. Installing remaining OS packages"
 
 SUDO=""
 [ "$(id -u)" -ne 0 ] && SUDO="sudo"
@@ -173,7 +223,7 @@ PYTHON=(
 yes_or_no "?? Install python modules: ${PYTHON[*]}" && install_list pip_package "${PYTHON[@]}"
 
 
-echo "-- 9. Changing login shell"
+echo "-- 11. Changing login shell"
 
 ZSH_BIN="$(command -v zsh)"
 if [ -n "$ZSH_BIN" ]; then
@@ -197,7 +247,12 @@ else
 fi
 
 
-echo "-- 2. Updating git submodules"
+echo "-- 2. Regenerating shell completions"
+
+cmd_completions
+
+
+echo "-- 3. Updating git submodules"
 
 if ! command -v git &> /dev/null; then
     fail "!! git cannot be found"
@@ -209,7 +264,8 @@ git submodule update --init --remote --recursive
 
 
 case "${1:-}" in
-    install) cmd_install ;;
-    update)  cmd_update ;;
-    *)       fail "Usage: $0 {install|update}" ;;
+    install)     cmd_install ;;
+    update)      cmd_update ;;
+    completions) cmd_completions ;;
+    *)           fail "Usage: $0 {install|update|completions}" ;;
 esac

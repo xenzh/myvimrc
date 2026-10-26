@@ -5,6 +5,9 @@ thisdir="$( cd "$(dirname ${(%):-%N})" > /dev/null && pwd)"
 # Has to be on top so that everything below uses mise binaries.
 export PATH="$HOME/.local/share/mise/shims:$PATH"
 
+# Keep $path/$fpath free of duplicates.
+typeset -U path fpath
+
 export ZSH=$thisdir/oh-my-zsh
 ZSH_CUSTOM=$thisdir/custom
 
@@ -50,15 +53,12 @@ autoload -U promptinit; promptinit
 prompt typewritten
 
 
+# Re-complete from the middle of a command; `cd` is separate, via `zsh-interactive-cd`.
+__zic_default_completion=expand-or-complete-prefix
+
 ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
-
-
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=59'
-
-
-# expand and complete all wildcards before cursor
-bindkey TAB expand-or-complete-prefix
 
 
 # User configuration

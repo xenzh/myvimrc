@@ -56,6 +56,7 @@ alias gc = git checkout
 alias gcb = git checkout -b
 alias gb = git branch
 alias gd = git diff
+alias gdd = git dd   # difftastic: see [alias] in git/config
 alias gpo = git push origin
 alias gpu = git push upstream
 alias grpo = git remote prune origin

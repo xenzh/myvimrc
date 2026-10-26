@@ -4,6 +4,9 @@
 [tools]
 zoxide = "latest"
 fzf = "latest"
+fd = "latest"
+delta = "latest"
+difftastic = "latest"
 carapace = "latest"
 starship = "latest"
 ripgrep = "latest"

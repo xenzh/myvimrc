@@ -3,6 +3,7 @@
 
 export-env {
     $env.FZF_DEFAULT_COMMAND = "rg --hidden -l -g '!.git' -g '!*.o' -g '!*.d' ''"
+    $env.FZF_ALT_C_COMMAND = "fd --type d --hidden --exclude .git"
 
     let colors = "bg+:#3B4252,bg:#2E3440,spinner:#81A1C1,hl:#616E88,fg:#D8DEE9,header:#616E88,info:#81A1C1,pointer:#81A1C1,marker:#81A1C1,fg+:#D8DEE9,prompt:#81A1C1,hl+:#81A1C1"
     let preview = ($env.FILE_PWD | path join ".." "tools" "preview")
