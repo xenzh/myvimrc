@@ -34,6 +34,9 @@ function! OverrideColors()
     hi link ALEVirtualTextError SpellCap
     hi link ALEVirtualTextStyleError SpellRare
 
+    hi DiagnosticUnderlineHint gui=NONE cterm=NONE guisp=NONE
+    hi DiagnosticUnnecessary gui=NONE cterm=NONE guifg=NONE ctermfg=NONE
+
     " LSP / floating windows
     hi NormalFloat guifg=#D8DEE9 guibg=#2E3440
     hi FloatBorder guifg=#616E88 guibg=#2E3440
