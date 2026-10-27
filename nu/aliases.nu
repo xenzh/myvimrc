@@ -36,6 +36,12 @@ def --wrapped vim [...rest] {
 def --wrapped vimdiff [...rest] {
     if (which nvim | is-not-empty) { ^nvim -d ...$rest } else { ^vimdiff ...$rest }
 }
+def --wrapped vimd [...rest] {
+    if (which nvim | is-not-empty) { ^nvim -c DiffviewOpen ...$rest }
+}
+def --wrapped vimgh [...rest] {
+    if (which nvim | is-not-empty) { ^nvim -c DiffviewFileHistory ...$rest }
+}
 def --wrapped edit [...rest] { vim ...$rest }
 def --wrapped ":e" [...rest] { vim ...$rest }
 def --wrapped vi [...rest] {

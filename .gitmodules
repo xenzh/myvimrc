@@ -114,3 +114,9 @@
 [submodule "vim/nvim/pack/3-nvim/start/nvim-treesitter-context"]
 	path = vim/nvim/pack/3-nvim/start/nvim-treesitter-context
 	url = http://github.com/nvim-treesitter/nvim-treesitter-context
+[submodule "vim/nvim/pack/3-nvim/start/diffview.nvim"]
+	path = vim/nvim/pack/3-nvim/start/diffview.nvim
+	url = http://github.com/sindrets/diffview.nvim
+[submodule "vim/nvim/pack/3-nvim/start/nvim-web-devicons"]
+	path = vim/nvim/pack/3-nvim/start/nvim-web-devicons
+	url = http://github.com/nvim-tree/nvim-web-devicons

@@ -27,6 +27,9 @@ if command -v nvim > /dev/null 2>&1; then
 
     alias vim="nvim"
     alias vimdiff="nvim -d"
+
+    alias vimd="nvim -c 'DiffviewOpen'"
+    alias vimgh="nvim -c 'DiffviewFileHistory'"
 else
     edit() { vim "$@"; }
 fi

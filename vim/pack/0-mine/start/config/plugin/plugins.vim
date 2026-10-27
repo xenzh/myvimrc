@@ -142,6 +142,14 @@ EOF
 endif
 
 
+" diffview.nvim
+if has('nvim')
+lua << EOF
+vim.keymap.set('n', '<leader>h', '<CMD>DiffviewFileHistory %<CR>')
+EOF
+endif
+
+
 " vim-airline, buffer tab selection remappings
 let g:airline_powerline_fonts = 1
 

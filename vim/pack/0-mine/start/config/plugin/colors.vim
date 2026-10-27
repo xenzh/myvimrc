@@ -37,6 +37,12 @@ function! OverrideColors()
     hi DiagnosticUnderlineHint gui=NONE cterm=NONE guisp=NONE
     hi DiagnosticUnnecessary gui=NONE cterm=NONE guifg=NONE ctermfg=NONE
 
+    " Diff: override Nord's bright backgrounds with dimmed versions.
+    hi DiffAdd    gui=NONE cterm=NONE guifg=NONE ctermfg=NONE guibg=#3C4548 ctermbg=NONE
+    hi DiffChange gui=NONE cterm=NONE guifg=NONE ctermfg=NONE guibg=#484745 ctermbg=NONE
+    hi DiffDelete gui=NONE cterm=NONE guifg=#5E3E49 ctermfg=8 guibg=#403843 ctermbg=NONE
+    hi DiffText   gui=NONE cterm=NONE guifg=NONE ctermfg=NONE guibg=#3D515E ctermbg=NONE
+
     " LSP / floating windows
     hi NormalFloat guifg=#D8DEE9 guibg=#2E3440
     hi FloatBorder guifg=#616E88 guibg=#2E3440
