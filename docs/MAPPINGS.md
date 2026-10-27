@@ -58,7 +58,7 @@
 | `gi` `gt`             | n    | _nvim-lsp_                      | Go to implementation/type definition                  |
 | `,,`                  | n    | _nvim-lsp_                      | Go to previous LSP diagnostic                         |
 | `..`                  | n    | _nvim-lsp_                      | Go to next LSP diagnostic                             |
-| `[h` `]h`             | n    | `vim-gitgutter`                 | Go to previous/next git hunk                          |
+| `[;` `]'`             | n    | `vim-gitgutter`                 | Go to previous/next git hunk                          |
 | `[c` `]c`             | n    | _config_                        | Go to previous/next git merge conflict                |
 | `[o` `]o`             | n    | `nvim-treesitter-textobjects`   | Go to previous/next function argument                 |
 
@@ -111,6 +111,15 @@
 | `:ToHex` `:FromHex`   | n    | `xxd`                           | Convert buffer to hex dump and read it back to text   |
 | `:NoAnsiColors    `   | n    | _config_                        | Remove ANSI color codes from the buffer               |
 
+### Diff
+
+| Key                   | Mode | Source                          | Description                                           |
+| --------------------- | ---- | ------------------------------- | ----------------------------------------------------- |
+| `<leader>h`           | n    | _config_, `diffview.nvim`       | Open git history for this file                        |
+| `<tab>`, `s-<tab>`    | n    | `diffview.nvim`                 | Open diff for the next/previous file                  |
+| `<leader>e, b`        | n    | `diffview.nvim`                 | Focus on files/toggle files                           |
+
+See the [plugin help](https://github.com/sindrets/diffview.nvim#configuration) for more.
 
 ### LSP & completion
 

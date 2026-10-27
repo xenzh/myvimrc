@@ -148,6 +148,7 @@ lua << EOF
 vim.keymap.set('n', '<leader>h', '<CMD>DiffviewFileHistory %<CR>')
 EOF
 endif
+set fillchars+=diff:╱ " diagonal lines in place of deleted
 
 
 " vim-airline, buffer tab selection remappings
